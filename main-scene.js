@@ -1,4 +1,4 @@
-import {tiny, defs} from './examples/common.js';
+import {tiny, defs} from './scenes/common.js';
                                                   // Pull these names into this module's scope for convenience:
 const { Vector, Vector3, vec, vec3, vec4, color, Matrix, Mat4, Light, Shape, Material, Shader, Texture, Scene,
         Canvas_Widget, Code_Widget, Text_Widget } = tiny;
@@ -13,9 +13,9 @@ const { Vector, Vector3, vec, vec3, vec4, color, Matrix, Mat4, Light, Shape, Mat
 
 const Minimal_Webgl_Demo = defs.Minimal_Webgl_Demo;
 import { Axes_Viewer, Axes_Viewer_Test_Scene } 
-  from "./examples/axes-viewer.js"
+  from "./scenes/axes-viewer.js"
 import { Transforms_Sandbox }
-  from "./examples/transforms-sandbox.js"
+  from "./scenes/transforms-sandbox.js"
 
 Object.assign( defs,
                      { Transforms_Sandbox } );
