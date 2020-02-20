@@ -14,17 +14,19 @@ const { Vector, Vector3, vec, vec3, vec4, color, Matrix, Mat4, Light, Shape, Mat
 const Minimal_Webgl_Demo = defs.Minimal_Webgl_Demo;
 import { Axes_Viewer, Axes_Viewer_Test_Scene } 
   from "./scenes/axes-viewer.js"
-import { Transforms_Sandbox }
-  from "./scenes/transforms-sandbox.js"
+import { Obj_File_Demo }
+    from "./scenes/placeJukeBox.js"
+import { Play_Jukebox }
+  from "./scenes/jukebox.js"
 
 Object.assign( defs,
-                     { Transforms_Sandbox } );
+                     { Obj_File_Demo } );
 
     // ******************** End extra step
 
 // (Can define Main_Scene's class here)
 
-const Main_Scene = Transforms_Sandbox;
+const Main_Scene = Obj_File_Demo ;
 const Additional_Scenes = [];
 
 export { Main_Scene, Additional_Scenes, Canvas_Widget, Code_Widget, Text_Widget, defs }

@@ -14,6 +14,11 @@ export class Jukebox_Base extends Scene
   constructor()
     {                  // constructor(): Scenes begin by populating initial values like the Shapes and Materials they'll need.
       super();
+
+      // Load the model file:
+      this.shapes = { "jukebox": new Shape_From_File( "assets/jukebox.obj" ) };
+
+
       this.hover = this.swarm = false;
                                                         // At the beginning of our program, load one of each of these shape 
                                                         // definitions onto the GPU.  NOTE:  Only do this ONCE per shape it
@@ -72,6 +77,8 @@ export class Jukebox_Base extends Scene
       const angle = Math.sin( t );
       const light_position = Mat4.rotation( angle,   1,0,0 ).times( vec4( 0,-1,1,0 ) );
       program_state.lights = [ new Light( light_position, color( 1,1,1,1 ), 1000000 ) ];
+
+      // this.shapes.jukebox.draw( context, program_state, model_transform);
     }
 }
 
@@ -126,6 +133,11 @@ export class Play_Jukebox extends Jukebox_Base
 
                                                      // Position the root shape.  For this example, we'll use a box 
                                                      // shape, and place it at the coordinate origin 0,0,0:
+
+
+      model_transform = model_transform.times( Mat4.translation( 0,0,0 ) );
+      this.shapes.jukebox.draw( context, program_state, model_transform);
+
       model_transform = model_transform.times( Mat4.translation( 0,0,0 ) );
                                                                                               // Draw the top box:
       this.shapes.box.draw( context, program_state, model_transform, this.materials.plastic.override( yellow ) );
