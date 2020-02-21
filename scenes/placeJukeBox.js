@@ -152,7 +152,8 @@ export class Obj_File_Demo extends Scene
 
         const model_transform =
             Mat4.translation( 0, 0, 0 )
-                .times(Mat4.rotation(-Math.PI/2,   0,1,0 ));
+                // .times(Mat4.rotation(-Math.PI/2,   0,1,0 ));
+                .times(Mat4.rotation(Math.PI/2,   0,1,0 ));
         this.shapes.teapot.draw( context, program_state, model_transform, 1 == 1 ? this.stars : this.bumps );
 
         //added
