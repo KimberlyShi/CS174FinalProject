@@ -113,12 +113,17 @@ export class Obj_File_Demo extends Scene
 
         // Don't create any DOM elements to control this scene:
         this.widget_options = { make_controls: false };
-        // Non bump mapped:
-        this.stars = new Material( new defs.Textured_Phong( 1 ),  { color: color( .5,.5,.5,1 ),
-            ambient: .3, diffusivity: .5, specularity: .5, texture: new Texture( "assets/stars.png" ) });
+        // // Non bump mapped:
+        // this.stars = new Material( new defs.Textured_Phong( 1 ),  { color: color( .5,.5,.5,1 ),
+        //     ambient: .3, diffusivity: .5, specularity: .5, texture: new Texture( "assets/pink.png" ) });
+
+        this.stars = new Material( new defs.Textured_Phong( 1 ),  { color: color( 0.5,0.5,0.5,1 ),
+            ambient: 1, diffusivity: 1, specularity: 1, texture: new Texture( "assets/pink.png" ) });
         // Bump mapped:
-        this.bumps = new Material( new defs.Fake_Bump_Map( 1 ), { color: color( .5,.5,.5,1 ),
-            ambient: .3, diffusivity: .5, specularity: .5, texture: new Texture( "assets/stars.png" ) });
+        // this.bumps = new Material( new defs.Fake_Bump_Map( 1 ), { color: color( .5,.5,.5,1 ),
+        //     ambient: .3, diffusivity: .5, specularity: .5, texture: new Texture( "assets/pink.png" ) });
+        this.bumps = new Material( new defs.Fake_Bump_Map( 1 ), { color: color( 0.5,0.5,0.5,1 ),
+            ambient: 1, diffusivity: 1, specularity: 1, texture: new Texture( "assets/pink.png" ) });
     }
     display( context, program_state )
     { const t = program_state.animation_time;
@@ -151,9 +156,9 @@ export class Obj_File_Demo extends Scene
         //     }
 
         const model_transform =
-            Mat4.translation( 0, 0, 0 )
+            Mat4.translation( 0, 1, 0 )
                 // .times(Mat4.rotation(-Math.PI/2,   0,1,0 ));
-                .times(Mat4.rotation(Math.PI/2,   0,1,0 ));
+                .times(Mat4.rotation(-Math.PI/4,   0,1,0 ));
         this.shapes.teapot.draw( context, program_state, model_transform, 1 == 1 ? this.stars : this.bumps );
 
         //added
