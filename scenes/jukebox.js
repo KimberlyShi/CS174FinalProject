@@ -19,25 +19,25 @@ export class Jukebox_Base extends Scene
       this.shapes = { "jukebox": new Shape_From_File( "assets/jukebox.obj" ) };
 
 
-      this.hover = this.swarm = false;
-                                                        // At the beginning of our program, load one of each of these shape 
-                                                        // definitions onto the GPU.  NOTE:  Only do this ONCE per shape it
-                                                        // would be redundant to tell it again.  You should just re-use the
-                                                        // one called "box" more than once in display() to draw multiple cubes.
-                                                        // Don't define more than one blueprint for the same thing here.
-      this.shapes = { 'box'  : new Cube(),
-                      'ball' : new Subdivision_Sphere( 4 ) };
+      // this.hover = this.swarm = false;
+                                                        // // At the beginning of our program, load one of each of these shape 
+                                                        // // definitions onto the GPU.  NOTE:  Only do this ONCE per shape it
+                                                        // // would be redundant to tell it again.  You should just re-use the
+                                                        // // one called "box" more than once in display() to draw multiple cubes.
+                                                        // // Don't define more than one blueprint for the same thing here.
+      // this.shapes = { 'box'  : new Cube(),
+                      // 'ball' : new Subdivision_Sphere( 4 ) };
       
-                                                  // *** Materials: *** Define a shader, and then define materials that use
-                                                  // that shader.  Materials wrap a dictionary of "options" for the shader.
-                                                  // Here we use a Phong shader and the Material stores the scalar 
-                                                  // coefficients that appear in the Phong lighting formulas so that the
-                                                  // appearance of particular materials can be tweaked via these numbers.
-      const phong = new defs.Phong_Shader();
-      this.materials = { plastic: new Material( phong,
-                                    { ambient: .2, diffusivity: 1, specularity: .5, color: color( .9,.5,.9,1 ) } ),
-                           metal: new Material( phong, 
-                                    { ambient: .2, diffusivity: 1, specularity:  1, color: color( .9,.5,.9,1 ) } ) };
+                                                  // // *** Materials: *** Define a shader, and then define materials that use
+                                                  // // that shader.  Materials wrap a dictionary of "options" for the shader.
+                                                  // // Here we use a Phong shader and the Material stores the scalar 
+                                                  // // coefficients that appear in the Phong lighting formulas so that the
+                                                  // // appearance of particular materials can be tweaked via these numbers.
+      // const phong = new defs.Phong_Shader();
+      // this.materials = { plastic: new Material( phong,
+                                    // { ambient: .2, diffusivity: 1, specularity: .5, color: color( .9,.5,.9,1 ) } ),
+                           // metal: new Material( phong, 
+                                    // { ambient: .2, diffusivity: 1, specularity:  1, color: color( .9,.5,.9,1 ) } ) };
     }
   make_control_panel()
     {                                 // make_control_panel(): Sets up a panel of interactive HTML elements, including
@@ -78,7 +78,7 @@ export class Jukebox_Base extends Scene
       const light_position = Mat4.rotation( angle,   1,0,0 ).times( vec4( 0,-1,1,0 ) );
       program_state.lights = [ new Light( light_position, color( 1,1,1,1 ), 1000000 ) ];
 
-      // this.shapes.jukebox.draw( context, program_state, model_transform);
+      this.shapes.jukebox.draw( context, program_state, model_transform);
     }
 }
 
