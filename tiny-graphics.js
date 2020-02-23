@@ -1015,23 +1015,28 @@ class Webgl_Manager
         || function( callback, element ) { w.setTimeout(callback, 1000/60);  } )( window );
     }
 	
-    click_handler(event) {
+    click_handler(event) {   //MAGGIE
+        var gl = this.context
 
-        if (window.music_play ==0)
-           window.music_play = 1;
-        else
-           window.music_play = 0; //count_click%2;
+        var mouse_x = event.clientX;
+        var mouse_y = event.clientY;
+		
+		if (mouse_x>702 && mouse_x<835 && mouse_y>192 && mouse_y<563) {
+			if (window.music_play ==0)
+               window.music_play = 1;
+            else
+               window.music_play = 0; //count_click%2;
+		}
+
 	    console.log("here!!!!");
 		console.log(window.music_play);
-        
-        var x = event.clientX;
-        var y = event.clientY;
-
-        console.log(x,y)
-
+        console.log(mouse_x,mouse_y)
+		
         var data = new Uint8Array(4);
 
-        //this.gl.readPixels(x-11, y+34, 1, 1, this.gl.RGBA, this.gl.UNSIGNED_BYTE, data);
+        gl.readPixels(mouse_x, mouse_y, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, data);
+		
+		console.log(data[3])
 
         // If mouse position has correct pixel color range, we have clicked the needle.
 

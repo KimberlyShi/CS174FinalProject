@@ -47,14 +47,14 @@ class Main_Scene extends Scene
                             // Detailed model files can be used in place of simpler primitive-based
                             // shapes to add complexity to a scene.  Simpler primitives in your scene
                             // can just be thought of as placeholders until you find a model file
-                            // that fits well.  This demo shows the teapot model twice, with one
-                            // teapot showing off the Fake_Bump_Map effect while the other has a
+                            // that fits well.  This demo shows the jukebox model twice, with one
+                            // jukebox showing off the Fake_Bump_Map effect while the other has a
                             // regular texture and Phong lighting.
     constructor() { 
         super();
         // Load the model file:
-        // this.shapes = { "teapot": new Shape_From_File( "assets/teapot.obj" ) };
-        this.shapes = { "teapot": new Shape_From_File( "assets/jukebox.obj" ) };
+        // this.shapes = { "jukebox": new Shape_From_File( "assets/jukebox.obj" ) };
+        this.shapes = { "jukebox": new Shape_From_File( "assets/jukebox.obj" ) };
 
         // Don't create any DOM elements to control this scene:
         //this.widget_options = { make_controls: false };
@@ -78,10 +78,10 @@ class Main_Scene extends Scene
             Mat4.translation( 0, 1, 0 )
                 .times(Mat4.rotation(-Math.PI/4,   0,1,0 ));
   //      console.log(music_play)
-        this.shapes.teapot.draw( context, program_state, model_transform, this.jukebox );
+        this.shapes.jukebox.draw( context, program_state, model_transform, this.jukebox );
 
-        console.log("qqq")
-        console.log(window.music_play)
+        //console.log("qqq")
+        //console.log(window.music_play)
 		if (window.music_play==1) {
 		     window.music_play = 2
 			 audio.src = sounds[Math.floor(Math.random() * sounds.length)];
