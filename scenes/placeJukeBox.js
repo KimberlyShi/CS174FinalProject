@@ -1,4 +1,5 @@
 import {tiny, defs} from './common.js';
+//import {tiny} from '../tiny-graphics.js';
 // Pull these names into this module's scope for convenience:
 const { vec3, vec4, vec, color, Mat4, Light, Shape, Material, Shader, Texture, Scene } = tiny;
 
@@ -112,14 +113,11 @@ export class Obj_File_Demo extends Scene
         this.shapes = { "teapot": new Shape_From_File( "assets/jukebox.obj" ) };
 
         // Don't create any DOM elements to control this scene:
-        this.widget_options = { make_controls: false };
+        //this.widget_options = { make_controls: false };
 
         this.stars = new Material( new defs.Textured_Phong( 1 ),  { color: color( 0.5,0.5,0.5,1 ),
             ambient: 1, diffusivity: 1, specularity: 1, texture: new Texture( "assets/pink.png" ) });
         // Bump mapped:
-
-        this.bumps = new Material( new defs.Fake_Bump_Map( 1 ), { color: color( 0.5,0.5,0.5,1 ),
-            ambient: 1, diffusivity: 1, specularity: 1, texture: new Texture( "assets/pink.png" ) });
     }
 
     display( context, program_state ) { 
@@ -134,9 +132,8 @@ export class Obj_File_Demo extends Scene
 
         const model_transform =
             Mat4.translation( 0, 1, 0 )
-                // .times(Mat4.rotation(-Math.PI/2,   0,1,0 ));
                 .times(Mat4.rotation(-Math.PI/4,   0,1,0 ));
-        this.shapes.teapot.draw( context, program_state, model_transform, 1 == 1 ? this.stars : this.bumps );
+        this.shapes.teapot.draw( context, program_state, model_transform, this.stars );
 	
     }
 }
