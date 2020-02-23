@@ -1008,12 +1008,46 @@ class Webgl_Manager
       gl.bindTexture(gl.TEXTURE_2D, gl.createTexture() );
       gl.texImage2D (gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([255, 0, 0, 255]));
 
+      console.log("HHHHHHHHHHHHHHHHHH");
+	  this.canvas.addEventListener("click", this.click_handler.bind(this)); //MAGGIE 
               // Find the correct browser's version of requestAnimationFrame() needed for queue-ing up re-display events:
       window.requestAnimFrame = ( w =>
            w.requestAnimationFrame    || w.webkitRequestAnimationFrame
         || w.mozRequestAnimationFrame || w.oRequestAnimationFrame || w.msRequestAnimationFrame
         || function( callback, element ) { w.setTimeout(callback, 1000/60);  } )( window );
     }
+	
+    click_handler(event) {
+	    console.log("here!!!!");
+		//if (music_play ==0)
+        //   music_play = 1;
+        //else
+        //   music_play = 0; //count_click%2;
+		console.log(music_play);
+        var x = event.clientX;
+        var y = event.clientY;
+
+        var data = new Uint8Array(4);
+
+        this.gl.readPixels(x-11, y+34, 1, 1, this.gl.RGBA, this.gl.UNSIGNED_BYTE, data);
+
+        // If mouse position has correct pixel color range, we have clicked the needle.
+
+        // if (data[3] < 255) {
+          // window.lid_open = true;
+        // }
+
+        var range1 = 0;
+        var range2 = 20
+        // if (window.lid_open) {
+          // if ((data[0] >= range1 && data[0] <= range2) && 
+              // (data[1] >= range1 && data[1] <= range2) &&
+              // (data[2] >= range1 && data[2] <= range2)) {
+                 // window.play_flag = true;
+              // }
+        // }
+
+    }  
   set_size( dimensions = [ 1080, 600 ] )
     {                                   // set_size():  Allows you to re-size the canvas anytime.  To work, it must change the
                                         // size in CSS, wait for style to re-flow, and then change the size again within canvas 

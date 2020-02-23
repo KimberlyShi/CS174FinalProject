@@ -3,6 +3,18 @@ import {tiny, defs} from './common.js';
 // Pull these names into this module's scope for convenience:
 const { vec3, vec4, vec, color, Mat4, Light, Shape, Material, Shader, Texture, Scene } = tiny;
 
+var sounds = [
+ "assets/circles.mp3",
+ "assets/heyjude.mp3",
+ "assets/mygirl.mp3",
+ "assets/neverbeentospain.mp3",
+ "assets/partyintheusa.mp3",
+ "assets/spanishflea.mp3",
+ "assets/sundaybest.mp3"
+];
+
+var audio = document.createElement('audio');
+
 export class Shape_From_File extends Shape
 {                                   // **Shape_From_File** is a versatile standalone Shape that imports
                                     // all its arrays' data from an .obj 3D model file.
@@ -115,7 +127,7 @@ export class Obj_File_Demo extends Scene
         // Don't create any DOM elements to control this scene:
         //this.widget_options = { make_controls: false };
 
-        this.stars = new Material( new defs.Textured_Phong( 1 ),  { color: color( 0.5,0.5,0.5,1 ),
+        this.jukebox = new Material( new defs.Textured_Phong( 1 ),  { color: color( 0.5,0.5,0.5,1 ),
             ambient: 1, diffusivity: 1, specularity: 1, texture: new Texture( "assets/pink.png" ) });
         // Bump mapped:
     }
@@ -133,7 +145,7 @@ export class Obj_File_Demo extends Scene
         const model_transform =
             Mat4.translation( 0, 1, 0 )
                 .times(Mat4.rotation(-Math.PI/4,   0,1,0 ));
-        this.shapes.teapot.draw( context, program_state, model_transform, this.stars );
+        this.shapes.teapot.draw( context, program_state, model_transform, this.jukebox );
 	
     }
 }
