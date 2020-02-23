@@ -770,7 +770,7 @@ class Movement_Controls extends Scene
       canvas  .addEventListener( "mouseout",  e => { if( !this.mouse.anchor ) this.mouse.from_center.scale_by(0) } );
     }
   show_explanation( document_element ) { }
-  make_control_panel()
+  /*make_control_panel()
     {                                 // make_control_panel(): Sets up a panel of interactive HTML elements, including
                                       // buttons with key bindings for affecting this scene, and live info readouts.
       this.control_panel.innerHTML += "Click and drag the scene to <br> spin your viewpoint around it.<br>";
@@ -828,7 +828,7 @@ class Movement_Controls extends Scene
       this.key_triggered_button( "Attach to global camera", [ "Shift", "R" ],
                                                  () => { this.will_take_over_graphics_state = true }, "blue" );
       this.new_line();
-    }
+    } */
   first_person_flyaround( radians_per_frame, meters_per_frame, leeway = 70 )
     {                                                     // (Internal helper function)
                                                           // Compare mouse's location to all four corners of a dead box:
