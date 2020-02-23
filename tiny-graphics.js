@@ -982,7 +982,6 @@ class Program_State extends Container
     }
 }
 
-
 const Webgl_Manager = tiny.Webgl_Manager =
 class Webgl_Manager
 {                        // **Webgl_Manager** manages a whole graphics program for one on-page canvas, including its 
@@ -1008,7 +1007,6 @@ class Webgl_Manager
       gl.bindTexture(gl.TEXTURE_2D, gl.createTexture() );
       gl.texImage2D (gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([255, 0, 0, 255]));
 
-      console.log("HHHHHHHHHHHHHHHHHH");
 	  this.canvas.addEventListener("click", this.click_handler.bind(this)); //MAGGIE 
               // Find the correct browser's version of requestAnimationFrame() needed for queue-ing up re-display events:
       window.requestAnimFrame = ( w =>
@@ -1018,18 +1016,22 @@ class Webgl_Manager
     }
 	
     click_handler(event) {
+
+        if (window.music_play ==0)
+           window.music_play = 1;
+        else
+           window.music_play = 0; //count_click%2;
 	    console.log("here!!!!");
-		//if (music_play ==0)
-        //   music_play = 1;
-        //else
-        //   music_play = 0; //count_click%2;
-		//console.log(music_play);
+		console.log(window.music_play);
+        
         var x = event.clientX;
         var y = event.clientY;
 
+        console.log(x,y)
+
         var data = new Uint8Array(4);
 
-        this.gl.readPixels(x-11, y+34, 1, 1, this.gl.RGBA, this.gl.UNSIGNED_BYTE, data);
+        //this.gl.readPixels(x-11, y+34, 1, 1, this.gl.RGBA, this.gl.UNSIGNED_BYTE, data);
 
         // If mouse position has correct pixel color range, we have clicked the needle.
 
