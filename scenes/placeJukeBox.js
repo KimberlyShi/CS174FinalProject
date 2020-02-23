@@ -15,6 +15,8 @@ var sounds = [
 
 var audio = document.createElement('audio');
 
+var music_play=0;
+
 export class Shape_From_File extends Shape
 {                                   // **Shape_From_File** is a versatile standalone Shape that imports
                                     // all its arrays' data from an .obj 3D model file.
