@@ -1023,7 +1023,7 @@ class Webgl_Manager
         //   music_play = 1;
         //else
         //   music_play = 0; //count_click%2;
-		console.log(music_play);
+		//console.log(music_play);
         var x = event.clientX;
         var y = event.clientY;
 
