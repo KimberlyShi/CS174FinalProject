@@ -58,6 +58,7 @@ export class Jukebox_Base extends Scene
                                                      // some initial setup.
      
                            // Setup -- This part sets up the scene's overall camera matrix, projection matrix, and lights:
+/*						   
       if( !context.scratchpad.controls ) 
         { this.children.push( context.scratchpad.controls = new defs.Movement_Controls() ); 
 
@@ -78,7 +79,7 @@ export class Jukebox_Base extends Scene
       const light_position = Mat4.rotation( angle,   1,0,0 ).times( vec4( 0,-1,1,0 ) );
       program_state.lights = [ new Light( light_position, color( 1,1,1,1 ), 1000000 ) ];
 
-      this.shapes.jukebox.draw( context, program_state, model_transform);
+      this.shapes.jukebox.draw( context, program_state, model_transform); */
     }
 }
 
