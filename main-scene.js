@@ -12,12 +12,8 @@ const { Vector, Vector3, vec, vec3, vec4, color, Matrix, Mat4, Light, Shape, Mat
     //                      as common.js into one file for you, such as "dependencies.js")
 
 const Minimal_Webgl_Demo = defs.Minimal_Webgl_Demo;
-import { Axes_Viewer, Axes_Viewer_Test_Scene } 
-  from "./scenes/axes-viewer.js"
-import { Obj_File_Demo }
-    from "./scenes/placeJukeBox.js"
-import { Play_Jukebox }
-  from "./scenes/jukebox.js"
+import { Axes_Viewer, Axes_Viewer_Test_Scene } from "./scenes/axes-viewer.js"
+import { Obj_File_Demo } from "./scenes/placeJukeBox.js"
 
 Object.assign( defs,
                      { Obj_File_Demo } );
