@@ -13,13 +13,13 @@ const { Vector, Vector3, vec, vec3, vec4, color, Matrix, Mat4, Light, Shape, Mat
     //                      as common.js into one file for you, such as "dependencies.js")
 
 var sounds = [
- "assets/circles.mp3",
- "assets/heyjude.mp3",
- "assets/mygirl.mp3",
- "assets/neverbeentospain.mp3",
- "assets/partyintheusa.mp3",
- "assets/spanishflea.mp3",
- "assets/sundaybest.mp3"
+ "assets/sound/circles.mp3",
+ "assets/sound/heyjude.mp3",
+ "assets/sound/mygirl.mp3",
+ "assets/sound/neverbeentospain.mp3",
+ "assets/sound/partyintheusa.mp3",
+ "assets/sound/spanishflea.mp3",
+ "assets/sound/sundaybest.mp3"
 ];
 
 var audio = document.createElement('audio');
@@ -66,17 +66,21 @@ class Main_Scene extends Scene
                 jukebox: new Material( new defs.Textured_Phong( 1 ), { color: color( 0.5,0.5,0.5,1 ), ambient: 1, diffusivity: 1, specularity: 1, texture: new Texture( "assets/pink.png" )}),
                 //KIMBERLY: adjust colors later
                 floor: new Material (new defs.Phong_Shader(), {ambient: 1, diffusivity: 1, specularity: 0.5,
-                    color: color(239/255,222/255, 205/255, 1)}),
-                floorTile: new Material (new defs.Textured_Phong(1), {ambient: 0.5, diffusivity: 0.5, specularity: 1, color: color(0, 0, 0, 1),
-                    texture: new Texture("assets/checkered_floor.png")}),
+                    color: color(0.78, 0.8, 0.6, 1)}),
+                floorTile: new Material (new defs.Textured_Phong(1), {ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
+                    texture: new Texture("assets/checkered_floor_2.jpg")}),
                 //KIMBERLY: change floorBumpMap coloring
-                floorBumpMap: new Material (new defs.Textured_Phong(1), {ambient: 0.6, diffusivity: 1, specularity: 0.5, color: color(232/255, 184/255, 135/255, 1),
+                floorBumpMap: new Material (new defs.Textured_Phong(1), {ambient: 0.6, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
                     texture: new Texture("assets/floorBumpMap.png")}),
                 cylinder1: new Material( new defs.Textured_Phong( 1 ),  { color: color( 1.0,1.0,0.0,1 ),
                     ambient: 1, diffusivity: 1, specularity: 1, texture: new Texture( "assets/pink.png" ) }),
                 cylinder2: new Material( new defs.Textured_Phong( 1 ),  { color: color( 1.0,0.0,1.0,1 ),
                     ambient: 1, diffusivity: 1, specularity: 1, texture: new Texture( "assets/pink.png" ) }),
+                // pinkWall: new Material( new defs.Textured_Phong( 1 ), { ambient: 1, diffusivity: 1, specularity: 1, color: color( 0.7, 0.5, 0.6, 1 ) }),
+                // otherWall: new Material( new defs.Textured_Phong( 1 ), { ambient: 1, diffusivity: 1, specularity: 1, color: color( 0.3, 0.2, 0.5, 1 ) }),
 
+                backWall: new Material( new defs.Textured_Phong( 1 ), { ambient: .9, color: color( 0.5,1,0,1 ) }),
+                leftWall: new Material( new defs.Textured_Phong( 1 ), { ambient: 1, diffusivity: 1, specularity: .5, color: color( 255/255, 153/255, 204/255, 1 ) }),
             };
         // this.jukebox = new Material( new defs.Textured_Phong( 1 ),  { color: color( 0.5,0.5,0.5,1 ),
         //     ambient: 1, diffusivity: 1, specularity: 1, texture: new Texture( "assets/pink.png" ) });
@@ -89,7 +93,10 @@ class Main_Scene extends Scene
         //camera movement
         if (!context.scratchpad.controls) {
             this.children.push(context.scratchpad.controls = new defs.Movement_Controls());
-            program_state.set_camera(Mat4.translation(0, 0, -5));    // Locate the camera here (inverted matrix).
+            program_state.set_camera(Mat4.translation(50,-8,-80 ));    // Locate the camera here (inverted matrix).
+
+            //0, 0, -5
+          //  -1,-8,-25
         }
 		
         program_state.projection_transform = Mat4.perspective( Math.PI/4, context.width/context.height, 1, 500 );
@@ -111,8 +118,8 @@ class Main_Scene extends Scene
 
         // const model_transform = Mat4.translation( 0, 3, 0 ).times(Mat4.rotation(-Math.PI/4,   0,1,0 ));
         let model_transform =
-            Mat4.translation( 0, 1.4, 0 ).times(Mat4.rotation(-Math.PI/4,   0,1,0 ));
-        model_transform = model_transform.times(Mat4.scale(0.5,0.5,0.5));
+            Mat4.translation( -50, 25, -15 ).times(Mat4.rotation(-Math.PI/4,   0,1,0 ));
+        model_transform = model_transform.times(Mat4.scale(10,10,10));
         this.shapes.jukebox.draw( context, program_state, model_transform, this.materials.jukebox );
         // let trJukebox = Mat4.identity();
         // trJukebox = trJukebox.times( Mat4. translation([0,3,0]));
@@ -120,14 +127,18 @@ class Main_Scene extends Scene
         // this.shapes.jukebox.draw( context, program_state, trJukebox, this.materials.jukebox );
 
         const model_transform1 =
-            Mat4.translation( mov, 0.45, 0 )
+            // Mat4.translation( mov, 0.45, 0 )
+            Mat4.translation( mov, 10, 0 )
                 .times(Mat4.rotation(0,0,1,0 ))
-                .times(Mat4.scale(0.3,0.3,0.3,1.0 ));
+                // .times(Mat4.scale(0.3,0.3,0.3,1.0 ));
+                .times(Mat4.scale(8,8,8,1.0 ));
 
         const model_transform2 =
-            Mat4.translation( 2, 0.45, 0 )
+            // Mat4.translation( 2, 0.45, 0 )
+            Mat4.translation( 10, 10, 0 )
                 .times(Mat4.rotation(0,0,1,0 ))
-                .times(Mat4.scale(0.3,0.3,0.3,1.0 ))
+                // .times(Mat4.scale(0.3,0.3,0.3,1.0 ))
+                .times(Mat4.scale(8,8,8,1.0 ))
                 .times(Mat4.translation(mov2,0,0 ));
 
 
@@ -163,8 +174,24 @@ class Main_Scene extends Scene
 		transformFloor = transformFloor.times(Mat4.translation(0,-0.5,0));
 
         //draw the floor
-        //KIMBERLY: will need to change
-        this.shapes.plane.draw(context, program_state, transformFloor, this.materials.floor);
+        //KIMBERLY: will need to change cuz im so confused
+        this.shapes.plane.draw(context, program_state, transformFloor, this.materials.floorBumpMap);
+        // this.shapes.plane.draw(context, program_state, transformFloor, this.materials.floorTile);
+
+
+
+        let transformBackWall = Mat4.identity();
+        transformBackWall = transformBackWall.times(Mat4.translation(0,50,-80));
+        transformBackWall = transformBackWall.times(Mat4.scale(100,50,0));
+
+        let transformLeftWall = Mat4.identity();
+        transformLeftWall = transformLeftWall.times(Mat4.rotation(Math.PI/2, 0,1,0));
+        transformLeftWall = transformLeftWall.times(Mat4.translation(50,50,-100));
+        transformLeftWall = transformLeftWall.times(Mat4.scale(100,50,0));
+
+        this.shapes.plane.draw(context, program_state, transformBackWall, this.materials.backWall);
+        this.shapes.plane.draw(context, program_state, transformLeftWall, this.materials.leftWall);
+
     }
 }
 
