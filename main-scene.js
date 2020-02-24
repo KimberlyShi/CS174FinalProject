@@ -119,7 +119,7 @@ class Main_Scene extends Scene
             mov2 = max_move2;
         }
 
-		console.log(mov)
+		//console.log(mov)
 		count += 1.0;
 
         // const model_transform = Mat4.translation( 0, 3, 0 ).times(Mat4.rotation(-Math.PI/4,   0,1,0 ));
@@ -170,7 +170,7 @@ class Main_Scene extends Scene
 
         //if(dist>2) collision
         //console.log("####");
-        console.log(dist);
+       // console.log(dist);
 
   //      console.log(music_play)
 
