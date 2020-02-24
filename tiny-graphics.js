@@ -993,19 +993,18 @@ class Webgl_Manager
       for( let name of [ "webgl", "experimental-webgl", "webkit-3d", "moz-webgl" ] )
         if(  this.context = this.canvas.getContext( name ) ) break;
       if( !this.context ) throw "Canvas failed to make a WebGL context.";
-      const gl = this.context;
-
+      this.gl = this.canvas.getContext("experimental-webgl", {preserveDrawingBuffer: true});
       this.set_size( dimensions );
                
-      gl.clearColor.apply( gl, background_color );           // Tell the GPU which color to clear the canvas with each frame.
-      gl.getExtension( "OES_element_index_uint" );           // Load an extension to allow shapes with more than 65535 vertices.
-      gl.enable( gl.DEPTH_TEST );                            // Enable Z-Buffering test.
+      this.gl.clearColor.apply( this.gl, background_color );           // Tell the GPU which color to clear the canvas with each frame.
+      this.gl.getExtension( "OES_element_index_uint" );           // Load an extension to allow shapes with more than 65535 vertices.
+      this.gl.enable( this.gl.DEPTH_TEST );                            // Enable Z-Buffering test.
                         // Specify an interpolation method for blending "transparent" triangles over the existing pixels:
-      gl.enable( gl.BLEND );
-      gl.blendFunc( gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA );           
+      this.gl.enable( this.gl.BLEND );
+      this.gl.blendFunc( this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA );           
                                               // Store a single red pixel, as a placeholder image to prevent a console warning:
-      gl.bindTexture(gl.TEXTURE_2D, gl.createTexture() );
-      gl.texImage2D (gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([255, 0, 0, 255]));
+      this.gl.bindTexture(this.gl.TEXTURE_2D, this.gl.createTexture() );
+      this.gl.texImage2D (this.gl.TEXTURE_2D, 0, this.gl.RGBA, 1, 1, 0, this.gl.RGBA, this.gl.UNSIGNED_BYTE, new Uint8Array([255, 0, 0, 255]));
 
 	  this.canvas.addEventListener("click", this.click_handler.bind(this)); //MAGGIE 
               // Find the correct browser's version of requestAnimationFrame() needed for queue-ing up re-display events:
@@ -1014,9 +1013,9 @@ class Webgl_Manager
         || w.mozRequestAnimationFrame || w.oRequestAnimationFrame || w.msRequestAnimationFrame
         || function( callback, element ) { w.setTimeout(callback, 1000/60);  } )( window );
     }
-	
+
     click_handler(event) {   //MAGGIE
-        var gl = this.context
+        //this.gl =this.canvas.getContext("experimental-webgl", {preserveDrawingBuffer: true})
 
         var mouse_x = event.clientX;
         var mouse_y = event.clientY;
@@ -1032,11 +1031,13 @@ class Webgl_Manager
 		console.log(window.music_play);
         console.log(mouse_x,mouse_y)
 		
+		this.render();
+
         var data = new Uint8Array(4);
 
-        gl.readPixels(mouse_x, mouse_y, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, data);
+        this.gl.readPixels(mouse_x, 600-mouse_y, 1, 1, this.gl.RGBA, this.gl.UNSIGNED_BYTE, data);
 		
-		console.log(data[3])
+		console.log(data)
 
         // If mouse position has correct pixel color range, we have clicked the needle.
 
