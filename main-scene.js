@@ -104,13 +104,19 @@ class Main_Scene extends Scene
         program_state.lights = [ new Light(
             Mat4.rotation( t/300,   1,0,0 ).times( vec4( 3,2,10,1 ) ),
             color( 1,.7,.7,1 ), 100000 ) ];
-        var mov = 0.005*count + 1;
-        var max_move = 1.86;
+        var mov = 0.1*count + 1;
+        var max_move = 6.3;
+        var max_move2 = 0.6;
+        var max_angle = 1.6;
 
 		if (mov > max_move) {
             mov = max_move
-            angle += 0.01
-			mov2 += 0.01
+            angle += 0.04;
+			mov2 += 0.01;
+        }
+        if (angle > max_angle) {
+            angle = max_angle;
+            mov2 = max_move2;
         }
 
 		console.log(mov)
@@ -129,10 +135,11 @@ class Main_Scene extends Scene
         const model_transform1 =
             // Mat4.translation( mov, 0.45, 0 )
             Mat4.translation( mov, 10, 0 )
-                .times(Mat4.rotation(0,0,1,0 ))
+                // .times(Mat4.rotation(0,0,1,0 ))
 
                 // .times(Mat4.scale(0.3,0.3,0.3,1.0 )); //from chairs that Kim commented
-                .times(Mat4.scale(8,8,8,1.0 )); //working Chair -Kim
+                .times(Mat4.scale(1,3,2))
+                .times(Mat4.rotation(Math.PI/2,1,0,0)); //working Chair -Kim
 
                 //from git conflict
                 // .times(Mat4.scale(0.05,0.2,0.1,1.0 ))
@@ -142,11 +149,12 @@ class Main_Scene extends Scene
         const model_transform2 =
             // Mat4.translation( 2, 0.45, 0 )
             Mat4.translation( 10, 10, 0 )
-                .times(Mat4.rotation(0,0,1,0 ))
+                // .times(Mat4.rotation(0,0,1,0 ))
 
                 // .times(Mat4.scale(0.3,0.3,0.3,1.0 )) //from chairs that Kim commented
-                .times(Mat4.scale(8,8,8,1.0 )) //working Chair -Kim
-                .times(Mat4.translation(mov2,0,0 )); //working Chair -Kim
+                .times(Mat4.scale(1,3,2)) //working Chair -Kim
+                .times(Mat4.translation(mov2 -1,0,0 ))
+                .times(Mat4.rotation(Math.PI/2,1,0,0)); //working Chair -Kim
 
                 //from git conflict
                 // .times(Mat4.scale(0.05,0.2,0.1,1.0 ))
@@ -169,7 +177,7 @@ class Main_Scene extends Scene
 
         this.shapes.ketchup.draw( context, program_state, model_transform1, this.materials.ketchup );
 		
-		this.shapes.mustard.draw( context, program_state, model_transform2.times(Mat4.rotation(angle,0,0,1 ) ), this.materials.mustard );
+		this.shapes.mustard.draw( context, program_state, model_transform2.times(Mat4.rotation(angle,1,0,0 ) ), this.materials.mustard );
         //console.log("qqq")
         //console.log(window.music_play)
 		if (window.music_play==1) {
