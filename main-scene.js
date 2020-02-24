@@ -109,10 +109,10 @@ class Main_Scene extends Scene
 		console.log(mov)
 		count += 1.0;
 
-        const model_transform = Mat4.translation( 0, 3, 0 ).times(Mat4.rotation(-Math.PI/4,   0,1,0 ));
-        // let model_transform =
-        //     Mat4.translation( 0, 1.4, 0 ).times(Mat4.rotation(-Math.PI/4,   0,1,0 ));
-        // model_transform = model_transform.times(Mat4.scale(0.5,0.5,0.5));
+        // const model_transform = Mat4.translation( 0, 3, 0 ).times(Mat4.rotation(-Math.PI/4,   0,1,0 ));
+        let model_transform =
+            Mat4.translation( 0, 1.4, 0 ).times(Mat4.rotation(-Math.PI/4,   0,1,0 ));
+        model_transform = model_transform.times(Mat4.scale(0.5,0.5,0.5));
         this.shapes.jukebox.draw( context, program_state, model_transform, this.materials.jukebox );
         // let trJukebox = Mat4.identity();
         // trJukebox = trJukebox.times( Mat4. translation([0,3,0]));
@@ -120,12 +120,12 @@ class Main_Scene extends Scene
         // this.shapes.jukebox.draw( context, program_state, trJukebox, this.materials.jukebox );
 
         const model_transform1 =
-            Mat4.translation( mov, 0, 0 )
+            Mat4.translation( mov, 0.45, 0 )
                 .times(Mat4.rotation(0,0,1,0 ))
                 .times(Mat4.scale(0.3,0.3,0.3,1.0 ));
 
         const model_transform2 =
-            Mat4.translation( 2, 0, 0 )
+            Mat4.translation( 2, 0.45, 0 )
                 .times(Mat4.rotation(0,0,1,0 ))
                 .times(Mat4.scale(0.3,0.3,0.3,1.0 ))
                 .times(Mat4.translation(mov2,0,0 ));
@@ -143,9 +143,9 @@ class Main_Scene extends Scene
   //      console.log(music_play)
 
 
-        this.shapes.cylinder1.draw( context, program_state, model_transform1, this.cylinder1 );
+        this.shapes.cylinder1.draw( context, program_state, model_transform1, this.materials.cylinder1 );
 		
-		this.shapes.cylinder2.draw( context, program_state, model_transform2.times(Mat4.rotation(angle,0,0,1 ) ), this.cylinder2 );
+		this.shapes.cylinder2.draw( context, program_state, model_transform2.times(Mat4.rotation(angle,0,0,1 ) ), this.materials.cylinder2 );
         //console.log("qqq")
         //console.log(window.music_play)
 		if (window.music_play==1) {
