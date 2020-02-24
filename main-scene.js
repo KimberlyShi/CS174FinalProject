@@ -79,7 +79,7 @@ class Main_Scene extends Scene
                 // pinkWall: new Material( new defs.Textured_Phong( 1 ), { ambient: 1, diffusivity: 1, specularity: 1, color: color( 0.7, 0.5, 0.6, 1 ) }),
                 // otherWall: new Material( new defs.Textured_Phong( 1 ), { ambient: 1, diffusivity: 1, specularity: 1, color: color( 0.3, 0.2, 0.5, 1 ) }),
 
-                backWall: new Material( new defs.Textured_Phong( 1 ), { ambient: .9, color: color( 0.5,1,0,1 ) }),
+                backWall: new Material( new defs.Textured_Phong( 1 ), { ambient: .9, color: color( 0.5,0,0.8,1 ) }),
                 leftWall: new Material( new defs.Textured_Phong( 1 ), { ambient: 1, diffusivity: 1, specularity: .5, color: color( 255/255, 153/255, 204/255, 1 ) }),
             };
         // this.jukebox = new Material( new defs.Textured_Phong( 1 ),  { color: color( 0.5,0.5,0.5,1 ),
@@ -93,7 +93,7 @@ class Main_Scene extends Scene
         //camera movement
         if (!context.scratchpad.controls) {
             this.children.push(context.scratchpad.controls = new defs.Movement_Controls());
-            program_state.set_camera(Mat4.translation(50,-8,-80 ));    // Locate the camera here (inverted matrix).
+            program_state.set_camera(Mat4.translation(40,-8,-80 ));    // Locate the camera here (inverted matrix).
 
             //0, 0, -5
           //  -1,-8,-25
