@@ -27,6 +27,10 @@ var audio = document.createElement('audio');
 var music_play=0;
 window.music_play = music_play;
 
+var count = 0;
+var angle = 0;
+var mov2 = 0
+	
 const Minimal_Webgl_Demo = defs.Minimal_Webgl_Demo;
 
     // ******************** End extra step
@@ -52,7 +56,8 @@ class Main_Scene extends Scene
         this.shapes = {
             jukebox: new Shape_From_File( "assets/jukebox.obj" ),
             plane: new defs.Square(), //used floor
-
+            cylinder1: new Shape_From_File( "assets/chair.obj" ),
+            cylinder2: new Shape_From_File( "assets/chair.obj"),
         };
         // Don't create any DOM elements to control this scene:
         //this.widget_options = { make_controls: false };
@@ -67,6 +72,10 @@ class Main_Scene extends Scene
                 //KIMBERLY: change floorBumpMap coloring
                 floorBumpMap: new Material (new defs.Textured_Phong(1), {ambient: 0.6, diffusivity: 1, specularity: 0.5, color: color(232/255, 184/255, 135/255, 1),
                     texture: new Texture("assets/floorBumpMap.png")}),
+                cylinder1: new Material( new defs.Textured_Phong( 1 ),  { color: color( 1.0,1.0,0.0,1 ),
+                    ambient: 1, diffusivity: 1, specularity: 1, texture: new Texture( "assets/pink.png" ) }),
+                cylinder2: new Material( new defs.Textured_Phong( 1 ),  { color: color( 1.0,0.0,1.0,1 ),
+                    ambient: 1, diffusivity: 1, specularity: 1, texture: new Texture( "assets/pink.png" ) }),
 
             };
         // this.jukebox = new Material( new defs.Textured_Phong( 1 ),  { color: color( 0.5,0.5,0.5,1 ),
@@ -82,27 +91,61 @@ class Main_Scene extends Scene
             this.children.push(context.scratchpad.controls = new defs.Movement_Controls());
             program_state.set_camera(Mat4.translation(0, 0, -5));    // Locate the camera here (inverted matrix).
         }
-
-
+		
         program_state.projection_transform = Mat4.perspective( Math.PI/4, context.width/context.height, 1, 500 );
         // A spinning light to show off the bump map:
         program_state.lights = [ new Light(
             Mat4.rotation( t/300,   1,0,0 ).times( vec4( 3,2,10,1 ) ),
             color( 1,.7,.7,1 ), 100000 ) ];
+        var mov = 0.005*count;
+        var max_move = 1.6
 
-        // let model_transform = Mat4.translation( 0, 3, 0 ).times(Mat4.rotation(-Math.PI/4,   0,1,0 ));
-        let model_transform = Mat4.translation( 0, 1.4, 0 ).times(Mat4.rotation(-Math.PI/4,   0,1,0 ));
-        model_transform = model_transform.times(Mat4.scale(0.5,0.5,0.5));
+		if (mov > max_move) {
+            mov = max_move
+            angle += 0.01
+			mov2 += 0.01
+        }
+
+		console.log(mov)
+		count += 1.0;
+
+        const model_transform = Mat4.translation( 0, 3, 0 ).times(Mat4.rotation(-Math.PI/4,   0,1,0 ));
+        // let model_transform =
+        //     Mat4.translation( 0, 1.4, 0 ).times(Mat4.rotation(-Math.PI/4,   0,1,0 ));
+        // model_transform = model_transform.times(Mat4.scale(0.5,0.5,0.5));
         this.shapes.jukebox.draw( context, program_state, model_transform, this.materials.jukebox );
         // let trJukebox = Mat4.identity();
         // trJukebox = trJukebox.times( Mat4. translation([0,3,0]));
         // trJukebox = trJukebox.times( Mat4.rotation(-Math.PI/4, 0,1,0));
         // this.shapes.jukebox.draw( context, program_state, trJukebox, this.materials.jukebox );
 
+        const model_transform1 =
+            Mat4.translation( mov, 0, 0 )
+                .times(Mat4.rotation(0,0,1,0 ))
+                .times(Mat4.scale(0.3,0.3,0.3,1.0 ));
+
+        const model_transform2 =
+            Mat4.translation( 2, 0, 0 )
+                .times(Mat4.rotation(0,0,1,0 ))
+                .times(Mat4.scale(0.3,0.3,0.3,1.0 ))
+                .times(Mat4.translation(mov2,0,0 ));
+
+
+        var v1 = model_transform1.times( vec4( 1,1,1,1 ) );
+        var v2 = model_transform2.times( vec4( 1,1,1,1 ) );
+
+        var dist = Math.sqrt( (v1[0]-v2[0])**2 + (v1[1]-v2[1])**2 + (v1[2]-v2[2])**2 );
+
+        //if(dist>2) collision
+        //console.log("####");
+        console.log(dist);
 
   //      console.log(music_play)
 
 
+        this.shapes.cylinder1.draw( context, program_state, model_transform1, this.cylinder1 );
+		
+		this.shapes.cylinder2.draw( context, program_state, model_transform2.times(Mat4.rotation(angle,0,0,1 ) ), this.cylinder2 );
         //console.log("qqq")
         //console.log(window.music_play)
 		if (window.music_play==1) {
