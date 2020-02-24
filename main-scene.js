@@ -48,13 +48,29 @@ class Main_Scene extends Scene
         super();
         // Load the model file:
         // this.shapes = { "jukebox": new Shape_From_File( "assets/jukebox.obj" ) };
-        this.shapes = { "jukebox": new Shape_From_File( "assets/jukebox.obj" ) };
+        // this.shapes = { "jukebox": new Shape_From_File( "assets/jukebox.obj" ) };
+        this.shapes = {
+            jukebox: new Shape_From_File( "assets/jukebox.obj" ),
+            plane: new defs.Square(), //used floor
 
+        };
         // Don't create any DOM elements to control this scene:
         //this.widget_options = { make_controls: false };
+        this.materials =
+            {
+                jukebox: new Material( new defs.Textured_Phong( 1 ), { color: color( 0.5,0.5,0.5,1 ), ambient: 1, diffusivity: 1, specularity: 1, texture: new Texture( "assets/pink.png" )}),
+                //KIMBERLY: adjust colors later
+                floor: new Material (new defs.Phong_Shader(), {ambient: 1, diffusivity: 1, specularity: 0.5,
+                    color: color(239/255,222/255, 205/255, 1)}),
+                floorTile: new Material (new defs.Textured_Phong(1), {ambient: 0.5, diffusivity: 0.5, specularity: 1, color: color(0, 0, 0, 1),
+                    texture: new Texture("assets/checkered_floor.png")}),
+                //KIMBERLY: change floorBumpMap coloring
+                floorBumpMap: new Material (new defs.Textured_Phong(1), {ambient: 0.6, diffusivity: 1, specularity: 0.5, color: color(232/255, 184/255, 135/255, 1),
+                    texture: new Texture("assets/floorBumpMap.png")}),
 
-        this.jukebox = new Material( new defs.Textured_Phong( 1 ),  { color: color( 0.5,0.5,0.5,1 ),
-            ambient: 1, diffusivity: 1, specularity: 1, texture: new Texture( "assets/pink.png" ) });
+            };
+        // this.jukebox = new Material( new defs.Textured_Phong( 1 ),  { color: color( 0.5,0.5,0.5,1 ),
+        //     ambient: 1, diffusivity: 1, specularity: 1, texture: new Texture( "assets/pink.png" ) });
         // Bump mapped:
     }
 
@@ -74,11 +90,18 @@ class Main_Scene extends Scene
             Mat4.rotation( t/300,   1,0,0 ).times( vec4( 3,2,10,1 ) ),
             color( 1,.7,.7,1 ), 100000 ) ];
 
-        const model_transform =
-            Mat4.translation( 0, 1, 0 )
-                .times(Mat4.rotation(-Math.PI/4,   0,1,0 ));
+        // let model_transform = Mat4.translation( 0, 3, 0 ).times(Mat4.rotation(-Math.PI/4,   0,1,0 ));
+        let model_transform = Mat4.translation( 0, 1.4, 0 ).times(Mat4.rotation(-Math.PI/4,   0,1,0 ));
+        model_transform = model_transform.times(Mat4.scale(0.5,0.5,0.5));
+        this.shapes.jukebox.draw( context, program_state, model_transform, this.materials.jukebox );
+        // let trJukebox = Mat4.identity();
+        // trJukebox = trJukebox.times( Mat4. translation([0,3,0]));
+        // trJukebox = trJukebox.times( Mat4.rotation(-Math.PI/4, 0,1,0));
+        // this.shapes.jukebox.draw( context, program_state, trJukebox, this.materials.jukebox );
+
+
   //      console.log(music_play)
-        this.shapes.jukebox.draw( context, program_state, model_transform, this.jukebox );
+
 
         //console.log("qqq")
         //console.log(window.music_play)
@@ -90,7 +113,15 @@ class Main_Scene extends Scene
 		} else if (window.music_play==0) {
 			 audio.pause();
 		}
- 
+
+		let transformFloor = Mat4.identity();
+		transformFloor = transformFloor.times(Mat4.rotation(Math.PI/2, 1, 0, 0));
+		transformFloor = transformFloor.times(Mat4.scale(100, 100, 0));
+		transformFloor = transformFloor.times(Mat4.translation(0,-0.5,0));
+
+        //draw the floor
+        //KIMBERLY: will need to change
+        this.shapes.plane.draw(context, program_state, transformFloor, this.materials.floor);
     }
 }
 
