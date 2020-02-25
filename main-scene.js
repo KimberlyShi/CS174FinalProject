@@ -55,6 +55,7 @@ class Main_Scene extends Scene
         // this.shapes = { "jukebox": new Shape_From_File( "assets/jukebox.obj" ) };
         this.shapes = {
             jukebox: new Shape_From_File( "assets/jukebox.obj" ),
+            table: new Shape_From_File("assets/table.obj"),
             plane: new defs.Square(), //used floor
             ketchup: new Shape_From_File( "assets/cylinder.obj" ),
             mustard: new Shape_From_File( "assets/cylinder.obj"),
@@ -64,6 +65,8 @@ class Main_Scene extends Scene
         this.materials =
             {
                 jukebox: new Material( new defs.Textured_Phong( 1 ), { color: color( 0.5,0.5,0.5,1 ), ambient: 1, diffusivity: 1, specularity: 1, texture: new Texture( "assets/pink.png" )}),
+                table: new Material( new defs.Textured_Phong( 1 ), {color: color(1, 0, 0, 1)}), //color of table rn is temp red
+
                 //KIMBERLY: adjust colors later
                 floor: new Material (new defs.Phong_Shader(), {ambient: 1, diffusivity: 1, specularity: 0.5,
                     color: color(0.78, 0.8, 0.6, 1)}),
@@ -132,6 +135,10 @@ class Main_Scene extends Scene
         // trJukebox = trJukebox.times( Mat4.rotation(-Math.PI/4, 0,1,0));
         // this.shapes.jukebox.draw( context, program_state, trJukebox, this.materials.jukebox );
 
+        let transformTable =  Mat4.translation( -10, 7, -15 ).times(Mat4.rotation(-Math.PI/12,   0,1,0 ));
+        transformTable = transformTable.times(Mat4.scale(15, 15, 15));
+
+        this.shapes.table.draw(context, program_state, transformTable, this.materials.table);
         const model_transform1 =
             // Mat4.translation( mov, 0.45, 0 )
             Mat4.translation( mov, 10, 0 )
