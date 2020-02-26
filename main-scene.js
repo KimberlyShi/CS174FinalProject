@@ -68,6 +68,7 @@ class Main_Scene extends Scene
             plane: new defs.Square(), //used floor
             ketchup: new Shape_From_File( "assets/cup.obj" ),
             mustard: new Shape_From_File( "assets/cup.obj"),
+            menu: new Shape_From_File("assets/menu.obj")
         };
         // Don't create any DOM elements to control this scene:
         //this.widget_options = { make_controls: false };
@@ -93,6 +94,11 @@ class Main_Scene extends Scene
 
                 backWall: new Material( new defs.Textured_Phong( 1 ), { ambient: .9, color: color( 0.5,0,0.8,1 ) }),
                 leftWall: new Material( new defs.Textured_Phong( 1 ), { ambient: 1, diffusivity: 1, specularity: .5, color: color( 255/255, 153/255, 204/255, 1 ) }),
+
+                menuFront: new Material( new defs.Textured_Phong(1), {ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
+                    texture: new Texture("assets/menufront.png")}),
+                menuBack: new Material( new defs.Textured_Phong(1), {ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
+                    texture: new Texture("assets/menuback.png")}),
             };
         // this.jukebox = new Material( new defs.Textured_Phong( 1 ),  { color: color( 0.5,0.5,0.5,1 ),
         //     ambient: 1, diffusivity: 1, specularity: 1, texture: new Texture( "assets/pink.png" ) });
@@ -194,6 +200,26 @@ class Main_Scene extends Scene
         this.shapes.ketchup.draw( context, program_state, model_transform1, this.materials.ketchup );
 		
 		this.shapes.mustard.draw( context, program_state, model_transform2.times(Mat4.rotation(-angle,0,0,1 ) ), this.materials.mustard );
+
+        var model_transform_menu_front = Mat4.identity();
+        const menuAngle = Math.PI;
+        // const upwardShift = Mat4.translation(-9, 12, -18);
+        // model_transform = model_transform.times(upwardShift).times(changeRotationCorner);
+        // model_transform = model_transform.times(Mat4.rotation(-(angle/2) + (angle/2*Math.sin(6*Math.PI*t)) , Vec.of(0, 0, 1)));
+        //     this.currentAngle = 6 * Math.PI * t;
+
+        // model_transform = model_transform.times(extendLength).times(resetRotationCorner);
+        model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(-9, 12, -18));
+        model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(Math.PI/2, 0, 1, 0));
+        model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(-Math.PI/2, 0, 0, 1));
+        model_transform_menu_front = model_transform_menu_front.times(Mat4.scale(4, 4, 4));
+        this.shapes.menu.draw(context, program_state, model_transform_menu_front, this.materials.menuBack);
+        model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(0, 0, -.5));
+        model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(-(menuAngle/2) + (menuAngle/2*Math.sin(Math.PI*t)) , 0, 1, 0));
+        model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(0, 0, .5));
+
+        this.shapes.menu.draw( context, program_state, model_transform_menu_front, this.materials.menuFront);
+
         //console.log("qqq")
         //console.log(window.music_play)
 		if (window.music_play==1) {
