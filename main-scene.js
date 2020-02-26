@@ -39,7 +39,7 @@ window.mustard_color = mustard_color;
 var count = 0;
 var angle = 0;
 var mov2 = 0
-	
+    
 const Minimal_Webgl_Demo = defs.Minimal_Webgl_Demo;
 
 // ******************** End extra step
@@ -116,7 +116,7 @@ class Main_Scene extends Scene
             //0, 0, -5
           //  -1,-8,-25
         }
-		
+        
         program_state.projection_transform = Mat4.perspective( Math.PI/4, context.width/context.height, 1, 500 );
         // A spinning light to show off the bump map:
         program_state.lights = [ new Light(
@@ -127,18 +127,18 @@ class Main_Scene extends Scene
         var max_move2 = 0.6;
         var max_angle = 1.6;
 
-		if (mov > max_move) {
+        if (mov > max_move) {
             mov = max_move
             angle += 0.04;
-			mov2 += 0.01;
+            mov2 += 0.01;
         }
         if (angle > max_angle) {
             angle = max_angle;
             mov2 = max_move2;
         }
 
-		//console.log(mov)
-		count += 1.0;
+        //console.log(mov)
+        count += 1.0;
 
         // const model_transform = Mat4.translation( 0, 3, 0 ).times(Mat4.rotation(-Math.PI/4,   0,1,0 ));
         let model_transform =
@@ -198,8 +198,8 @@ class Main_Scene extends Scene
 
 
         this.shapes.ketchup.draw( context, program_state, model_transform1, this.materials.ketchup );
-		
-		this.shapes.mustard.draw( context, program_state, model_transform2.times(Mat4.rotation(-angle,0,0,1 ) ), this.materials.mustard );
+        
+        this.shapes.mustard.draw( context, program_state, model_transform2.times(Mat4.rotation(-angle,0,0,1 ) ), this.materials.mustard );
 
         var model_transform_menu_front = Mat4.identity();
         const menuAngle = Math.PI;
@@ -212,29 +212,32 @@ class Main_Scene extends Scene
         model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(-9, 12, -18));
         model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(Math.PI/2, 0, 1, 0));
         model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(-Math.PI/2, 0, 0, 1));
-        model_transform_menu_front = model_transform_menu_front.times(Mat4.scale(4, 4, 4));
-        this.shapes.menu.draw(context, program_state, model_transform_menu_front, this.materials.menuBack);
-        model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(0, 0, -.5));
+        var model_transform_menu_back = model_transform_menu_front;
+        model_transform_menu_back = model_transform_menu_back.times(Mat4.translation(0.05, 0, 0));
+        model_transform_menu_back = model_transform_menu_back.times(Mat4.scale(4, 4, 4));
+        this.shapes.menu.draw(context, program_state, model_transform_menu_back, this.materials.menuBack);
+        model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(0, 0, -2.2));
         model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(-(menuAngle/2) + (menuAngle/2*Math.sin(Math.PI*t)) , 0, 1, 0));
-        model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(0, 0, .5));
+        model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(0, 0, 2.2));
+        model_transform_menu_front = model_transform_menu_front.times(Mat4.scale(4, 4, 4));
 
         this.shapes.menu.draw( context, program_state, model_transform_menu_front, this.materials.menuFront);
 
         //console.log("qqq")
         //console.log(window.music_play)
-		if (window.music_play==1) {
-		     window.music_play = 2
-			 audio.src = sounds[Math.floor(Math.random() * sounds.length)];
+        if (window.music_play==1) {
+             window.music_play = 2
+             audio.src = sounds[Math.floor(Math.random() * sounds.length)];
              audio.loop = false;
              audio.play(); 
-		} else if (window.music_play==0) {
-			 audio.pause();
-		}
+        } else if (window.music_play==0) {
+             audio.pause();
+        }
 
-		let transformFloor = Mat4.identity();
-		transformFloor = transformFloor.times(Mat4.rotation(Math.PI/2, 1, 0, 0));
-		transformFloor = transformFloor.times(Mat4.scale(100, 100, 0));
-		transformFloor = transformFloor.times(Mat4.translation(0,-0.5,0));
+        let transformFloor = Mat4.identity();
+        transformFloor = transformFloor.times(Mat4.rotation(Math.PI/2, 1, 0, 0));
+        transformFloor = transformFloor.times(Mat4.scale(100, 100, 0));
+        transformFloor = transformFloor.times(Mat4.translation(0,-0.5,0));
 
         //draw the floor
         //KIMBERLY: will need to change cuz im so confused
