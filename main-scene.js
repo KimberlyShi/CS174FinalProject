@@ -27,13 +27,22 @@ var audio = document.createElement('audio');
 var music_play=0;
 window.music_play = music_play;
 
+const jukebox_color = color(127/255, 124/255, 127/255, 255/255);
+const ketchup_color = color(255/255, 255/255, 0/255, 255/255);
+const mustard_color = color(255/255, 0/255, 255/255, 255/255);
+
+
+window.jukebox_color = jukebox_color;
+window.ketchup_color = ketchup_color;
+window.mustard_color = mustard_color;
+
 var count = 0;
 var angle = 0;
 var mov2 = 0
 	
 const Minimal_Webgl_Demo = defs.Minimal_Webgl_Demo;
 
-    // ******************** End extra step
+// ******************** End extra step
 
 // (Can define Main_Scene's class here)
 
@@ -57,14 +66,14 @@ class Main_Scene extends Scene
             jukebox: new Shape_From_File( "assets/jukebox.obj" ),
             table: new Shape_From_File("assets/table.obj"),
             plane: new defs.Square(), //used floor
-            ketchup: new Shape_From_File( "assets/cylinder.obj" ),
-            mustard: new Shape_From_File( "assets/cylinder.obj"),
+            ketchup: new Shape_From_File( "assets/cup.obj" ),
+            mustard: new Shape_From_File( "assets/cup.obj"),
         };
         // Don't create any DOM elements to control this scene:
         //this.widget_options = { make_controls: false };
         this.materials =
             {
-                jukebox: new Material( new defs.Textured_Phong( 1 ), { color: color( 0.5,0.5,0.5,1 ), ambient: 1, diffusivity: 1, specularity: 1, texture: new Texture( "assets/pink.png" )}),
+                jukebox: new Material( new defs.Textured_Phong( 1 ), { color: jukebox_color, ambient: 1, diffusivity: 1, specularity: 1, texture: new Texture( "assets/pink.png" )}),
                 table: new Material( new defs.Textured_Phong( 1 ), {color: color(1, 0, 0, 1)}), //color of table rn is temp red
 
                 //KIMBERLY: adjust colors later
@@ -75,9 +84,9 @@ class Main_Scene extends Scene
                 //KIMBERLY: change floorBumpMap coloring
                 floorBumpMap: new Material (new defs.Textured_Phong(1), {ambient: 0.6, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
                     texture: new Texture("assets/floorBumpMap.png")}),
-                mustard: new Material( new defs.Textured_Phong( 1 ),  { color: color( 1.0,1.0,0.0,1 ),
+                mustard: new Material( new defs.Textured_Phong( 1 ),  { color: mustard_color,
                     ambient: 1, diffusivity: 1, specularity: 1, texture: new Texture( "assets/pink.png" ) }),
-                ketchup: new Material( new defs.Textured_Phong( 1 ),  { color: color( 1.0,0.0,0.0,1 ),
+                ketchup: new Material( new defs.Textured_Phong( 1 ),  { color: ketchup_color,
                     ambient: 1, diffusivity: 1, specularity: 1, texture: new Texture( "assets/pink.png" ) }),
                 // pinkWall: new Material( new defs.Textured_Phong( 1 ), { ambient: 1, diffusivity: 1, specularity: 1, color: color( 0.7, 0.5, 0.6, 1 ) }),
                 // otherWall: new Material( new defs.Textured_Phong( 1 ), { ambient: 1, diffusivity: 1, specularity: 1, color: color( 0.3, 0.2, 0.5, 1 ) }),
@@ -145,8 +154,8 @@ class Main_Scene extends Scene
                 // .times(Mat4.rotation(0,0,1,0 ))
 
                 // .times(Mat4.scale(0.3,0.3,0.3,1.0 )); //from chairs that Kim commented
-                .times(Mat4.scale(1,3,2))
-                .times(Mat4.rotation(Math.PI/2,1,0,0)); //working Chair -Kim
+                .times(Mat4.scale(2,2,2));
+                //.times(Mat4.rotation(Math.PI/2,1,0,0)); //working Chair -Kim
 
                 //from git conflict
                 // .times(Mat4.scale(0.05,0.2,0.1,1.0 ))
@@ -159,9 +168,9 @@ class Main_Scene extends Scene
                 // .times(Mat4.rotation(0,0,1,0 ))
 
                 // .times(Mat4.scale(0.3,0.3,0.3,1.0 )) //from chairs that Kim commented
-                .times(Mat4.scale(1,3,2)) //working Chair -Kim
-                .times(Mat4.translation(mov2 -1,0,0 ))
-                .times(Mat4.rotation(Math.PI/2,1,0,0)); //working Chair -Kim
+                .times(Mat4.scale(2,2,2)) //working Chair -Kim
+                .times(Mat4.translation(mov2 -1,0,0 ));
+                //.times(Mat4.rotation(Math.PI/2,1,0,0)); //working Chair -Kim
 
                 //from git conflict
                 // .times(Mat4.scale(0.05,0.2,0.1,1.0 ))
@@ -184,7 +193,7 @@ class Main_Scene extends Scene
 
         this.shapes.ketchup.draw( context, program_state, model_transform1, this.materials.ketchup );
 		
-		this.shapes.mustard.draw( context, program_state, model_transform2.times(Mat4.rotation(angle,1,0,0 ) ), this.materials.mustard );
+		this.shapes.mustard.draw( context, program_state, model_transform2.times(Mat4.rotation(-angle,0,0,1 ) ), this.materials.mustard );
         //console.log("qqq")
         //console.log(window.music_play)
 		if (window.music_play==1) {
