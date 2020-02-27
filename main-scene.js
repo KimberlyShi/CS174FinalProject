@@ -68,7 +68,7 @@ class Main_Scene extends Scene
         // this.shapes = { "jukebox": new Shape_From_File( "assets/jukebox.obj" ) };
         // this.shapes = { "jukebox": new Shape_From_File( "assets/jukebox.obj" ) };
         this.shapes = {
-            jukebox: new Shape_From_File( "assets/jukebox.obj" ),
+            jukebox: new Shape_From_File( "assets/newjukebox.obj" ),
             table: new Shape_From_File("assets/table.obj"),
             // plane: new defs.Square(), //used floor
             ketchup: new Shape_From_File( "assets/mustard_ketchup.obj" ),
@@ -177,8 +177,9 @@ class Main_Scene extends Scene
         count += 1.0;
 
         // const model_transform = Mat4.translation( 0, 3, 0 ).times(Mat4.rotation(-Math.PI/4,   0,1,0 ));
-        let model_transform =
-            Mat4.translation( -50, 25, -15 ).times(Mat4.rotation(-Math.PI/4,   0,1,0 ));
+        // let model_transform =
+        //     Mat4.translation( -50, 25, -15 ).times(Mat4.rotation(-Math.PI/4,   0,1,0 ));
+        let model_transform = Mat4.translation(-50, 25, -15).times(Mat4.rotation(-Math.PI/2, 1,0,0));
         model_transform = model_transform.times(Mat4.scale(10,10,10));
         this.shapes.jukebox.draw( context, program_state, model_transform, this.materials.jukebox );
         // let trJukebox = Mat4.identity();
