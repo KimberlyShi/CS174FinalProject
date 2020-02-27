@@ -27,6 +27,7 @@ var audio = document.createElement('audio');
 var music_play=0;
 window.music_play = music_play;
 var ketchup_move = 0;
+window.ketchup_move - ketchup_move;
 
 const jukebox_color = color(127/255, 124/255, 127/255, 255/255);
 const ketchup_color = color(255/255, 0/255, 0/255, 255/255);
@@ -100,7 +101,7 @@ class Main_Scene extends Scene
                 // pinkWall: new Material( new defs.Textured_Phong( 1 ), { ambient: 1, diffusivity: 1, specularity: 1, color: color( 0.7, 0.5, 0.6, 1 ) }),
                 // otherWall: new Material( new defs.Textured_Phong( 1 ), { ambient: 1, diffusivity: 1, specularity: 1, color: color( 0.3, 0.2, 0.5, 1 ) }),
 
-                backWall: new Material( new defs.Textured_Phong( 1 ), { ambient: .9, color: color( 1,0,0, 1 ) }),
+                backWall: new Material( new defs.Textured_Phong( 1 ), { ambient: .9, color: color( 1,0.5,0, 1 ) }),
                 leftWall: new Material( new defs.Textured_Phong( 1 ), { ambient: 1, diffusivity: 1, specularity: .5, color: color( 0, 0, 1, 1 ) }),
 
                 menuFront: new Material( new defs.Textured_Phong(1), {ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
@@ -131,13 +132,13 @@ class Main_Scene extends Scene
         program_state.lights = [ new Light(
             Mat4.rotation( t/300,   1,0,0 ).times( vec4( 3,2,10,1 ) ),
             color( 1,.7,.7,1 ), 100000 ) ];
-        var mov = 0.1*count + 2;
-        var max_move = 6.9;
-        var max_move2 = 0.6;
-        var max_angle = 1.6;
-        if(ketchup_move == 1)
+        var mov = 0;
+        if(window.ketchup_move == 1)
         {
-    
+            mov = 0.1*count;
+            var max_move = 6.9;
+            var max_move2 = 0.6;
+            var max_angle = 1.6;
             if (mov > max_move) {
                 mov = max_move
                 angle += 0.06;
@@ -147,10 +148,8 @@ class Main_Scene extends Scene
                 angle = max_angle;
                 mov2 = max_move2;
             }
-        } else {
-            mov = 0;
-
         }
+      
        
 
         //console.log(mov)
