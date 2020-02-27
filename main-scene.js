@@ -72,7 +72,9 @@ class Main_Scene extends Scene
             mustard: new Shape_From_File( "assets/mustard_ketchup.obj"),
             planeFloor: new defs.Square(), //used floor
             plane: new defs.Square(),
-            menu: new Shape_From_File("assets/menu.obj")
+            menu: new Shape_From_File("assets/menu.obj"),
+            coke: new defs.Square(),
+            openSign: new defs.Square(),
         };
         // Don't create any DOM elements to control this scene:
         //this.widget_options = { make_controls: false };
@@ -108,6 +110,14 @@ class Main_Scene extends Scene
                     texture: new Texture("assets/menufront.png")}),
                 menuBack: new Material( new defs.Textured_Phong(1), {ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
                     texture: new Texture("assets/menuback.png")}),
+
+                // coke: new Material (new defs.Phong_Shader(), {ambient: 1, diffusivity: 1, specularity: 0.5,
+                //     color: color(0.78, 0.8, 0.6, 1)}),
+                coke: new Material( new defs.Textured_Phong(1), {ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
+                    texture: new Texture("assets/coke_1.png")}),
+                openSign: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: color(0, 0, 0, 1),
+                    texture: new Texture("assets/open_1.png")}),
+
             };
         // this.jukebox = new Material( new defs.Textured_Phong( 1 ),  { color: color( 0.5,0.5,0.5,1 ),
         //     ambient: 1, diffusivity: 1, specularity: 1, texture: new Texture( "assets/pink.png" ) });
@@ -120,8 +130,9 @@ class Main_Scene extends Scene
         //camera movement
         if (!context.scratchpad.controls) {
             this.children.push(context.scratchpad.controls = new defs.Movement_Controls());
-            program_state.set_camera(Mat4.translation(0, -100,-320 ));    // Locate the camera here (inverted matrix).
-
+            // Locate the camera here (inverted matrix).
+            program_state.set_camera(Mat4.translation(0, -100,-320 ));   //overview of room view
+            // program_state.set_camera(Mat4.translation(40, -8,-80 ));
             //Original camera coord: 40, -8, -80
             //0, 0, -5
           //  -1,-8,-25
@@ -149,8 +160,11 @@ class Main_Scene extends Scene
                 mov2 = max_move2;
             }
         }
+<<<<<<< HEAD
       
        
+=======
+>>>>>>> 930f824f989d56a78c081bb2ea5388205fc0652a
 
         //console.log(mov)
         count += 1.0;
@@ -240,14 +254,14 @@ class Main_Scene extends Scene
         model_transform_menu_back = model_transform_menu_back.times(Mat4.translation(0.05, 0, 0));
         model_transform_menu_back = model_transform_menu_back.times(Mat4.scale(4, 4, 4));
         //ALbert: I commented out this code for testing -Kim
-       // this.shapes.menu.draw(context, program_state, model_transform_menu_back, this.materials.menuBack);
+       this.shapes.menu.draw(context, program_state, model_transform_menu_back, this.materials.menuBack);
         model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(0, 0, -2.2));
         model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(-(menuAngle/2) + (menuAngle/2*Math.sin(Math.PI*t)) , 0, 1, 0));
         model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(0, 0, 2.2));
         model_transform_menu_front = model_transform_menu_front.times(Mat4.scale(4, 4, 4));
 
         //ALbert: I commented out this code for testing -Kim
-        // this.shapes.menu.draw( context, program_state, model_transform_menu_front, this.materials.menuFront);
+        this.shapes.menu.draw( context, program_state, model_transform_menu_front, this.materials.menuFront);
 
         //console.log("qqq")
         //console.log(window.music_play)
@@ -260,28 +274,30 @@ class Main_Scene extends Scene
              audio.pause();
         }
 
-        // let transformFloor = Mat4.identity();
-        // transformFloor = transformFloor.times(Mat4.rotation(Math.PI/2, 1, 0, 0));
-        // transformFloor = transformFloor.times(Mat4.scale(100, 100, 0));
-        // transformFloor = transformFloor.times(Mat4.translation(0,-0.5,0));
-        //
-        // //draw the floor
-        // //KIMBERLY: will need to change cuz im so confused
-        // this.shapes.planeFloor.draw(context, program_state, transformFloor, this.materials.floorBumpMap);
-        // // this.shapes.plane.draw(context, program_state, transformFloor, this.materials.floorTile);
+        var transformCoke = Mat4.identity();
+        transformCoke = transformCoke.times(Mat4.translation(-20, 50, -99));
+        transformCoke = transformCoke.times(Mat4.scale(35, 35, 35));
+        this.shapes.coke.draw(context, program_state, transformCoke, this.materials.coke);
+
+        var transformOpenSign = Mat4.identity();
+        transformOpenSign = transformOpenSign.times(Mat4.translation(50, 50, -99));
+        transformOpenSign = transformOpenSign.times(Mat4.scale(35, 35, 35));
+        this.shapes.openSign.draw(context, program_state, transformOpenSign, this.materials.openSign);
 
 
+        //TODO: NEED TO FIX TransformFloor is placed here to cover the image wrapping issue for now
+        //NOTE: order matters for the floor and back wall transformations cuz of png
+        //so plz don't change it thanks! -kim
+        let transformFloor = Mat4.identity();
+        transformFloor = transformFloor.times(Mat4.rotation(Math.PI/2, 1, 0, 0));
+        transformFloor = transformFloor.times(Mat4.scale(150, 100, 0));
+        this.shapes.plane.draw(context, program_state, transformFloor, this.materials.floorBumpMap);
 
+        //Place flooring and walls
         let transformBackWall = Mat4.identity();
         transformBackWall = transformBackWall.times(Mat4.translation(0,50,-100));
         transformBackWall = transformBackWall.times(Mat4.scale(150,50,0));
-        this.shapes.plane.draw(context, program_state, transformBackWall, this.materials.backWall);
-
-        //TO DO: took out the front wall for now but the coords are correct -Kim
-        // let transformFrontWall = Mat4.identity();
-        // transformFrontWall = transformFrontWall.times(Mat4.translation(0,50,100));
-        // transformFrontWall = transformFrontWall.times(Mat4.scale(150,50,0));
-        // this.shapes.plane.draw(context, program_state, transformFrontWall, this.materials.leftWall);
+        this.shapes.coke.draw(context, program_state, transformBackWall, this.materials.backWall);
 
         let transformLeftWall = Mat4.identity();
         transformLeftWall = transformLeftWall.times(Mat4.translation(-150,50,0));
@@ -295,15 +311,13 @@ class Main_Scene extends Scene
         transformRightWall = transformRightWall.times(Mat4.scale(100,50,0));
         this.shapes.plane.draw(context, program_state, transformRightWall, this.materials.rightWall);
 
-        let transformFloor = Mat4.identity();
-        transformFloor = transformFloor.times(Mat4.rotation(Math.PI/2, 1, 0, 0));
-        transformFloor = transformFloor.times(Mat4.scale(150, 100, 0));
-        this.shapes.plane.draw(context, program_state, transformFloor, this.materials.floorTile);
+        let transformChecks = Mat4.identity();
+        transformChecks = transformChecks.times(Mat4.translation(0, 1,0));
+        transformChecks = transformChecks.times(Mat4.rotation(Math.PI/2, 1, 0, 0));
+        transformChecks = transformChecks.times(Mat4.scale(150, 100, 0));
+        this.shapes.planeFloor.draw(context, program_state, transformChecks, this.materials.floorTile);
 
-        //draw the floor
-        //KIMBERLY: will need to change cuz im so confused
-        // this.shapes.planeFloor.draw(context, program_state, transformFloor, this.materials.floorBumpMap);
-        // this.shapes.planeFloor.draw(context, program_state, transformFloor, this.materials.floorBumpMap);
+
 
     }
 }
