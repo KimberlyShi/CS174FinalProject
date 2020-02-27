@@ -162,7 +162,6 @@ class Main_Scene extends Scene
             mov = 0;
 
         }
-       
 
         //console.log(mov)
         count += 1.0;
@@ -284,24 +283,18 @@ class Main_Scene extends Scene
 
 
         //TODO: NEED TO FIX TransformFloor is placed here to cover the image wrapping issue for now
+        //NOTE: order matters for the floor and back wall transformations cuz of png
+        //so plz don't change it thanks! -kim
         let transformFloor = Mat4.identity();
         transformFloor = transformFloor.times(Mat4.rotation(Math.PI/2, 1, 0, 0));
         transformFloor = transformFloor.times(Mat4.scale(150, 100, 0));
-        // this.shapes.plane.draw(context, program_state, transformFloor, this.materials.floorTile);
         this.shapes.plane.draw(context, program_state, transformFloor, this.materials.floorBumpMap);
-
 
         //Place flooring and walls
         let transformBackWall = Mat4.identity();
         transformBackWall = transformBackWall.times(Mat4.translation(0,50,-100));
         transformBackWall = transformBackWall.times(Mat4.scale(150,50,0));
         this.shapes.coke.draw(context, program_state, transformBackWall, this.materials.backWall);
-
-        //TO DO: took out the front wall for now but the coords are correct -Kim
-        // let transformFrontWall = Mat4.identity();
-        // transformFrontWall = transformFrontWall.times(Mat4.translation(0,50,100));
-        // transformFrontWall = transformFrontWall.times(Mat4.scale(150,50,0));
-        // this.shapes.plane.draw(context, program_state, transformFrontWall, this.materials.leftWall);
 
         let transformLeftWall = Mat4.identity();
         transformLeftWall = transformLeftWall.times(Mat4.translation(-150,50,0));
@@ -315,25 +308,13 @@ class Main_Scene extends Scene
         transformRightWall = transformRightWall.times(Mat4.scale(100,50,0));
         this.shapes.plane.draw(context, program_state, transformRightWall, this.materials.rightWall);
 
-        // let transformFloor = Mat4.identity();
-        // transformFloor = transformFloor.times(Mat4.rotation(Math.PI/2, 1, 0, 0));
-        // transformFloor = transformFloor.times(Mat4.scale(150, 100, 0));
-        // this.shapes.plane.draw(context, program_state, transformFloor, this.materials.floorTile);
-
         let transformChecks = Mat4.identity();
         transformChecks = transformChecks.times(Mat4.translation(0, 1,0));
         transformChecks = transformChecks.times(Mat4.rotation(Math.PI/2, 1, 0, 0));
         transformChecks = transformChecks.times(Mat4.scale(150, 100, 0));
         this.shapes.planeFloor.draw(context, program_state, transformChecks, this.materials.floorTile);
-        
-        //draw the floor
-        //KIMBERLY: will need to change cuz im so confused
-        // this.shapes.planeFloor.draw(context, program_state, transformFloor, this.materials.floorBumpMap);
-        // this.shapes.planeFloor.draw(context, program_state, transformFloor, this.materials.floorBumpMap);
-        //
-        // var transformCoke = Mat4.identity();
-        // transformCoke = transformCoke.times(Mat4.translation(-20, 12, -18));
-        // this.shapes.coke.draw(context, program_state, transformCoke, this.materials.coke);
+
+
 
     }
 }
