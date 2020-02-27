@@ -1057,6 +1057,15 @@
                                if(this.color_match(window.ketchup_color,data)) {
                                  window.ketchup_move = 1;
                                }
+
+                               if(this.color_match(window.coke_color,data)){
+                                 if(window.change_coke == 1) {
+                                   window.change_coke = 0;
+                                 }
+                                 else if (window.change_coke == 0) {
+                                   window.change_coke = 1;
+                                 }
+                               }
                        
                            console.log(rect)
                            

@@ -27,20 +27,23 @@ var audio = document.createElement('audio');
 var music_play=0;
 window.music_play = music_play;
 var ketchup_move = 0;
-window.ketchup_move - ketchup_move;
+window.ketchup_move = ketchup_move; //MAGGIE do you mean window.ketchup_move = ketchup_move; ?? - KIM
+var change_coke = 0;
+window.change_coke = change_coke;
 
 const jukebox_color = color(127/255, 124/255, 127/255, 255/255);
 const ketchup_color = color(255/255, 0/255, 0/255, 255/255);
 const mustard_color = color(255/255, 255/255, 0/255, 255/255);
-
+const coke_color = color(0/255, 0/255, 255/255, 1);
 
 window.jukebox_color = jukebox_color;
 window.ketchup_color = ketchup_color;
 window.mustard_color = mustard_color;
+window.coke_color = coke_color;
 
 var count = 0;
 var angle = 0;
-var mov2 = 0
+var mov2 = 0;
     
 const Minimal_Webgl_Demo = defs.Minimal_Webgl_Demo;
 
@@ -75,6 +78,7 @@ class Main_Scene extends Scene
             menu: new Shape_From_File("assets/menu.obj"),
             coke: new defs.Square(),
             openSign: new defs.Square(),
+            smiley: new defs.Square(),
         };
         // Don't create any DOM elements to control this scene:
         //this.widget_options = { make_controls: false };
@@ -113,10 +117,16 @@ class Main_Scene extends Scene
 
                 // coke: new Material (new defs.Phong_Shader(), {ambient: 1, diffusivity: 1, specularity: 0.5,
                 //     color: color(0.78, 0.8, 0.6, 1)}),
-                coke: new Material( new defs.Textured_Phong(1), {ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
-                    texture: new Texture("assets/coke_1.png")}),
+                // coke: new Material( new defs.Textured_Phong(1), {ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
+                //     texture: new Texture("assets/coke_1.png")}),
+                // coke: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: color(0, 0, 0, 1),
+                //     texture: new Texture("assets/coke_1.png")}),
+                coke: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
+                    texture: new Texture("assets/pink.png")}),
                 openSign: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: color(0, 0, 0, 1),
                     texture: new Texture("assets/open_door.png")}),
+                smiley: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: color(0, 0, 0, 1),
+                    texture: new Texture("assets/smiley_1.png")}),
 
             };
         // this.jukebox = new Material( new defs.Textured_Phong( 1 ),  { color: color( 0.5,0.5,0.5,1 ),
@@ -144,7 +154,7 @@ class Main_Scene extends Scene
             Mat4.rotation( t/300,   1,0,0 ).times( vec4( 3,2,10,1 ) ),
             color( 1,.7,.7,1 ), 100000 ) ];
         var mov = 0;
-        if(window.ketchup_move == 1)
+        if(window.ketchup_move== 1)
         {
             mov = 0.1*count;
             var max_move = 6.9;
@@ -251,14 +261,14 @@ class Main_Scene extends Scene
         model_transform_menu_back = model_transform_menu_back.times(Mat4.translation(0.05, 0, 0));
         model_transform_menu_back = model_transform_menu_back.times(Mat4.scale(4, 4, 4));
         //ALbert: I commented out this code for testing -Kim
-       this.shapes.menu.draw(context, program_state, model_transform_menu_back, this.materials.menuBack);
+       // this.shapes.menu.draw(context, program_state, model_transform_menu_back, this.materials.menuBack);
         model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(0, 0, -2.2));
         model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(-(menuAngle/2) + (menuAngle/2*Math.sin(Math.PI*t)) , 0, 1, 0));
         model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(0, 0, 2.2));
         model_transform_menu_front = model_transform_menu_front.times(Mat4.scale(4, 4, 4));
 
         //ALbert: I commented out this code for testing -Kim
-        this.shapes.menu.draw( context, program_state, model_transform_menu_front, this.materials.menuFront);
+        // this.shapes.menu.draw( context, program_state, model_transform_menu_front, this.materials.menuFront);
 
         //console.log("qqq")
         //console.log(window.music_play)
@@ -271,10 +281,46 @@ class Main_Scene extends Scene
              audio.pause();
         }
 
-        var transformCoke = Mat4.identity();
-        transformCoke = transformCoke.times(Mat4.translation(-20, 50, -99));
-        transformCoke = transformCoke.times(Mat4.scale(35, 35, 35));
-        this.shapes.coke.draw(context, program_state, transformCoke, this.materials.coke);
+        // v transformCoke = Mat4.identity();
+        // transformCoke = transformCoke.times(Mat4.translation(-20, 50, -99));
+        // transformCoke = transformCoke.times(Mat4.scale(35, 35, 35));
+        // this.shapes.coke.draw(context, program_state, transformCoke, this.materials.coke);
+
+
+        const transformCoke =
+            // Mat4.translation( mov, 0.45, 0 )
+            Mat4.translation(-20, 50, -99)
+                // .times(Mat4.rotation(0,0,1,0 ))
+
+                // .times(Mat4.scale(0.3,0.3,0.3,1.0 )); //from chairs that Kim commented
+                .times(Mat4.scale(35, 35, 35));
+        var myMaterial;
+        if(window.change_coke == 0) {
+
+            myMaterial = this.materials.coke;
+            // this.shapes.coke.draw(context, program_state, transformCoke, this.materials.coke);
+        }
+        else if(window.change_coke == 1) {
+
+            myMaterial = this.materials.smiley;
+            // this.shapes.smiley.draw(context, program_state, transformCoke, this.materials.smiley);
+        }
+
+        this.shapes.coke.draw(context, program_state, transformCoke, myMaterial);
+        // if(window.change_coke == 1)
+        // {
+        //     var transformSmiley = Mat4.identity();
+        //     transformSmiley = transformSmiley.times(Mat4.translation(-100, 50, -99));
+        //     transformSmiley = transformSmiley.times(Mat4.scale(35, 35, 35));
+        //     this.shapes.smiley.draw(context, program_state, transformSmiley, this.materials.smiley);
+        // }
+        // else if (window.change_coke == 0) {
+        //     var transformCoke = Mat4.identity();
+        //     transformCoke = transformCoke.times(Mat4.translation(-20, 50, -99));
+        //     transformCoke = transformCoke.times(Mat4.scale(35, 35, 35));
+        //     this.shapes.coke.draw(context, program_state, transformCoke, this.materials.coke);
+        // }
+
 
         var transformOpenSign = Mat4.identity();
         transformOpenSign = transformOpenSign.times(Mat4.translation(50, 50, -99));
