@@ -103,7 +103,7 @@ class Main_Scene extends Scene
                 // pinkWall: new Material( new defs.Textured_Phong( 1 ), { ambient: 1, diffusivity: 1, specularity: 1, color: color( 0.7, 0.5, 0.6, 1 ) }),
                 // otherWall: new Material( new defs.Textured_Phong( 1 ), { ambient: 1, diffusivity: 1, specularity: 1, color: color( 0.3, 0.2, 0.5, 1 ) }),
 
-                backWall: new Material( new defs.Textured_Phong( 1 ), { ambient: .9, color: color( 1,0.5,0, 1 ) }),
+                backWall: new Material( new defs.Textured_Phong( 1 ), { ambient: .9, color: color( 1,0,0, 1 ) }),
                 leftWall: new Material( new defs.Textured_Phong( 1 ), { ambient: 1, diffusivity: 1, specularity: .5, color: color( 0, 0, 1, 1 ) }),
                 rightWall: new Material( new defs.Textured_Phong( 1 ), { ambient: .9, color: color( 0,1,0, 1 ) }),
                 menuFront: new Material( new defs.Textured_Phong(1), {ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
