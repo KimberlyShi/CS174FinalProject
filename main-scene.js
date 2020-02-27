@@ -66,7 +66,7 @@ class Main_Scene extends Scene
         this.shapes = {
             jukebox: new Shape_From_File( "assets/jukebox.obj" ),
             table: new Shape_From_File("assets/table.obj"),
-            plane: new defs.Square(), //used floor
+            // plane: new defs.Square(), //used floor
             ketchup: new Shape_From_File( "assets/mustard_ketchup.obj" ),
             mustard: new Shape_From_File( "assets/mustard_ketchup.obj"),
             planeFloor: new defs.Square(), //used floor
