@@ -72,7 +72,8 @@ class Main_Scene extends Scene
             planeFloor: new defs.Square(), //used floor
             plane: new defs.Square(),
             menu: new Shape_From_File("assets/menu.obj"),
-            coke: new defs.Cube(),
+            coke: new defs.Square(),
+            openSign: new defs.Square(),
         };
         // Don't create any DOM elements to control this scene:
         //this.widget_options = { make_controls: false };
@@ -113,6 +114,9 @@ class Main_Scene extends Scene
                 //     color: color(0.78, 0.8, 0.6, 1)}),
                 coke: new Material( new defs.Textured_Phong(1), {ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
                     texture: new Texture("assets/coke_1.png")}),
+                openSign: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: color(0, 0, 0, 1),
+                    texture: new Texture("assets/open_1.png")}),
+
             };
         // this.jukebox = new Material( new defs.Textured_Phong( 1 ),  { color: color( 0.5,0.5,0.5,1 ),
         //     ambient: 1, diffusivity: 1, specularity: 1, texture: new Texture( "assets/pink.png" ) });
@@ -271,8 +275,15 @@ class Main_Scene extends Scene
         var transformCoke = Mat4.identity();
         transformCoke = transformCoke.times(Mat4.translation(-20, 50, -99));
         transformCoke = transformCoke.times(Mat4.scale(35, 35, 35));
-        this.shapes.plane.draw(context, program_state, transformCoke, this.materials.coke);
+        this.shapes.coke.draw(context, program_state, transformCoke, this.materials.coke);
 
+        var transformOpenSign = Mat4.identity();
+        transformOpenSign = transformOpenSign.times(Mat4.translation(50, 50, -99));
+        transformOpenSign = transformOpenSign.times(Mat4.scale(35, 35, 35));
+        this.shapes.openSign.draw(context, program_state, transformOpenSign, this.materials.openSign);
+
+
+        //TODO: NEED TO FIX TransformFloor is placed here to cover the image wrapping issue for now
         let transformFloor = Mat4.identity();
         transformFloor = transformFloor.times(Mat4.rotation(Math.PI/2, 1, 0, 0));
         transformFloor = transformFloor.times(Mat4.scale(150, 100, 0));
@@ -283,7 +294,7 @@ class Main_Scene extends Scene
         let transformBackWall = Mat4.identity();
         transformBackWall = transformBackWall.times(Mat4.translation(0,50,-100));
         transformBackWall = transformBackWall.times(Mat4.scale(150,50,0));
-        this.shapes.plane.draw(context, program_state, transformBackWall, this.materials.backWall);
+        this.shapes.coke.draw(context, program_state, transformBackWall, this.materials.backWall);
 
         //TO DO: took out the front wall for now but the coords are correct -Kim
         // let transformFrontWall = Mat4.identity();
