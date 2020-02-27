@@ -26,10 +26,11 @@ var audio = document.createElement('audio');
 
 var music_play=0;
 window.music_play = music_play;
+var ketchup_move = 0;
 
 const jukebox_color = color(127/255, 124/255, 127/255, 255/255);
-const ketchup_color = color(255/255, 255/255, 0/255, 255/255);
-const mustard_color = color(255/255, 0/255, 255/255, 255/255);
+const ketchup_color = color(255/255, 0/255, 0/255, 255/255);
+const mustard_color = color(255/255, 255/255, 0/255, 255/255);
 
 
 window.jukebox_color = jukebox_color;
@@ -66,8 +67,8 @@ class Main_Scene extends Scene
             jukebox: new Shape_From_File( "assets/jukebox.obj" ),
             table: new Shape_From_File("assets/table.obj"),
             plane: new defs.Square(), //used floor
-            ketchup: new Shape_From_File( "assets/cup.obj" ),
-            mustard: new Shape_From_File( "assets/cup.obj"),
+            ketchup: new Shape_From_File( "assets/mustard_ketchup.obj" ),
+            mustard: new Shape_From_File( "assets/mustard_ketchup.obj"),
             menu: new Shape_From_File("assets/menu.obj")
         };
         // Don't create any DOM elements to control this scene:
@@ -122,20 +123,27 @@ class Main_Scene extends Scene
         program_state.lights = [ new Light(
             Mat4.rotation( t/300,   1,0,0 ).times( vec4( 3,2,10,1 ) ),
             color( 1,.7,.7,1 ), 100000 ) ];
-        var mov = 0.1*count + 1;
-        var max_move = 6.3;
+        var mov = 0.1*count + 2;
+        var max_move = 6.9;
         var max_move2 = 0.6;
         var max_angle = 1.6;
+        if(ketchup_move == 1)
+        {
+    
+            if (mov > max_move) {
+                mov = max_move
+                angle += 0.06;
+                mov2 += 0.01;
+            }
+            if (angle > max_angle) {
+                angle = max_angle;
+                mov2 = max_move2;
+            }
+        } else {
+            mov = 0;
 
-        if (mov > max_move) {
-            mov = max_move
-            angle += 0.04;
-            mov2 += 0.01;
         }
-        if (angle > max_angle) {
-            angle = max_angle;
-            mov2 = max_move2;
-        }
+       
 
         //console.log(mov)
         count += 1.0;
@@ -160,7 +168,7 @@ class Main_Scene extends Scene
                 // .times(Mat4.rotation(0,0,1,0 ))
 
                 // .times(Mat4.scale(0.3,0.3,0.3,1.0 )); //from chairs that Kim commented
-                .times(Mat4.scale(2,2,2));
+                .times(Mat4.scale(0.7,0.7,0.7));
                 //.times(Mat4.rotation(Math.PI/2,1,0,0)); //working Chair -Kim
 
                 //from git conflict
@@ -174,8 +182,12 @@ class Main_Scene extends Scene
                 // .times(Mat4.rotation(0,0,1,0 ))
 
                 // .times(Mat4.scale(0.3,0.3,0.3,1.0 )) //from chairs that Kim commented
-                .times(Mat4.scale(2,2,2)) //working Chair -Kim
-                .times(Mat4.translation(mov2 -1,0,0 ));
+                
+                .times(Mat4.translation(mov2 -1,0,0 ))
+                .times(Mat4.translation(0, -3.8, 0))
+                .times(Mat4.rotation(-angle, 0, 0, 1))
+                .times(Mat4.translation(0, 3.8, 0))
+                .times(Mat4.scale(0.7,0.7,0.7));
                 //.times(Mat4.rotation(Math.PI/2,1,0,0)); //working Chair -Kim
 
                 //from git conflict
@@ -198,8 +210,10 @@ class Main_Scene extends Scene
 
 
         this.shapes.ketchup.draw( context, program_state, model_transform1, this.materials.ketchup );
+        this.shapes.mustard.draw( context, program_state, model_transform2, this.materials.mustard );
+
         
-        this.shapes.mustard.draw( context, program_state, model_transform2.times(Mat4.rotation(-angle,0,0,1 ) ), this.materials.mustard );
+        // this.shapes.mustard.draw( context, program_state, model_transform2.times(Mat4.rotation(-angle,0,0,1 ) ), this.materials.mustard );
 
         var model_transform_menu_front = Mat4.identity();
         const menuAngle = Math.PI;

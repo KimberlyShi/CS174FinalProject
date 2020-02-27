@@ -1053,6 +1053,10 @@
                                    else
                                       window.music_play = 0;
                                }
+
+                               if(this.color_match(window.ketchup_color,data)) {
+                                 window.ketchup_move = 1;
+                               }
                        
                            console.log(rect)
                            
