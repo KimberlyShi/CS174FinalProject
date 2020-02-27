@@ -288,7 +288,8 @@ class Main_Scene extends Scene
         transformFloor = transformFloor.times(Mat4.rotation(Math.PI/2, 1, 0, 0));
         transformFloor = transformFloor.times(Mat4.scale(150, 100, 0));
         // this.shapes.plane.draw(context, program_state, transformFloor, this.materials.floorTile);
-        this.shapes.planeFloor.draw(context, program_state, transformFloor, this.materials.floorBumpMap);
+        this.shapes.plane.draw(context, program_state, transformFloor, this.materials.floorBumpMap);
+
 
         //Place flooring and walls
         let transformBackWall = Mat4.identity();
@@ -319,6 +320,12 @@ class Main_Scene extends Scene
         // transformFloor = transformFloor.times(Mat4.scale(150, 100, 0));
         // this.shapes.plane.draw(context, program_state, transformFloor, this.materials.floorTile);
 
+        let transformChecks = Mat4.identity();
+        transformChecks = transformChecks.times(Mat4.translation(0, 1,0));
+        transformChecks = transformChecks.times(Mat4.rotation(Math.PI/2, 1, 0, 0));
+        transformChecks = transformChecks.times(Mat4.scale(150, 100, 0));
+        this.shapes.planeFloor.draw(context, program_state, transformChecks, this.materials.floorTile);
+        
         //draw the floor
         //KIMBERLY: will need to change cuz im so confused
         // this.shapes.planeFloor.draw(context, program_state, transformFloor, this.materials.floorBumpMap);
