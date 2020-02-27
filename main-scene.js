@@ -116,7 +116,7 @@ class Main_Scene extends Scene
                 coke: new Material( new defs.Textured_Phong(1), {ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
                     texture: new Texture("assets/coke_1.png")}),
                 openSign: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: color(0, 0, 0, 1),
-                    texture: new Texture("assets/open_1.png")}),
+                    texture: new Texture("assets/open_door.png")}),
 
             };
         // this.jukebox = new Material( new defs.Textured_Phong( 1 ),  { color: color( 0.5,0.5,0.5,1 ),
@@ -278,7 +278,7 @@ class Main_Scene extends Scene
 
         var transformOpenSign = Mat4.identity();
         transformOpenSign = transformOpenSign.times(Mat4.translation(50, 50, -99));
-        transformOpenSign = transformOpenSign.times(Mat4.scale(35, 35, 35));
+        transformOpenSign = transformOpenSign.times(Mat4.scale(50, 50, 50));
         this.shapes.openSign.draw(context, program_state, transformOpenSign, this.materials.openSign);
 
 
