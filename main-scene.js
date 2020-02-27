@@ -160,11 +160,6 @@ class Main_Scene extends Scene
                 mov2 = max_move2;
             }
         }
-<<<<<<< HEAD
-      
-       
-=======
->>>>>>> 930f824f989d56a78c081bb2ea5388205fc0652a
 
         //console.log(mov)
         count += 1.0;
