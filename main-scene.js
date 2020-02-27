@@ -65,7 +65,8 @@ class Main_Scene extends Scene
         this.shapes = {
             jukebox: new Shape_From_File( "assets/jukebox.obj" ),
             table: new Shape_From_File("assets/table.obj"),
-            plane: new defs.Square(), //used floor
+            planeFloor: new defs.Square(), //used floor
+            plane: new defs.Square(),
             ketchup: new Shape_From_File( "assets/cup.obj" ),
             mustard: new Shape_From_File( "assets/cup.obj"),
             menu: new Shape_From_File("assets/menu.obj")
@@ -80,8 +81,13 @@ class Main_Scene extends Scene
                 //KIMBERLY: adjust colors later
                 floor: new Material (new defs.Phong_Shader(), {ambient: 1, diffusivity: 1, specularity: 0.5,
                     color: color(0.78, 0.8, 0.6, 1)}),
-                floorTile: new Material (new defs.Textured_Phong(1), {ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
-                    texture: new Texture("assets/checkered_floor_2.jpg")}),
+                floorTile: new Material (new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: color(0, 0, 0, 1),
+                    texture: new Texture("assets/CheckerFloor_3.png")}),
+                // floorTile: context.get_instance(Phong_Shader).material(Color.of(0,0,0,1), {
+                //     ambient: 0.5, texture: context.get_instance("assets/checkerFloor_2.jpg", false)
+                // }),
+                // floorTile: new Material (new defs.Phong_Shader(), {ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
+                //         texture: new Texture("assets/checkerFloor_2.jpg")}),
                 //KIMBERLY: change floorBumpMap coloring
                 floorBumpMap: new Material (new defs.Textured_Phong(1), {ambient: 0.6, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
                     texture: new Texture("assets/floorBumpMap.png")}),
@@ -92,8 +98,8 @@ class Main_Scene extends Scene
                 // pinkWall: new Material( new defs.Textured_Phong( 1 ), { ambient: 1, diffusivity: 1, specularity: 1, color: color( 0.7, 0.5, 0.6, 1 ) }),
                 // otherWall: new Material( new defs.Textured_Phong( 1 ), { ambient: 1, diffusivity: 1, specularity: 1, color: color( 0.3, 0.2, 0.5, 1 ) }),
 
-                backWall: new Material( new defs.Textured_Phong( 1 ), { ambient: .9, color: color( 0.5,0,0.8,1 ) }),
-                leftWall: new Material( new defs.Textured_Phong( 1 ), { ambient: 1, diffusivity: 1, specularity: .5, color: color( 255/255, 153/255, 204/255, 1 ) }),
+                backWall: new Material( new defs.Textured_Phong( 1 ), { ambient: .9, color: color( 1,0,0, 1 ) }),
+                leftWall: new Material( new defs.Textured_Phong( 1 ), { ambient: 1, diffusivity: 1, specularity: .5, color: color( 0, 0, 1, 1 ) }),
 
                 menuFront: new Material( new defs.Textured_Phong(1), {ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
                     texture: new Texture("assets/menufront.png")}),
@@ -111,8 +117,9 @@ class Main_Scene extends Scene
         //camera movement
         if (!context.scratchpad.controls) {
             this.children.push(context.scratchpad.controls = new defs.Movement_Controls());
-            program_state.set_camera(Mat4.translation(40,-8,-80 ));    // Locate the camera here (inverted matrix).
+            program_state.set_camera(Mat4.translation(40, -70,-300 ));    // Locate the camera here (inverted matrix).
 
+            //Original camera coord: 40, -8, -80
             //0, 0, -5
           //  -1,-8,-25
         }
@@ -209,19 +216,24 @@ class Main_Scene extends Scene
         //     this.currentAngle = 6 * Math.PI * t;
 
         // model_transform = model_transform.times(extendLength).times(resetRotationCorner);
+
+
+
         model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(-9, 12, -18));
         model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(Math.PI/2, 0, 1, 0));
         model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(-Math.PI/2, 0, 0, 1));
         var model_transform_menu_back = model_transform_menu_front;
         model_transform_menu_back = model_transform_menu_back.times(Mat4.translation(0.05, 0, 0));
         model_transform_menu_back = model_transform_menu_back.times(Mat4.scale(4, 4, 4));
-        this.shapes.menu.draw(context, program_state, model_transform_menu_back, this.materials.menuBack);
+        //ALbert: I commented out this code for testing -Kim
+       // this.shapes.menu.draw(context, program_state, model_transform_menu_back, this.materials.menuBack);
         model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(0, 0, -2.2));
         model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(-(menuAngle/2) + (menuAngle/2*Math.sin(Math.PI*t)) , 0, 1, 0));
         model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(0, 0, 2.2));
         model_transform_menu_front = model_transform_menu_front.times(Mat4.scale(4, 4, 4));
 
-        this.shapes.menu.draw( context, program_state, model_transform_menu_front, this.materials.menuFront);
+        //ALbert: I commented out this code for testing -Kim
+        // this.shapes.menu.draw( context, program_state, model_transform_menu_front, this.materials.menuFront);
 
         //console.log("qqq")
         //console.log(window.music_play)
@@ -234,29 +246,45 @@ class Main_Scene extends Scene
              audio.pause();
         }
 
-        let transformFloor = Mat4.identity();
-        transformFloor = transformFloor.times(Mat4.rotation(Math.PI/2, 1, 0, 0));
-        transformFloor = transformFloor.times(Mat4.scale(100, 100, 0));
-        transformFloor = transformFloor.times(Mat4.translation(0,-0.5,0));
-
-        //draw the floor
-        //KIMBERLY: will need to change cuz im so confused
-        this.shapes.plane.draw(context, program_state, transformFloor, this.materials.floorBumpMap);
-        // this.shapes.plane.draw(context, program_state, transformFloor, this.materials.floorTile);
+        // let transformFloor = Mat4.identity();
+        // transformFloor = transformFloor.times(Mat4.rotation(Math.PI/2, 1, 0, 0));
+        // transformFloor = transformFloor.times(Mat4.scale(100, 100, 0));
+        // transformFloor = transformFloor.times(Mat4.translation(0,-0.5,0));
+        //
+        // //draw the floor
+        // //KIMBERLY: will need to change cuz im so confused
+        // this.shapes.planeFloor.draw(context, program_state, transformFloor, this.materials.floorBumpMap);
+        // // this.shapes.plane.draw(context, program_state, transformFloor, this.materials.floorTile);
 
 
 
         let transformBackWall = Mat4.identity();
-        transformBackWall = transformBackWall.times(Mat4.translation(0,50,-80));
-        transformBackWall = transformBackWall.times(Mat4.scale(100,50,0));
+        transformBackWall = transformBackWall.times(Mat4.translation(0,50,-100));
+        transformBackWall = transformBackWall.times(Mat4.scale(150,50,0));
+        this.shapes.plane.draw(context, program_state, transformBackWall, this.materials.backWall);
 
         let transformLeftWall = Mat4.identity();
+        transformLeftWall = transformLeftWall.times(Mat4.translation(-150,50,0));
         transformLeftWall = transformLeftWall.times(Mat4.rotation(Math.PI/2, 0,1,0));
-        transformLeftWall = transformLeftWall.times(Mat4.translation(50,50,-100));
+        // transformLeftWall = transformLeftWall.times(Mat4.translation(50,50,-100));
+        // transformLeftWall = transformLeftWall.times(Mat4.translation(0,50,-100));
         transformLeftWall = transformLeftWall.times(Mat4.scale(100,50,0));
 
-        this.shapes.plane.draw(context, program_state, transformBackWall, this.materials.backWall);
+
+
         this.shapes.plane.draw(context, program_state, transformLeftWall, this.materials.leftWall);
+
+        let transformFloor = Mat4.identity();
+       // transformFloor = transformFloor.times(Mat4.scale(10, 10, 0));
+        transformFloor = transformFloor.times(Mat4.rotation(Math.PI/2, 1, 0, 0));
+        transformFloor = transformFloor.times(Mat4.scale(150, 100, 0));
+        // transformFloor = transformFloor.times(Mat4.translation(0,-0.5,0));
+        // transformFloor = transformFloor.times(Mat4.scale(10, 10, 0));
+        //draw the floor
+        //KIMBERLY: will need to change cuz im so confused
+        // this.shapes.planeFloor.draw(context, program_state, transformFloor, this.materials.floorBumpMap);
+        this.shapes.plane.draw(context, program_state, transformFloor, this.materials.floorTile);
+        // this.shapes.planeFloor.draw(context, program_state, transformFloor, this.materials.floorBumpMap);
 
     }
 }
