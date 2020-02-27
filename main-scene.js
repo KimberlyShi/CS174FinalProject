@@ -82,7 +82,7 @@ class Main_Scene extends Scene
                 floor: new Material (new defs.Phong_Shader(), {ambient: 1, diffusivity: 1, specularity: 0.5,
                     color: color(0.78, 0.8, 0.6, 1)}),
                 floorTile: new Material (new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: color(0, 0, 0, 1),
-                    texture: new Texture("assets/CheckerFloor_3.png")}),
+                    texture: new Texture("assets/moreChecker_1.png")}),
                 // floorTile: context.get_instance(Phong_Shader).material(Color.of(0,0,0,1), {
                 //     ambient: 0.5, texture: context.get_instance("assets/checkerFloor_2.jpg", false)
                 // }),
@@ -100,7 +100,7 @@ class Main_Scene extends Scene
 
                 backWall: new Material( new defs.Textured_Phong( 1 ), { ambient: .9, color: color( 1,0,0, 1 ) }),
                 leftWall: new Material( new defs.Textured_Phong( 1 ), { ambient: 1, diffusivity: 1, specularity: .5, color: color( 0, 0, 1, 1 ) }),
-
+                rightWall: new Material( new defs.Textured_Phong( 1 ), { ambient: .9, color: color( 0,1,0, 1 ) }),
                 menuFront: new Material( new defs.Textured_Phong(1), {ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
                     texture: new Texture("assets/menufront.png")}),
                 menuBack: new Material( new defs.Textured_Phong(1), {ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
@@ -117,7 +117,7 @@ class Main_Scene extends Scene
         //camera movement
         if (!context.scratchpad.controls) {
             this.children.push(context.scratchpad.controls = new defs.Movement_Controls());
-            program_state.set_camera(Mat4.translation(40, -70,-300 ));    // Locate the camera here (inverted matrix).
+            program_state.set_camera(Mat4.translation(0, -100,-320 ));    // Locate the camera here (inverted matrix).
 
             //Original camera coord: 40, -8, -80
             //0, 0, -5
@@ -263,27 +263,32 @@ class Main_Scene extends Scene
         transformBackWall = transformBackWall.times(Mat4.scale(150,50,0));
         this.shapes.plane.draw(context, program_state, transformBackWall, this.materials.backWall);
 
+        //TO DO: took out the front wall for now but the coords are correct -Kim
+        // let transformFrontWall = Mat4.identity();
+        // transformFrontWall = transformFrontWall.times(Mat4.translation(0,50,100));
+        // transformFrontWall = transformFrontWall.times(Mat4.scale(150,50,0));
+        // this.shapes.plane.draw(context, program_state, transformFrontWall, this.materials.leftWall);
+
         let transformLeftWall = Mat4.identity();
         transformLeftWall = transformLeftWall.times(Mat4.translation(-150,50,0));
         transformLeftWall = transformLeftWall.times(Mat4.rotation(Math.PI/2, 0,1,0));
-        // transformLeftWall = transformLeftWall.times(Mat4.translation(50,50,-100));
-        // transformLeftWall = transformLeftWall.times(Mat4.translation(0,50,-100));
         transformLeftWall = transformLeftWall.times(Mat4.scale(100,50,0));
-
-
-
         this.shapes.plane.draw(context, program_state, transformLeftWall, this.materials.leftWall);
 
+        let transformRightWall = Mat4.identity();
+        transformRightWall = transformRightWall.times(Mat4.translation(150,50,0));
+        transformRightWall = transformRightWall.times(Mat4.rotation(Math.PI/2, 0,1,0));
+        transformRightWall = transformRightWall.times(Mat4.scale(100,50,0));
+        this.shapes.plane.draw(context, program_state, transformRightWall, this.materials.rightWall);
+
         let transformFloor = Mat4.identity();
-       // transformFloor = transformFloor.times(Mat4.scale(10, 10, 0));
         transformFloor = transformFloor.times(Mat4.rotation(Math.PI/2, 1, 0, 0));
         transformFloor = transformFloor.times(Mat4.scale(150, 100, 0));
-        // transformFloor = transformFloor.times(Mat4.translation(0,-0.5,0));
-        // transformFloor = transformFloor.times(Mat4.scale(10, 10, 0));
+        this.shapes.plane.draw(context, program_state, transformFloor, this.materials.floorTile);
+
         //draw the floor
         //KIMBERLY: will need to change cuz im so confused
         // this.shapes.planeFloor.draw(context, program_state, transformFloor, this.materials.floorBumpMap);
-        this.shapes.plane.draw(context, program_state, transformFloor, this.materials.floorTile);
         // this.shapes.planeFloor.draw(context, program_state, transformFloor, this.materials.floorBumpMap);
 
     }
