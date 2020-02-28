@@ -30,19 +30,18 @@ var ketchup_move = 0;
 window.ketchup_move = ketchup_move; //MAGGIE do you mean window.ketchup_move = ketchup_move; ?? - KIM
 var change_coke = 0;
 window.change_coke = change_coke;
-var keyCoke = false;
 
 const jukebox_color = color(127/255, 124/255, 127/255, 250/255); // change alpha from 255 to 250 for pick color
 const ketchup_color = color(255/255, 0/255, 0/255, 251/255);
 const mustard_color = color(255/255, 255/255, 0/255, 255/255);
-// const coke_color = color(0/255, 0/255, 255/255, 1);
-// const coke_color = color(208/255, 72/255, 52/255, 252/255);
 const coke_color = color(0/255,0/255, 0/255, 252/255);
+const smile_color = color(0/255,0/255, 0/255, 253/255);
 
 window.jukebox_color = jukebox_color;
 window.ketchup_color = ketchup_color;
 window.mustard_color = mustard_color;
 window.coke_color = coke_color;
+window.smile_color = smile_color;
 
 var count = 0;
 var angle = 0;
@@ -68,21 +67,14 @@ class Main_Scene extends Scene
     constructor() { 
         super();
         // Load the model file:
-        // this.shapes = { "jukebox": new Shape_From_File( "assets/jukebox.obj" ) };
-        // this.shapes = { "jukebox": new Shape_From_File( "assets/jukebox.obj" ) };
         this.shapes = {
-            // jukebox: new Shape_From_File( "assets/newjukebox.obj" ),
             jukebox: new Shape_From_File( "assets/jb.obj" ),
             table: new Shape_From_File("assets/table.obj"),
-            // plane: new defs.Square(), //used floor
-            // ketchup: new Shape_From_File( "assets/mustard_ketchup.obj" ),
-            // mustard: new Shape_From_File( "assets/mustard_ketchup.obj"),
             ketchup: new Shape_From_File( "assets/kb.obj" ),
             mustard: new Shape_From_File( "assets/kb.obj"),
             planeFloor: new defs.Square(), //used floor
             plane: new defs.Square(),
             menu: new Shape_From_File("assets/menu.obj"),
-            // coke: new defs.Regular_2D_Polygon(),
             coke: new defs.Square(),
             openSign: new defs.Square(),
             smiley: new defs.Square(),
@@ -99,21 +91,12 @@ class Main_Scene extends Scene
                     color: color(0.78, 0.8, 0.6, 1)}),
                 floorTile: new Material (new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: color(0, 0, 0, 1),
                     texture: new Texture("assets/moreChecker_1.png")}),
-                // floorTile: context.get_instance(Phong_Shader).material(Color.of(0,0,0,1), {
-                //     ambient: 0.5, texture: context.get_instance("assets/checkerFloor_2.jpg", false)
-                // }),
-                // floorTile: new Material (new defs.Phong_Shader(), {ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
-                //         texture: new Texture("assets/checkerFloor_2.jpg")}),
-                //KIMBERLY: change floorBumpMap coloring
                 floorBumpMap: new Material (new defs.Textured_Phong(1), {ambient: 0.6, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
                     texture: new Texture("assets/floorBumpMap.png")}),
                 mustard: new Material( new defs.Textured_Phong( 1 ),  { color: mustard_color,
                     ambient: 1, diffusivity: 1, specularity: 1, texture: new Texture( "assets/pink.png" ) }),
                 ketchup: new Material( new defs.Textured_Phong( 1 ),  { color: ketchup_color,
                     ambient: 1, diffusivity: 1, specularity: 1, texture: new Texture( "assets/pink.png" ) }),
-                // pinkWall: new Material( new defs.Textured_Phong( 1 ), { ambient: 1, diffusivity: 1, specularity: 1, color: color( 0.7, 0.5, 0.6, 1 ) }),
-                // otherWall: new Material( new defs.Textured_Phong( 1 ), { ambient: 1, diffusivity: 1, specularity: 1, color: color( 0.3, 0.2, 0.5, 1 ) }),
-
                 backWall: new Material( new defs.Textured_Phong( 1 ), { ambient: .9, color: color( 1,0,0, 1 ) }),
                 leftWall: new Material( new defs.Textured_Phong( 1 ), { ambient: 1, diffusivity: 1, specularity: .5, color: color( 0, 0, 1, 1 ) }),
                 rightWall: new Material( new defs.Textured_Phong( 1 ), { ambient: .9, color: color( 0,1,0, 1 ) }),
@@ -123,12 +106,6 @@ class Main_Scene extends Scene
                 menuBack: new Material( new defs.Textured_Phong(1), {ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
                     texture: new Texture("assets/menuback.png")}),
 
-                // coke: new Material (new defs.Phong_Shader(), {ambient: 1, diffusivity: 1, specularity: 0.5,
-                //     color: color(0.78, 0.8, 0.6, 1)}),
-                // coke: new Material( new defs.Textured_Phong(1), {ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
-                //     texture: new Texture("assets/coke_1.png")}),
-                // coke: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
-                //     texture: new Texture("assets/coke_1.png")}),
                 coke: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
                     texture: new Texture("assets/coke_1.png")}),
                 openSign: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: color(0, 0, 0, 1),
@@ -137,9 +114,6 @@ class Main_Scene extends Scene
                     texture: new Texture("assets/smiley_1.png")}),
 
             };
-        // this.jukebox = new Material( new defs.Textured_Phong( 1 ),  { color: color( 0.5,0.5,0.5,1 ),
-        //     ambient: 1, diffusivity: 1, specularity: 1, texture: new Texture( "assets/pink.png" ) });
-        // Bump mapped:
     }
 
     display( context, program_state ) { 
@@ -150,10 +124,7 @@ class Main_Scene extends Scene
             this.children.push(context.scratchpad.controls = new defs.Movement_Controls());
             // Locate the camera here (inverted matrix).
             program_state.set_camera(Mat4.translation(0, -100,-320 ));   //overview of room view
-            // program_state.set_camera(Mat4.translation(40, -8,-80 ));
-            //Original camera coord: 40, -8, -80
-            //0, 0, -5
-          //  -1,-8,-25
+            // program_state.set_camera(Mat4.translation(40, -8,-80 )); //Original camera coord
         }
         
         program_state.projection_transform = Mat4.perspective( Math.PI/4, context.width/context.height, 1, 500 );
@@ -161,6 +132,22 @@ class Main_Scene extends Scene
         program_state.lights = [ new Light(
             Mat4.rotation( t/300,   1,0,0 ).times( vec4( 3,2,10,1 ) ),
             color( 1,.7,.7,1 ), 100000 ) ];
+
+
+        //JUKEBOX
+        let model_transform = Mat4.translation(-90, 50, -80).times(Mat4.rotation(-Math.PI/2, 0, 1,0));
+        model_transform = model_transform.times(Mat4.scale(30,30,30));
+        this.shapes.jukebox.draw( context, program_state, model_transform, this.materials.jukebox );
+        if (window.music_play==1) {
+            window.music_play = 2
+            audio.src = sounds[Math.floor(Math.random() * sounds.length)];
+            audio.loop = false;
+            audio.play();
+        } else if (window.music_play==0) {
+            audio.pause();
+        }
+
+        //KETCHUP + MUSTARD
         var mov = 0;
         if(window.ketchup_move== 1)
         {
@@ -178,82 +165,28 @@ class Main_Scene extends Scene
                 mov2 = max_move2;
             }
         }
-      
-       
-
-        //console.log(mov)
         count += 1.0;
-
-        // const model_transform = Mat4.translation( 0, 3, 0 ).times(Mat4.rotation(-Math.PI/4,   0,1,0 ));
-        // let model_transform =
-        //     Mat4.translation( -50, 25, -15 ).times(Mat4.rotation(-Math.PI/4,   0,1,0 ));
-        // let model_transform = Mat4.translation(-50, 25, -15).times(Mat4.rotation(-Math.PI/2, 1,0,0));
-        let model_transform = Mat4.translation(-90, 50, -80).times(Mat4.rotation(-Math.PI/2, 0, 1,0));
-        model_transform = model_transform.times(Mat4.scale(30,30,30));
-        // model_transform = model_transform.times(Mat4)
-        this.shapes.jukebox.draw( context, program_state, model_transform, this.materials.jukebox );
-        // let trJukebox = Mat4.identity();
-        // trJukebox = trJukebox.times( Mat4. translation([0,3,0]));
-        // trJukebox = trJukebox.times( Mat4.rotation(-Math.PI/4, 0,1,0));
-        // this.shapes.jukebox.draw( context, program_state, trJukebox, this.materials.jukebox );
-
         let transformTable =  Mat4.translation( -10, 7, -15 ).times(Mat4.rotation(-Math.PI/12,   0,1,0 ));
         transformTable = transformTable.times(Mat4.scale(15, 15, 15));
-
         this.shapes.table.draw(context, program_state, transformTable, this.materials.table);
-        const model_transform1 =
-            // Mat4.translation( mov, 0.45, 0 )
-            Mat4.translation( mov, 10, 0 )
-                // .times(Mat4.rotation(0,0,1,0 ))
-
-                // .times(Mat4.scale(0.3,0.3,0.3,1.0 )); //from chairs that Kim commented
+        const model_transform1 = Mat4.translation( mov, 10, 0 )
                 .times(Mat4.scale(0.7,0.7,0.7));
-                //.times(Mat4.rotation(Math.PI/2,1,0,0)); //working Chair -Kim
-
-                //from git conflict
-                // .times(Mat4.scale(0.05,0.2,0.1,1.0 ))
-                // .times(Mat4.rotation(Math.PI/2,1,0,0));
-
-
+        //model_transform1 is ketchup
+        //model_transform2 is mustard
         const model_transform2 =
-            // Mat4.translation( 2, 0.45, 0 )
             Mat4.translation( 10, 10, 0 )
-                // .times(Mat4.rotation(0,0,1,0 ))
-
-                // .times(Mat4.scale(0.3,0.3,0.3,1.0 )) //from chairs that Kim commented
-                
                 .times(Mat4.translation(mov2 -1,0,0 ))
                 .times(Mat4.translation(0, -3.8, 0))
                 .times(Mat4.rotation(-angle, 0, 0, 1))
                 .times(Mat4.translation(0, 3.8, 0))
                 .times(Mat4.scale(0.7,0.7,0.7));
-                //.times(Mat4.rotation(Math.PI/2,1,0,0)); //working Chair -Kim
-
-                //from git conflict
-                // .times(Mat4.scale(0.05,0.2,0.1,1.0 ))
-                // .times(Mat4.translation(mov2,0,0 ))
-                // .times(Mat4.rotation(Math.PI/2,1,0,0));
-
-
-
         var v1 = model_transform1.times( vec4( 1,1,1,1 ) );
         var v2 = model_transform2.times( vec4( 1,1,1,1 ) );
-
         var dist = Math.sqrt( (v1[0]-v2[0])**2 + (v1[1]-v2[1])**2 + (v1[2]-v2[2])**2 );
-
-        //if(dist>2) collision
-        //console.log("####");
-       // console.log(dist);
-
-  //      console.log(music_play)
-
-
         this.shapes.ketchup.draw( context, program_state, model_transform1, this.materials.ketchup );
         this.shapes.mustard.draw( context, program_state, model_transform2, this.materials.mustard );
 
-        
-        // this.shapes.mustard.draw( context, program_state, model_transform2.times(Mat4.rotation(-angle,0,0,1 ) ), this.materials.mustard );
-
+        //MENU
         var model_transform_menu_front = Mat4.identity();
         const menuAngle = Math.PI;
         // const upwardShift = Mat4.translation(-9, 12, -18);
@@ -263,83 +196,31 @@ class Main_Scene extends Scene
 
         // model_transform = model_transform.times(extendLength).times(resetRotationCorner);
 
-
-
         model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(-9, 12, -18));
         model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(Math.PI/2, 0, 1, 0));
         model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(-Math.PI/2, 0, 0, 1));
         var model_transform_menu_back = model_transform_menu_front;
         model_transform_menu_back = model_transform_menu_back.times(Mat4.translation(0.05, 0, 0));
         model_transform_menu_back = model_transform_menu_back.times(Mat4.scale(4, 4, 4));
-        //ALbert: I commented out this code for testing -Kim
        this.shapes.menu.draw(context, program_state, model_transform_menu_back, this.materials.menuBack);
         model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(0, 0, -2.2));
         model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(-(menuAngle/2) + (menuAngle/2*Math.sin(Math.PI*t)) , 0, 1, 0));
         model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(0, 0, 2.2));
         model_transform_menu_front = model_transform_menu_front.times(Mat4.scale(4, 4, 4));
-
-        //ALbert: I commented out this code for testing -Kim
         this.shapes.menu.draw( context, program_state, model_transform_menu_front, this.materials.menuFront);
 
-        //console.log("qqq")
-        //console.log(window.music_play)
-        if (window.music_play==1) {
-             window.music_play = 2
-             audio.src = sounds[Math.floor(Math.random() * sounds.length)];
-             audio.loop = false;
-             audio.play(); 
-        } else if (window.music_play==0) {
-             audio.pause();
-        }
-
-        // v transformCoke = Mat4.identity();
-        // transformCoke = transformCoke.times(Mat4.translation(-20, 50, -99));
-        // transformCoke = transformCoke.times(Mat4.scale(35, 35, 35));
-        // this.shapes.coke.draw(context, program_state, transformCoke, this.materials.coke);
-
-        // this.key_triggered_button( "", [ "K" ],
-        //     () => { this.keyCoke = true });
-
         const transformCoke =
-            // Mat4.translation( mov, 0.45, 0 )
             Mat4.translation(-20, 50, -99)
-                // .times(Mat4.rotation(0,0,1,0 ))
-
-                // .times(Mat4.scale(0.3,0.3,0.3,1.0 )); //from chairs that Kim commented
                 .times(Mat4.scale(35, 35, 35));
         var myMaterial;
-        // if(keyCoke == true) {
-        //     myMaterial = this.materials.coke;
-        // }
-        // else if(keyCoke == false){
-        //     myMaterial = this.materials.smiley;
-        // }
-        // if(window.change_coke == 0) {
-        //
-        //     myMaterial = this.materials.coke;
-        //     // this.shapes.coke.draw(context, program_state, transformCoke, this.materials.coke);
-        // }
-        // else if(window.change_coke == 1) {
-        //
-        //     myMaterial = this.materials.smiley;
-        //     // this.shapes.smiley.draw(context, program_state, transformCoke, this.materials.smiley);
-        // }
+        if(window.change_coke == 0) {
+            myMaterial = this.materials.coke;
+        }
+        else if(window.change_coke == 1) {
+            myMaterial = this.materials.smiley;
+        }
 
         this.shapes.coke.draw(context, program_state, transformCoke, myMaterial);
-        // if(window.change_coke == 1)
-        // {
-        //     var transformSmiley = Mat4.identity();
-        //     transformSmiley = transformSmiley.times(Mat4.translation(-100, 50, -99));
-        //     transformSmiley = transformSmiley.times(Mat4.scale(35, 35, 35));
-        //     this.shapes.smiley.draw(context, program_state, transformSmiley, this.materials.smiley);
-        // }
-        // else if (window.change_coke == 0) {
-        //     var transformCoke = Mat4.identity();
-        //     transformCoke = transformCoke.times(Mat4.translation(-20, 50, -99));
-        //     transformCoke = transformCoke.times(Mat4.scale(35, 35, 35));
-        //     this.shapes.coke.draw(context, program_state, transformCoke, this.materials.coke);
-        // }
-
 
         var transformOpenSign = Mat4.identity();
         transformOpenSign = transformOpenSign.times(Mat4.translation(100, 50, -99));
