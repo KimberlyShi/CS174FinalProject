@@ -72,6 +72,8 @@ class Main_Scene extends Scene
             table: new Shape_From_File("assets/table.obj"),
             ketchup: new Shape_From_File( "assets/kb.obj" ),
             mustard: new Shape_From_File( "assets/kb.obj"),
+            booth: new Shape_From_File("assets/booth.obj"),
+            stool: new Shape_From_File("assets/stool.obj"),
             planeFloor: new defs.Square(), //used floor
             plane: new defs.Square(),
             menu: new Shape_From_File("assets/menu.obj"),
@@ -83,7 +85,8 @@ class Main_Scene extends Scene
         //this.widget_options = { make_controls: false };
         this.materials =
             {
-                jukebox: new Material( new defs.Textured_Phong( 1 ), { color: jukebox_color, ambient: 1, diffusivity: 1, specularity: 1, texture: new Texture( "assets/pink.png" )}),
+                jukebox: new Material( new defs.Textured_Phong( 1 ), { color: jukebox_color, ambient: 1, diffusivity: 1, specularity: 1, 
+                	texture: new Texture( "assets/pink.png" )}),
                 table: new Material( new defs.Textured_Phong( 1 ), {color: color(1, 0, 0, 1)}), //color of table rn is temp red
 
                 //KIMBERLY: adjust colors later
@@ -107,7 +110,10 @@ class Main_Scene extends Scene
                     texture: new Texture("assets/menufront.png")}),
                 menuBack: new Material( new defs.Textured_Phong(1), {ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
                     texture: new Texture("assets/menuback.png")}),
-
+                stool: new Material( new defs.Textured_Phong( 1 ), { color: jukebox_color, ambient: 1, diffusivity: 1, specularity: 1, 
+                	texture: new Texture( "assets/stool_map.png" )}),
+                booth: new Material( new defs.Textured_Phong(1), {ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
+                    texture: new Texture("assets/booth_map.png")}),
                 coke: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
                     texture: new Texture("assets/coke_1.png")}),
                 openSign: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: color(0, 0, 0, 1),
@@ -119,6 +125,7 @@ class Main_Scene extends Scene
 
             };
     }
+
 
     display( context, program_state ) { 
         const t = program_state.animation_time/1000;
@@ -136,7 +143,6 @@ class Main_Scene extends Scene
         program_state.lights = [ new Light(
             Mat4.rotation( t/300,   1,0,0 ).times( vec4( 3,2,10,1 ) ),
             color( 1,.7,.7,1 ), 100000 ) ];
-
 
         //JUKEBOX
         let model_transform = Mat4.translation(-90, 50, -80).times(Mat4.rotation(-Math.PI/2, 0, 1,0));
@@ -190,6 +196,35 @@ class Main_Scene extends Scene
         this.shapes.ketchup.draw( context, program_state, model_transform1, this.materials.ketchup );
         this.shapes.mustard.draw( context, program_state, model_transform2, this.materials.mustard );
 
+        //BOOTH
+        var boothTransform = Mat4.identity();
+        boothTransform = boothTransform.times(Mat4.translation(-110, 13, 10));
+        boothTransform = boothTransform.times(Mat4.rotation(Math.PI, 0, 1, 0));
+        boothTransform = boothTransform.times(Mat4.scale(30, 30, 30));
+        this.shapes.booth.draw(context, program_state, boothTransform, this.materials.booth);
+        boothTransform = Mat4.identity();
+        boothTransform = boothTransform.times(Mat4.translation(-110, 13, 50));
+        // boothTransform = boothTransform.times(Mat4.rotation(Math.PI, 0, 1, 0));
+        boothTransform = boothTransform.times(Mat4.scale(30, 30, 30));
+        this.shapes.booth.draw(context, program_state, boothTransform, this.materials.booth);
+
+        //STOOLS
+        let stoolShiftFactor = 30;
+        let stoolTransform = Mat4.translation(120, 14, 90 + stoolShiftFactor);
+        for (let i = 0; i < 5; i++ ) {
+            // stoolTransform = this.drawStools(context, program_state, model_transform, i);
+            stoolTransform = stoolTransform.times(Mat4.translation(0, 0, -stoolShiftFactor));
+            stoolTransform = stoolTransform.times(Mat4.scale(10, 10, 10));
+	        this.shapes.stool.draw(context, program_state, stoolTransform, this.materials.stool);
+	        stoolTransform = stoolTransform.times(Mat4.scale(0.1, 0.1, 0.1));
+        }
+        // let stoolTransform = Mat4.identity();
+        // stoolTransform = stoolTransform.times(Mat4.translation(120, 14, 60));
+        // stoolTransform = stoolTransform.times(Mat4.scale(10, 10, 10));
+        // this.shapes.stool.draw(context, program_state, stoolTransform, this.materials.stool);
+
+
+
         //MENU
         var model_transform_menu_front = Mat4.identity();
         const menuAngle = Math.PI;
@@ -206,7 +241,7 @@ class Main_Scene extends Scene
         var model_transform_menu_back = model_transform_menu_front;
         model_transform_menu_back = model_transform_menu_back.times(Mat4.translation(0.05, 0, 0));
         model_transform_menu_back = model_transform_menu_back.times(Mat4.scale(4, 4, 4));
-       this.shapes.menu.draw(context, program_state, model_transform_menu_back, this.materials.menuBack);
+        this.shapes.menu.draw(context, program_state, model_transform_menu_back, this.materials.menuBack);
         model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(0, 0, -2.2));
         model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(-(menuAngle/2) + (menuAngle/2*Math.sin(Math.PI*t)) , 0, 1, 0));
         model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(0, 0, 2.2));
