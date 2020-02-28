@@ -73,8 +73,10 @@ class Main_Scene extends Scene
             jukebox: new Shape_From_File( "assets/jb.obj" ),
             table: new Shape_From_File("assets/table.obj"),
             // plane: new defs.Square(), //used floor
-            ketchup: new Shape_From_File( "assets/mustard_ketchup.obj" ),
-            mustard: new Shape_From_File( "assets/mustard_ketchup.obj"),
+            // ketchup: new Shape_From_File( "assets/mustard_ketchup.obj" ),
+            // mustard: new Shape_From_File( "assets/mustard_ketchup.obj"),
+            ketchup: new Shape_From_File( "assets/kb.obj" ),
+            mustard: new Shape_From_File( "assets/kb.obj"),
             planeFloor: new defs.Square(), //used floor
             plane: new defs.Square(),
             menu: new Shape_From_File("assets/menu.obj"),
@@ -267,14 +269,14 @@ class Main_Scene extends Scene
         model_transform_menu_back = model_transform_menu_back.times(Mat4.translation(0.05, 0, 0));
         model_transform_menu_back = model_transform_menu_back.times(Mat4.scale(4, 4, 4));
         //ALbert: I commented out this code for testing -Kim
-       // this.shapes.menu.draw(context, program_state, model_transform_menu_back, this.materials.menuBack);
+       this.shapes.menu.draw(context, program_state, model_transform_menu_back, this.materials.menuBack);
         model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(0, 0, -2.2));
         model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(-(menuAngle/2) + (menuAngle/2*Math.sin(Math.PI*t)) , 0, 1, 0));
         model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(0, 0, 2.2));
         model_transform_menu_front = model_transform_menu_front.times(Mat4.scale(4, 4, 4));
 
         //ALbert: I commented out this code for testing -Kim
-        // this.shapes.menu.draw( context, program_state, model_transform_menu_front, this.materials.menuFront);
+        this.shapes.menu.draw( context, program_state, model_transform_menu_front, this.materials.menuFront);
 
         //console.log("qqq")
         //console.log(window.music_play)
