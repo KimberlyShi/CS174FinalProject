@@ -122,6 +122,7 @@ class Main_Scene extends Scene
                 //     texture: new Texture("assets/smiley_1.png")}),
                 smiley: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
                     texture: new Texture("assets/smiley_1.png")}),
+                tempBar: new Material( new defs.Textured_Phong( 1 ), { color: color(1, 0, 0, 1), ambient: 1, diffusivity: 1, specularity: 1}),
 
             };
     }
@@ -198,19 +199,36 @@ class Main_Scene extends Scene
 
         //BOOTH
         var boothTransform = Mat4.identity();
+        boothTransform = boothTransform.times(Mat4.translation(-110, 13, 90));
+        boothTransform = boothTransform.times(Mat4.scale(30, 30, 30));
+        this.shapes.booth.draw(context, program_state, boothTransform, this.materials.booth);
+        boothTransform = Mat4.identity();
+        boothTransform = boothTransform.times(Mat4.translation(-110, 13, 60));
+        boothTransform = boothTransform.times(Mat4.rotation(Math.PI, 0, 1, 0));
+        boothTransform = boothTransform.times(Mat4.scale(30, 30, 30));
+        this.shapes.booth.draw(context, program_state, boothTransform, this.materials.booth);
+        boothTransform = Mat4.identity();
+        boothTransform = boothTransform.times(Mat4.translation(-110, 13, 40));
+        boothTransform = boothTransform.times(Mat4.scale(30, 30, 30));
+        this.shapes.booth.draw(context, program_state, boothTransform, this.materials.booth);
+        boothTransform = Mat4.identity();
         boothTransform = boothTransform.times(Mat4.translation(-110, 13, 10));
         boothTransform = boothTransform.times(Mat4.rotation(Math.PI, 0, 1, 0));
         boothTransform = boothTransform.times(Mat4.scale(30, 30, 30));
         this.shapes.booth.draw(context, program_state, boothTransform, this.materials.booth);
         boothTransform = Mat4.identity();
-        boothTransform = boothTransform.times(Mat4.translation(-110, 13, 50));
-        // boothTransform = boothTransform.times(Mat4.rotation(Math.PI, 0, 1, 0));
+        boothTransform = boothTransform.times(Mat4.translation(-110, 13, -10));
+        boothTransform = boothTransform.times(Mat4.scale(30, 30, 30));
+        this.shapes.booth.draw(context, program_state, boothTransform, this.materials.booth);
+        boothTransform = Mat4.identity();
+        boothTransform = boothTransform.times(Mat4.translation(-110, 13, -40));
+        boothTransform = boothTransform.times(Mat4.rotation(Math.PI, 0, 1, 0));
         boothTransform = boothTransform.times(Mat4.scale(30, 30, 30));
         this.shapes.booth.draw(context, program_state, boothTransform, this.materials.booth);
 
         //STOOLS
         let stoolShiftFactor = 30;
-        let stoolTransform = Mat4.translation(120, 14, 90 + stoolShiftFactor);
+        let stoolTransform = Mat4.translation(123, 14, 80 + stoolShiftFactor);
         for (let i = 0; i < 5; i++ ) {
             // stoolTransform = this.drawStools(context, program_state, model_transform, i);
             stoolTransform = stoolTransform.times(Mat4.translation(0, 0, -stoolShiftFactor));
@@ -218,11 +236,14 @@ class Main_Scene extends Scene
 	        this.shapes.stool.draw(context, program_state, stoolTransform, this.materials.stool);
 	        stoolTransform = stoolTransform.times(Mat4.scale(0.1, 0.1, 0.1));
         }
-        // let stoolTransform = Mat4.identity();
-        // stoolTransform = stoolTransform.times(Mat4.translation(120, 14, 60));
-        // stoolTransform = stoolTransform.times(Mat4.scale(10, 10, 10));
-        // this.shapes.stool.draw(context, program_state, stoolTransform, this.materials.stool);
 
+        let barStandTransform = Mat4.identity();
+        barStandTransform = barStandTransform.times(Mat4.translation(141, 30, 12));
+        barStandTransform = barStandTransform.times(Mat4.scale(1, 2, 15));
+        // barStandTransform = barStandTransform.times(Mat4.rotation(Math.PI/2, 0, 0, 1));
+        barStandTransform = barStandTransform.times(Mat4.rotation(Math.PI/2, 0, 0, 1));
+        barStandTransform = barStandTransform.times(Mat4.scale(10, 10, 10));
+        this.shapes.menu.draw(context, program_state, barStandTransform, this.materials.tempBar);
 
 
         //MENU
