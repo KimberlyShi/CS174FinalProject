@@ -27,7 +27,7 @@ var audio = document.createElement('audio');
 var music_play=0;
 window.music_play = music_play;
 var ketchup_move = 0;
-window.ketchup_move = ketchup_move; //MAGGIE do you mean window.ketchup_move = ketchup_move; ?? - KIM
+window.ketchup_move = ketchup_move; 
 var change_coke = 0;
 window.change_coke = change_coke;
 
@@ -74,6 +74,7 @@ class Main_Scene extends Scene
             mustard: new Shape_From_File( "assets/kb.obj"),
             booth: new Shape_From_File("assets/booth.obj"),
             stool: new Shape_From_File("assets/stool.obj"),
+            bar: new Shape_From_File("assets/bar.obj")  ,  
             planeFloor: new defs.Square(), //used floor
             plane: new defs.Square(),
             menu: new Shape_From_File("assets/menu.obj"),
@@ -102,6 +103,7 @@ class Main_Scene extends Scene
                     ambient: 1, diffusivity: 1, specularity: 1, texture: new Texture( "assets/pink.png" ) }),
                 ketchup: new Material( new defs.Textured_Phong( 1 ),  { color: ketchup_color,
                     ambient: 1, diffusivity: 1, specularity: 1, texture: new Texture( "assets/pink.png" ) }),
+                bar: new Material(new defs.Textured_Phong(1), {color: color(0, 0, 0, 1), ambient: 1, diffusivity: 1, specularity: 1, texture: new Texture("assets/pink.png")}),
                 backWall: new Material( new defs.Textured_Phong( 1 ), { ambient: .9, color: color( 1,0,0, 1 ) }),
                 leftWall: new Material( new defs.Textured_Phong( 1 ), { ambient: 1, diffusivity: 1, specularity: .5, color: color( 0, 0, 1, 1 ) }),
                 rightWall: new Material( new defs.Textured_Phong( 1 ), { ambient: .9, color: color( 0,1,0, 1 ) }),
@@ -196,6 +198,13 @@ class Main_Scene extends Scene
         var dist = Math.sqrt( (v1[0]-v2[0])**2 + (v1[1]-v2[1])**2 + (v1[2]-v2[2])**2 );
         this.shapes.ketchup.draw( context, program_state, model_transform1, this.materials.ketchup );
         this.shapes.mustard.draw( context, program_state, model_transform2, this.materials.mustard );
+
+        //BAR
+        var barTransform = Mat4.identity();
+        barTransform = barTransform.times(Mat4.translation(60, 50, 140))
+                                   .times(Mat4.rotation(Math.PI/1.5, 0, 1, 0))
+                                   .times(Mat4.scale(15,15,15));
+        this.shapes.bar.draw(context, program_state, barTransform, this.materials.bar);
 
         //BOOTH
         var boothTransform = Mat4.identity();
