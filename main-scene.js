@@ -34,7 +34,8 @@ window.change_coke = change_coke;
 const jukebox_color = color(127/255, 124/255, 127/255, 255/255);
 const ketchup_color = color(255/255, 0/255, 0/255, 255/255);
 const mustard_color = color(255/255, 255/255, 0/255, 255/255);
-const coke_color = color(0/255, 0/255, 255/255, 1);
+// const coke_color = color(0/255, 0/255, 255/255, 1);
+const coke_color = color(208/255, 72/255, 52/255, 1);
 
 window.jukebox_color = jukebox_color;
 window.ketchup_color = ketchup_color;
@@ -68,7 +69,8 @@ class Main_Scene extends Scene
         // this.shapes = { "jukebox": new Shape_From_File( "assets/jukebox.obj" ) };
         // this.shapes = { "jukebox": new Shape_From_File( "assets/jukebox.obj" ) };
         this.shapes = {
-            jukebox: new Shape_From_File( "assets/newjukebox.obj" ),
+            // jukebox: new Shape_From_File( "assets/newjukebox.obj" ),
+            jukebox: new Shape_From_File( "assets/jb.obj" ),
             table: new Shape_From_File("assets/table.obj"),
             // plane: new defs.Square(), //used floor
             ketchup: new Shape_From_File( "assets/mustard_ketchup.obj" ),
@@ -76,6 +78,7 @@ class Main_Scene extends Scene
             planeFloor: new defs.Square(), //used floor
             plane: new defs.Square(),
             menu: new Shape_From_File("assets/menu.obj"),
+            // coke: new defs.Regular_2D_Polygon(),
             coke: new defs.Square(),
             openSign: new defs.Square(),
             smiley: new defs.Square(),
@@ -119,10 +122,10 @@ class Main_Scene extends Scene
                 //     color: color(0.78, 0.8, 0.6, 1)}),
                 // coke: new Material( new defs.Textured_Phong(1), {ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
                 //     texture: new Texture("assets/coke_1.png")}),
-                // coke: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: color(0, 0, 0, 1),
+                // coke: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
                 //     texture: new Texture("assets/coke_1.png")}),
                 coke: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
-                    texture: new Texture("assets/pink.png")}),
+                    texture: new Texture("assets/cokesign_1.png")}),
                 openSign: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: color(0, 0, 0, 1),
                     texture: new Texture("assets/open_door.png")}),
                 smiley: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: color(0, 0, 0, 1),
@@ -179,8 +182,10 @@ class Main_Scene extends Scene
         // const model_transform = Mat4.translation( 0, 3, 0 ).times(Mat4.rotation(-Math.PI/4,   0,1,0 ));
         // let model_transform =
         //     Mat4.translation( -50, 25, -15 ).times(Mat4.rotation(-Math.PI/4,   0,1,0 ));
-        let model_transform = Mat4.translation(-50, 25, -15).times(Mat4.rotation(-Math.PI/2, 1,0,0));
-        model_transform = model_transform.times(Mat4.scale(10,10,10));
+        // let model_transform = Mat4.translation(-50, 25, -15).times(Mat4.rotation(-Math.PI/2, 1,0,0));
+        let model_transform = Mat4.translation(-90, 50, -80).times(Mat4.rotation(-Math.PI/2, 0, 1,0));
+        model_transform = model_transform.times(Mat4.scale(30,30,30));
+        // model_transform = model_transform.times(Mat4)
         this.shapes.jukebox.draw( context, program_state, model_transform, this.materials.jukebox );
         // let trJukebox = Mat4.identity();
         // trJukebox = trJukebox.times( Mat4. translation([0,3,0]));
