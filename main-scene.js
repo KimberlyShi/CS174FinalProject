@@ -30,6 +30,7 @@ var ketchup_move = 0;
 window.ketchup_move = ketchup_move; //MAGGIE do you mean window.ketchup_move = ketchup_move; ?? - KIM
 var change_coke = 0;
 window.change_coke = change_coke;
+var keyCoke = false;
 
 const jukebox_color = color(127/255, 124/255, 127/255, 255/255);
 const ketchup_color = color(255/255, 0/255, 0/255, 255/255);
@@ -295,6 +296,8 @@ class Main_Scene extends Scene
         // transformCoke = transformCoke.times(Mat4.scale(35, 35, 35));
         // this.shapes.coke.draw(context, program_state, transformCoke, this.materials.coke);
 
+        // this.key_triggered_button( "", [ "K" ],
+        //     () => { this.keyCoke = true });
 
         const transformCoke =
             // Mat4.translation( mov, 0.45, 0 )
@@ -304,16 +307,22 @@ class Main_Scene extends Scene
                 // .times(Mat4.scale(0.3,0.3,0.3,1.0 )); //from chairs that Kim commented
                 .times(Mat4.scale(35, 35, 35));
         var myMaterial;
-        if(window.change_coke == 0) {
-
-            myMaterial = this.materials.coke;
-            // this.shapes.coke.draw(context, program_state, transformCoke, this.materials.coke);
-        }
-        else if(window.change_coke == 1) {
-
-            myMaterial = this.materials.smiley;
-            // this.shapes.smiley.draw(context, program_state, transformCoke, this.materials.smiley);
-        }
+        // if(keyCoke == true) {
+        //     myMaterial = this.materials.coke;
+        // }
+        // else if(keyCoke == false){
+        //     myMaterial = this.materials.smiley;
+        // }
+        // if(window.change_coke == 0) {
+        //
+        //     myMaterial = this.materials.coke;
+        //     // this.shapes.coke.draw(context, program_state, transformCoke, this.materials.coke);
+        // }
+        // else if(window.change_coke == 1) {
+        //
+        //     myMaterial = this.materials.smiley;
+        //     // this.shapes.smiley.draw(context, program_state, transformCoke, this.materials.smiley);
+        // }
 
         this.shapes.coke.draw(context, program_state, transformCoke, myMaterial);
         // if(window.change_coke == 1)
