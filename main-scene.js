@@ -332,7 +332,7 @@ class Main_Scene extends Scene
 
 
         var transformOpenSign = Mat4.identity();
-        transformOpenSign = transformOpenSign.times(Mat4.translation(50, 50, -99));
+        transformOpenSign = transformOpenSign.times(Mat4.translation(100, 50, -99));
         transformOpenSign = transformOpenSign.times(Mat4.scale(50, 50, 50));
         this.shapes.openSign.draw(context, program_state, transformOpenSign, this.materials.openSign);
 
