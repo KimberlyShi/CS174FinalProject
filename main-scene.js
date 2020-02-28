@@ -35,13 +35,13 @@ const jukebox_color = color(127/255, 124/255, 127/255, 250/255); // change alpha
 const ketchup_color = color(255/255, 0/255, 0/255, 251/255);
 const mustard_color = color(255/255, 255/255, 0/255, 255/255);
 const coke_color = color(0/255,0/255, 0/255, 252/255);
-const smile_color = color(0/255,0/255, 0/255, 253/255);
+// const smile_color = color(0/255,0/255, 0/255, 253/255);
 
 window.jukebox_color = jukebox_color;
 window.ketchup_color = ketchup_color;
 window.mustard_color = mustard_color;
 window.coke_color = coke_color;
-window.smile_color = smile_color;
+// window.smile_color = smile_color;
 
 var count = 0;
 var angle = 0;
@@ -89,7 +89,9 @@ class Main_Scene extends Scene
                 //KIMBERLY: adjust colors later
                 floor: new Material (new defs.Phong_Shader(), {ambient: 1, diffusivity: 1, specularity: 0.5,
                     color: color(0.78, 0.8, 0.6, 1)}),
-                floorTile: new Material (new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: color(0, 0, 0, 1),
+                // floorTile: new Material (new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: color(0, 0, 0, 1),
+                //     texture: new Texture("assets/moreChecker_1.png")}),
+                floorTile: new Material (new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: color(1/255, 1/255, 1/255, 255/255),
                     texture: new Texture("assets/moreChecker_1.png")}),
                 floorBumpMap: new Material (new defs.Textured_Phong(1), {ambient: 0.6, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
                     texture: new Texture("assets/floorBumpMap.png")}),
@@ -110,7 +112,9 @@ class Main_Scene extends Scene
                     texture: new Texture("assets/coke_1.png")}),
                 openSign: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: color(0, 0, 0, 1),
                     texture: new Texture("assets/open_door.png")}),
-                smiley: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: color(0, 0, 0, 1),
+                // smiley: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: color(0, 0, 0, 1),
+                //     texture: new Texture("assets/smiley_1.png")}),
+                smiley: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
                     texture: new Texture("assets/smiley_1.png")}),
 
             };
