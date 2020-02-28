@@ -115,6 +115,7 @@ class Main_Scene extends Scene
                 backWall: new Material( new defs.Textured_Phong( 1 ), { ambient: .9, color: color( 1,0,0, 1 ) }),
                 leftWall: new Material( new defs.Textured_Phong( 1 ), { ambient: 1, diffusivity: 1, specularity: .5, color: color( 0, 0, 1, 1 ) }),
                 rightWall: new Material( new defs.Textured_Phong( 1 ), { ambient: .9, color: color( 0,1,0, 1 ) }),
+                ceiling: new Material( new defs.Textured_Phong( 1 ), { ambient: .9, color: color( 0,1,1, 1 ) }),
                 menuFront: new Material( new defs.Textured_Phong(1), {ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
                     texture: new Texture("assets/menufront.png")}),
                 menuBack: new Material( new defs.Textured_Phong(1), {ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
@@ -361,6 +362,12 @@ class Main_Scene extends Scene
         transformRightWall = transformRightWall.times(Mat4.rotation(Math.PI/2, 0,1,0));
         transformRightWall = transformRightWall.times(Mat4.scale(100,50,0));
         this.shapes.plane.draw(context, program_state, transformRightWall, this.materials.rightWall);
+
+        let transformCeiling = Mat4.identity();
+        transformCeiling = transformCeiling.times(Mat4.translation(0,100,0));
+        transformCeiling = transformCeiling.times(Mat4.rotation(Math.PI/2, 1, 0, 0));
+        transformCeiling = transformCeiling.times(Mat4.scale(150, 100, 0));
+        this.shapes.plane.draw(context, program_state, transformCeiling, this.materials.ceiling);
 
         let transformChecks = Mat4.identity();
         transformChecks = transformChecks.times(Mat4.translation(0, 1,0));
