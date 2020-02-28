@@ -31,7 +31,7 @@ window.ketchup_move = ketchup_move; //MAGGIE do you mean window.ketchup_move = k
 var change_coke = 0;
 window.change_coke = change_coke;
 
-const jukebox_color = color(127/255, 124/255, 127/255, 255/255);
+const jukebox_color = color(127/255, 124/255, 127/255, 250/255); // change alpha from 255 to 250 for pick color
 const ketchup_color = color(255/255, 0/255, 0/255, 255/255);
 const mustard_color = color(255/255, 255/255, 0/255, 255/255);
 // const coke_color = color(0/255, 0/255, 255/255, 1);
@@ -379,4 +379,3 @@ class Main_Scene extends Scene
 
     }
 }
-

@@ -1022,11 +1022,12 @@
                            objc[1] = obj_color[1]*255;
                            objc[2] = obj_color[2]*255;
                            objc[3] = obj_color[3]*255;
-                               console.log(objc)
-                               if ( picked_color[0] == objc[0] &&  picked_color[1] == objc[1] && picked_color[2] == objc[2] ) 
-                                    return true
-                               else
-                                    return false
+                           //console.log(objc)
+						   //if ( picked_color[0] == objc[0] &&  picked_color[1] == objc[1] && picked_color[2] == objc[2] ) 
+                           if ( picked_color[3] == objc[3]) 
+                                return true
+                           else
+                                return false
                            }
                            click_handler(event) {   //MAGGIE
                                //this.gl =this.canvas.getContext("experimental-webgl", {preserveDrawingBuffer: true})
@@ -1169,4 +1170,3 @@
                          show_explanation( document_section )
                            {}                            // show_explanation(): Called by Text_Widget for generating documentation.
                        }
-                       
