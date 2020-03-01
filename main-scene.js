@@ -46,7 +46,7 @@ window.coke_color = coke_color;
 window.cup_color = cup_color;
 // window.smile_color = smile_color;
 
-var collision_occured = false
+var collision_occured = false;
 var mustard_angle = 0;
 var mustard_mov = 0;
 var kup_mov = 0;
@@ -188,7 +188,7 @@ class Main_Scene extends Scene
 
         //KETCHUP + MUSTARD
 
-		var distance_cup = 40; // define the initial distance between cups
+		var distance_cup = 10; // define the initial distance between cups
         if(window.ketchup_move == 1) {
 			if (collision_occured) {
 			   //kup_mov = max_move
@@ -241,6 +241,14 @@ class Main_Scene extends Scene
 		
         this.shapes.ketchup.draw( context, program_state, model_transform1, this.materials.ketchup );
         this.shapes.mustard.draw( context, program_state, model_transform2, this.materials.mustard );
+        var transformMustard = Mat4.identity();
+        transformMustard = transformMustard.times(Mat4.translation(116, 31, 31));
+        transformMustard = transformMustard.times(Mat4.rotation(-Math.PI/2, 0, 1, 0));
+        transformMustard = transformMustard.times(Mat4.rotation(-Math.PI/2, 1, 0, 0));
+        transformMustard = transformMustard.times(Mat4.scale(35, 35, 35));
+        if(mustard_angle == max_angle){
+            this.shapes.mustardSpill.draw(context, program_state, transformMustard, this.materials.mustardSpill);
+        }
 
         //BOOTH TABLE
         //var transformBoothTable = Mat4.identity();
@@ -349,13 +357,7 @@ class Main_Scene extends Scene
         transformTallCup = transformTallCup.times(Mat4.translation(0,3,0));
         transformTallCup = transformTallCup.times(Mat4.rotation(Math.PI, 0, 1, 0));
         this.shapes.tallCup.draw(context, program_state, transformTallCup, this.materials.tallCup);
-
-        var transformMustard = Mat4.identity();
-        transformMustard = transformMustard.times(Mat4.translation(113, 31, 37));
-        transformMustard = transformMustard.times(Mat4.rotation(-Math.PI/2, 0, 1, 0));
-        transformMustard = transformMustard.times(Mat4.rotation(-Math.PI/2, 1, 0, 0));
-        transformMustard = transformMustard.times(Mat4.scale(35, 35, 35));
-        this.shapes.mustardSpill.draw(context, program_state, transformMustard, this.materials.mustardSpill);
+        
 
         //TODO: NEED TO FIX TransformFloor is placed here to cover the image wrapping issue for now
         //NOTE: order matters for the floor and back wall transformations cuz of png
