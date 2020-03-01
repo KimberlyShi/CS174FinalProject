@@ -206,7 +206,7 @@ class Main_Scene extends Scene
             Mat4.translation( 10, 10, 0 )
                 .times(Mat4.translation(0,0,mov2 - 1 ))
                 .times(Mat4.translation(0, -3.8, 0))
-                .times(Mat4.rotation(0, 0, 0, 1))
+                .times(Mat4.rotation(0, -angle, 0, 1))
                 .times(Mat4.translation(0, 3.8, 0))
                 .times(Mat4.scale(0.7,0.7,0.7))
                 .times(Mat4.translation(187, 35, -5));
