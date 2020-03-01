@@ -109,6 +109,7 @@ class Main_Scene extends Scene
                 leftWall: new Material( new defs.Textured_Phong( 1 ), { ambient: 1, diffusivity: 1, specularity: .5, color: color( 0, 0, 1, 1 ) }),
                 rightWall: new Material( new defs.Textured_Phong( 1 ), { ambient: .9, color: color( 0,1,0, 1 ) }),
                 ceiling: new Material( new defs.Textured_Phong( 1 ), { ambient: .9, color: color( 0,1,1, 1 ) }),
+                frontWall: new Material( new defs.Textured_Phong( 1 ), { ambient: .9, color: color( 0,1,1, 1 ) }),
                 menuFront: new Material( new defs.Textured_Phong(1), {ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
                     texture: new Texture("assets/menufront.png")}),
                 menuBack: new Material( new defs.Textured_Phong(1), {ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
@@ -138,8 +139,10 @@ class Main_Scene extends Scene
         if (!context.scratchpad.controls) {
             this.children.push(context.scratchpad.controls = new defs.Movement_Controls());
             // Locate the camera here (inverted matrix).
-            program_state.set_camera(Mat4.translation(0, -100,-320 ));   //overview of room view
+            // program_state.set_camera(Mat4.translation(0, -100,-320 ));   //overview of room view without front wall
             // program_state.set_camera(Mat4.translation(40, -8,-80 )); //Original camera coord
+            program_state.set_camera(Mat4.translation(40, -30,-80 )); //DO THIS ONE for POV
+            // program_state.set_camera(Mat4.translation(0, -100,-450 )); //Current overview of front wall
         }
         
         program_state.projection_transform = Mat4.perspective( Math.PI/4, context.width/context.height, 1, 500 );
@@ -225,9 +228,10 @@ class Main_Scene extends Scene
 
         //BAR
         var barTransform = Mat4.identity();
-        barTransform = barTransform.times(Mat4.translation(60, 50, 140))
-                                   .times(Mat4.rotation(Math.PI/1.5, 0, 1, 0))
-                                   .times(Mat4.scale(15,15,15));
+        barTransform = barTransform.times(Mat4.translation(10, 40, 160))
+                                   .times(Mat4.rotation(-Math.PI/3, 0, 1, 0))
+                                   .times(Mat4.scale(20,20,20));
+
         this.shapes.bar.draw(context, program_state, barTransform, this.materials.bar);
 
         //BAR STAND (TEMP)
@@ -287,37 +291,59 @@ class Main_Scene extends Scene
         //so plz don't change it thanks! -kim
         let transformFloor = Mat4.identity();
         transformFloor = transformFloor.times(Mat4.rotation(Math.PI/2, 1, 0, 0));
-        transformFloor = transformFloor.times(Mat4.scale(150, 100, 0));
+        // transformFloor = transformFloor.times(Mat4.scale(150, 100, 0));
+        transformFloor = transformFloor.times(Mat4.scale(150, 200, 0));
         this.shapes.plane.draw(context, program_state, transformFloor, this.materials.floorBumpMap);
+
 
         //Place flooring and walls
         let transformBackWall = Mat4.identity();
-        transformBackWall = transformBackWall.times(Mat4.translation(0,50,-100));
-        transformBackWall = transformBackWall.times(Mat4.scale(150,50,0));
-        this.shapes.coke.draw(context, program_state, transformBackWall, this.materials.backWall);
+        // transformBackWall = transformBackWall.times(Mat4.translation(0,50,-100));
+        // transformBackWall = transformBackWall.times(Mat4.scale(150,50,0));
+        transformBackWall = transformBackWall.times(Mat4.translation(0,80,-100));
+        transformBackWall = transformBackWall.times(Mat4.scale(150,80,0));
+        this.shapes.plane.draw(context, program_state, transformBackWall, this.materials.backWall);
 
         let transformLeftWall = Mat4.identity();
-        transformLeftWall = transformLeftWall.times(Mat4.translation(-150,50,0));
+        // transformLeftWall = transformLeftWall.times(Mat4.translation(-150,50,0));
+        // transformLeftWall = transformLeftWall.times(Mat4.rotation(Math.PI/2, 0,1,0));
+        // transformLeftWall = transformLeftWall.times(Mat4.scale(100,50,0));
+        transformLeftWall = transformLeftWall.times(Mat4.translation(-150,80,0));
         transformLeftWall = transformLeftWall.times(Mat4.rotation(Math.PI/2, 0,1,0));
-        transformLeftWall = transformLeftWall.times(Mat4.scale(100,50,0));
+        // transformLeftWall = transformLeftWall.times(Mat4.scale(100,80,0));
+        transformLeftWall = transformLeftWall.times(Mat4.scale(200,80,0));
         this.shapes.plane.draw(context, program_state, transformLeftWall, this.materials.leftWall);
 
         let transformRightWall = Mat4.identity();
-        transformRightWall = transformRightWall.times(Mat4.translation(150,50,0));
+        // transformRightWall = transformRightWall.times(Mat4.translation(150,50,0));
+        // transformRightWall = transformRightWall.times(Mat4.rotation(Math.PI/2, 0,1,0));
+        // transformRightWall = transformRightWall.times(Mat4.scale(100,50,0));
+        transformRightWall = transformRightWall.times(Mat4.translation(150,80,0));
         transformRightWall = transformRightWall.times(Mat4.rotation(Math.PI/2, 0,1,0));
-        transformRightWall = transformRightWall.times(Mat4.scale(100,50,0));
+        // transformRightWall = transformRightWall.times(Mat4.scale(100,80,0));
+        transformRightWall = transformRightWall.times(Mat4.scale(200,80,0));
         this.shapes.plane.draw(context, program_state, transformRightWall, this.materials.rightWall);
 
         let transformCeiling = Mat4.identity();
-        transformCeiling = transformCeiling.times(Mat4.translation(0,100,0));
+        // transformCeiling = transformCeiling.times(Mat4.translation(0,100,0));
+        transformCeiling = transformCeiling.times(Mat4.translation(0,160,0));
         transformCeiling = transformCeiling.times(Mat4.rotation(Math.PI/2, 1, 0, 0));
-        transformCeiling = transformCeiling.times(Mat4.scale(150, 100, 0));
+        // transformCeiling = transformCeiling.times(Mat4.scale(150, 100, 0));
+        transformCeiling = transformCeiling.times(Mat4.scale(150, 200, 0));
         this.shapes.plane.draw(context, program_state, transformCeiling, this.materials.ceiling);
+
+        let transformFrontWall = Mat4.identity();
+        // transformBackWall = transformBackWall.times(Mat4.translation(0,50,-100));
+        // transformBackWall = transformBackWall.times(Mat4.scale(150,50,0));
+        transformFrontWall = transformFrontWall.times(Mat4.translation(0,80,200));
+        transformFrontWall = transformFrontWall.times(Mat4.scale(150,80,0));
+        this.shapes.plane.draw(context, program_state, transformFrontWall, this.materials.frontWall);
 
         let transformChecks = Mat4.identity();
         transformChecks = transformChecks.times(Mat4.translation(0, 1,0));
         transformChecks = transformChecks.times(Mat4.rotation(Math.PI/2, 1, 0, 0));
-        transformChecks = transformChecks.times(Mat4.scale(150, 100, 0));
+        // transformChecks = transformChecks.times(Mat4.scale(150, 100, 0));
+        transformChecks = transformChecks.times(Mat4.scale(150, 200, 0));
         this.shapes.planeFloor.draw(context, program_state, transformChecks, this.materials.floorTile);
 
 
