@@ -85,7 +85,8 @@ class Main_Scene extends Scene
             coke: new defs.Square(),
             // openSign: new defs.Square(),
             openSign: new Shape_From_File("assets/door.obj"),
-            smiley: new defs.Square(),
+            // smiley: new defs.Square(),
+            cokeClue: new defs.Square(),
 
             boothTable: new Shape_From_File("assets/squareTable.obj"),
             tallCup: new Shape_From_File("assets/kcup.obj"),
@@ -137,8 +138,10 @@ class Main_Scene extends Scene
                 //     texture: new Texture("assets/smiley_1.png")}),
                 // smiley: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
                 //     texture: new Texture("assets/smiley_1.png")}),
-                smiley: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
-                    texture: new Texture("assets/smiley_1.png")}),
+                // smiley: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
+                //     texture: new Texture("assets/smiley_1.png")}),
+                cokeClue: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
+                    texture: new Texture("assets/cokeClue_1.png")}),
                 tempBar: new Material( new defs.Textured_Phong( 1 ), { color: color(1, 0, 0, 1), ambient: 1, diffusivity: 1, specularity: 1}),
 
                 tallCup: new Material( new defs.Textured_Phong( 1 ),  { ambient: 0.5, diffusivity: 1, specularity: 0.5, color: cup_color,
@@ -313,7 +316,8 @@ class Main_Scene extends Scene
             myMaterial = this.materials.coke;
         }
         else if(window.change_coke == 1) {
-            myMaterial = this.materials.smiley;
+            // myMaterial = this.materials.smiley;
+            myMaterial = this.materials.cokeClue;
         }
 
         this.shapes.coke.draw(context, program_state, transformCoke, myMaterial);
