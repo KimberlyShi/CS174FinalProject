@@ -234,22 +234,25 @@ class Main_Scene extends Scene
         //this.shapes.boothTable.draw(context, program_state, transformBoothTable, this.materials.boothTable);
 
         //BOOTH
-        const boothShiftFactor = 50;
-        const boothScaleFactor = Mat4.scale(30, 30, 30);
-        const boothTableScaleFactor = Mat4.scale(9, 9, 9);
+        //shift factor changes how far apart the same facing chair will be
+        const boothShiftFactor = 90;
+        const boothScaleFactor = Mat4.scale(45, 45, 45);
+        const boothTableScaleFactor = Mat4.scale(13, 13, 13);
         for (let i = 0 ; i < 3 ; i++ ){
-            //draw the two booth chairs
+            //draw the two booth chairs.
+            //front facing booth
             var boothTransform = Mat4.identity();
-            boothTransform = boothTransform.times(Mat4.translation(-170, 13, -58 - i * boothShiftFactor));
+            boothTransform = boothTransform.times(Mat4.translation(-155, 19, 60 - i * boothShiftFactor));
             this.shapes.booth.draw(context, program_state, boothTransform.times(boothScaleFactor), this.materials.booth);
+            //back facing booth
             boothTransform = Mat4.identity();
-            boothTransform = boothTransform.times(Mat4.translation(-170, 13, -88 - i * boothShiftFactor));
+            boothTransform = boothTransform.times(Mat4.translation(-155, 19, 5 - i * boothShiftFactor));
             boothTransform = boothTransform.times(Mat4.rotation(Math.PI, 0, 1, 0));
             this.shapes.booth.draw(context, program_state, boothTransform.times(boothScaleFactor), this.materials.booth);
 
             //draw the booth table between the two tables
             var transformBoothTable = Mat4.identity();
-            transformBoothTable = transformBoothTable.times(Mat4.translation(-170, 8.3, -73 - i * boothShiftFactor));
+            transformBoothTable = transformBoothTable.times(Mat4.translation(-155, 11, 33 - i * boothShiftFactor));
             this.shapes.boothTable.draw(context, program_state, transformBoothTable.times(boothTableScaleFactor), this.materials.boothTable);
         }
 
