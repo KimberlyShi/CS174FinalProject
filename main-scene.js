@@ -36,12 +36,14 @@ const jukebox_color = color(127/255, 124/255, 127/255, 250/255); // change alpha
 const ketchup_color = color(255/255, 0/255, 0/255, 251/255);
 const mustard_color = color(255/255, 255/255, 0/255, 255/255);
 const coke_color = color(0/255,0/255, 0/255, 252/255);
+const cup_color = color(190/255, 223/255, 221/255);
 // const smile_color = color(0/255,0/255, 0/255, 253/255);
 
 window.jukebox_color = jukebox_color;
 window.ketchup_color = ketchup_color;
 window.mustard_color = mustard_color;
 window.coke_color = coke_color;
+window.cup_color = cup_color;
 // window.smile_color = smile_color;
 
 var count = 0;
@@ -83,6 +85,8 @@ class Main_Scene extends Scene
             // openSign: new defs.Square(),
             openSign: new Shape_From_File("assets/door.obj"),
             smiley: new defs.Square(),
+            boothTable: new Shape_From_File("assets/squareTable.obj"),
+            tallCup: new Shape_From_File("assets/kcup.obj")
         };
         // Don't create any DOM elements to control this scene:
         //this.widget_options = { make_controls: false };
@@ -131,8 +135,11 @@ class Main_Scene extends Scene
                 smiley: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
                     texture: new Texture("assets/smiley_1.png")}),
                 tempBar: new Material( new defs.Textured_Phong( 1 ), { color: color(1, 0, 0, 1), ambient: 1, diffusivity: 1, specularity: 1}),
-
-            };
+                tallCup: new Material( new defs.Textured_Phong( 1 ),  { ambient: 0.5, diffusivity: 1, specularity: 0.5, color: cup_color,
+                    texture: new Texture("assets/pink.png")}),
+                boothTable: new Material( new defs.Textured_Phong( 1 ),  { ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
+                    texture: new Texture("assets/pink.png")})
+            }
     }
 
 
@@ -208,17 +215,30 @@ class Main_Scene extends Scene
         this.shapes.ketchup.draw( context, program_state, model_transform1, this.materials.ketchup );
         this.shapes.mustard.draw( context, program_state, model_transform2, this.materials.mustard );
 
+        //BOOTH TABLE
+        //var transformBoothTable = Mat4.identity();
+        //transformBoothTable = transformBoothTable.times(Mat4.translation(-170, 8.3, 75));
+        //transformBoothTable = transformBoothTable.times(Mat4.scale(9, 9, 9));
+        //this.shapes.boothTable.draw(context, program_state, transformBoothTable, this.materials.boothTable);
+
         //BOOTH
         const boothShiftFactor = 50;
         const boothScaleFactor = Mat4.scale(30, 30, 30);
+        const boothTableScaleFactor = Mat4.scale(9, 9, 9);
         for (let i = 0 ; i < 3 ; i++ ){
+            //draw the two booth chairs
             var boothTransform = Mat4.identity();
-            boothTransform = boothTransform.times(Mat4.translation(-110, 13, 90 - i * boothShiftFactor));
+            boothTransform = boothTransform.times(Mat4.translation(-170, 13, -58 - i * boothShiftFactor));
             this.shapes.booth.draw(context, program_state, boothTransform.times(boothScaleFactor), this.materials.booth);
             boothTransform = Mat4.identity();
-            boothTransform = boothTransform.times(Mat4.translation(-110, 13, 60 - i * boothShiftFactor));
+            boothTransform = boothTransform.times(Mat4.translation(-170, 13, -88 - i * boothShiftFactor));
             boothTransform = boothTransform.times(Mat4.rotation(Math.PI, 0, 1, 0));
             this.shapes.booth.draw(context, program_state, boothTransform.times(boothScaleFactor), this.materials.booth);
+
+            //draw the booth table between the two tables
+            var transformBoothTable = Mat4.identity();
+            transformBoothTable = transformBoothTable.times(Mat4.translation(-170, 8.3, -73 - i * boothShiftFactor));
+            this.shapes.boothTable.draw(context, program_state, transformBoothTable.times(boothTableScaleFactor), this.materials.boothTable);
         }
 
         //STOOLS
@@ -293,6 +313,11 @@ class Main_Scene extends Scene
         transformOpenSign = transformOpenSign.times(Mat4.scale(30, 30, 30));
         this.shapes.openSign.draw(context, program_state, transformOpenSign, this.materials.openSign);
 
+        //TALL CUP
+        var transformTallCup = Mat4.identity();
+        transformTallCup = transformTallCup.times(Mat4.translation(0,3,0));
+        transformTallCup = transformTallCup.times(Mat4.rotation(Math.PI, 0, 1, 0));
+        this.shapes.tallCup.draw(context, program_state, transformTallCup, this.materials.tallCup);
 
         //TODO: NEED TO FIX TransformFloor is placed here to cover the image wrapping issue for now
         //NOTE: order matters for the floor and back wall transformations cuz of png
