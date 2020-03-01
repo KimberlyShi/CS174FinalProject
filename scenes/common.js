@@ -736,9 +736,12 @@ class Movement_Controls extends Scene
                                         // button controls to help you explore what's in it.
   constructor()
     { super();
-      const data_members = { roll: 0, look_around_locked: true, 
+      const data_members = { roll: 0, look_around_locked: true,
                              thrust: vec3( 0,0,0 ), pos: vec3( 0,0,0 ), z_axis: vec3( 0,0,0 ),
                              radians_per_frame: 1/200, meters_per_frame: 20, speed_multiplier: 1 };
+      // const data_members = { roll: 0, pan: 0, look_around_locked: true,
+      //   thrust: vec3( 0,0,0 ), pos: vec3( 0,0,0 ), z_axis: vec3( 0,0,0 ),
+      //   radians_per_frame: 1/200, meters_per_frame: 20, speed_multiplier: 1 };
       Object.assign( this, data_members );
 
       this.mouse_enabled_canvases = new Set();
@@ -793,6 +796,10 @@ class Movement_Controls extends Scene
       this.new_line();
       this.key_triggered_button( "Roll left",  [ "," ], () => this.roll =  1, undefined, () => this.roll = 0 );
       this.key_triggered_button( "Roll right", [ "." ], () => this.roll = -1, undefined, () => this.roll = 0 );
+
+      // this.key_triggered_button( "Roll left",  [ "," ], () => this.pan =  1, undefined, () => this.pan = 0 );
+      // this.key_triggered_button( "Roll right", [ "." ], () => this.pan = -1, undefined, () => this.pan = 0 );
+
       this.new_line();
       this.key_triggered_button( "(Un)freeze mouse look around", [ "f" ], () => this.look_around_locked ^=  1, "green" );
       this.new_line();
@@ -847,8 +854,19 @@ class Movement_Controls extends Scene
           this.matrix().post_multiply( Mat4.rotation( -velocity,   i, 1-i, 0 ) );
           this.inverse().pre_multiply( Mat4.rotation( +velocity,   i, 1-i, 0 ) );
         }
-      this.matrix().post_multiply( Mat4.rotation( -.1 * this.roll,   0,0,1 ) );
-      this.inverse().pre_multiply( Mat4.rotation( +.1 * this.roll,   0,0,1 ) );
+      // this.matrix().post_multiply( Mat4.rotation( -.1 * this.roll,   0,0,1 ) );
+      // this.inverse().pre_multiply( Mat4.rotation( +.1 * this.roll,   0,0,1 ) );
+
+      this.matrix().post_multiply( Mat4.rotation( +.1 * this.roll,   0,1,0 ) );
+      this.inverse().pre_multiply( Mat4.rotation( -.1 * this.roll,   0,1,0 ) );
+
+
+      //ADDED by kim
+      this.matrix().post_multiply( Mat4.rotation( -.1 * this.pan,   0,0,1 ) );
+      this.matrix().pre_multiply( Mat4.rotation( +.1 * this.pan,   0,0,1 ) );
+
+
+
                                     // Now apply translation movement of the camera, in the newest local coordinate frame.
       this.matrix().post_multiply( Mat4.translation( ...this.thrust.times( -meters_per_frame ) ) );
       this.inverse().pre_multiply( Mat4.translation( ...this.thrust.times( +meters_per_frame ) ) );
