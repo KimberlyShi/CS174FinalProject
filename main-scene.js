@@ -13,6 +13,7 @@ const { Vector, Vector3, vec, vec3, vec4, color, Matrix, Mat4, Light, Shape, Mat
     //                      as common.js into one file for you, such as "dependencies.js")
 
 var sounds = [
+ "assets/sound/iwillsurvive.mp3",
  "assets/sound/circles.mp3",
  "assets/sound/heyjude.mp3",
  "assets/sound/mygirl.mp3",
