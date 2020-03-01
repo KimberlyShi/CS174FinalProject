@@ -1056,7 +1056,11 @@
                                }
 
                                if(this.color_match(window.ketchup_color,data)) {
-                                 window.ketchup_move = 1;
+                                  if (window.ketchup_move == 1) {
+									  window.ketchup_move = 0
+								  } else {
+									  window.ketchup_move = 1
+								  };
                                }
 
                                if(this.color_match(window.coke_color,data)){
