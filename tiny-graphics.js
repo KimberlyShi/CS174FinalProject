@@ -1049,11 +1049,15 @@
                                this.gl.readPixels(mx, my, 1, 1, this.gl.RGBA, this.gl.UNSIGNED_BYTE, data);
                        
                                if (this.color_match(window.jukebox_color,data)) {
-                             if (window.music_play ==0)
-                                      window.music_play = 1;
+                                if (window.music_play ==0)
+                                {
+                                   window.music_play = 1;
+                                   window.music_index += 1;
+                                }
+                                   
                                    else
                                       window.music_play = 0;
-                               }
+                                }
 
                                if(this.color_match(window.ketchup_color,data)) {
                                   if (window.ketchup_move == 1) {

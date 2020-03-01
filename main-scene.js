@@ -13,9 +13,9 @@ const { Vector, Vector3, vec, vec3, vec4, color, Matrix, Mat4, Light, Shape, Mat
     //                      as common.js into one file for you, such as "dependencies.js")
 
 var sounds = [
- "assets/sound/iwillsurvive.mp3",
  "assets/sound/circles.mp3",
  "assets/sound/heyjude.mp3",
+ "assets/sound/iwillsurvive.mp3",
  "assets/sound/mygirl.mp3",
  "assets/sound/neverbeentospain.mp3",
  "assets/sound/partyintheusa.mp3",
@@ -31,6 +31,8 @@ var ketchup_move = 0;
 window.ketchup_move = ketchup_move;
 var change_coke = 0;
 window.change_coke = change_coke;
+var music_index = -1;
+window.music_index = music_index;
 
 const jukebox_color = color(127/255, 124/255, 127/255, 250/255); // change alpha from 255 to 250 for pick color
 const ketchup_color = color(255/255, 0/255, 0/255, 251/255);
@@ -179,7 +181,7 @@ class Main_Scene extends Scene
         this.shapes.jukebox.draw( context, program_state, model_transform, this.materials.jukebox );
         if (window.music_play==1) {
             window.music_play = 2
-            audio.src = sounds[Math.floor(Math.random() * sounds.length)];
+            audio.src = sounds[window.music_index];
             audio.loop = false;
             audio.play();
         } else if (window.music_play==0) {
