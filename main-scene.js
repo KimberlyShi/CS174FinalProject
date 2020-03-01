@@ -1,4 +1,3 @@
-
 import {tiny, defs} from './scenes/common.js';
 import {Shape_From_File} from './scenes/obj-file-demo.js';
                                                   // Pull these names into this module's scope for convenience:
@@ -14,9 +13,9 @@ const { Vector, Vector3, vec, vec3, vec4, color, Matrix, Mat4, Light, Shape, Mat
     //                      as common.js into one file for you, such as "dependencies.js")
 
 var sounds = [
- "assets/sound/iwillsurvive.mp3",
  "assets/sound/circles.mp3",
  "assets/sound/heyjude.mp3",
+ "assets/sound/iwillsurvive.mp3",
  "assets/sound/mygirl.mp3",
  "assets/sound/neverbeentospain.mp3",
  "assets/sound/partyintheusa.mp3",
@@ -32,6 +31,8 @@ var ketchup_move = 0;
 window.ketchup_move = ketchup_move;
 var change_coke = 0;
 window.change_coke = change_coke;
+var music_index = -1;
+window.music_index = music_index;
 
 const jukebox_color = color(127/255, 124/255, 127/255, 250/255); // change alpha from 255 to 250 for pick color
 const ketchup_color = color(255/255, 0/255, 0/255, 251/255);
@@ -47,9 +48,10 @@ window.coke_color = coke_color;
 window.cup_color = cup_color;
 // window.smile_color = smile_color;
 
-var count = 0;
-var angle = 0;
-var mov2 = 0;
+var collision_occured = false;
+var mustard_angle = 0;
+var mustard_mov = 0;
+var kup_mov = 0;
     
 const Minimal_Webgl_Demo = defs.Minimal_Webgl_Demo;
 
@@ -182,7 +184,7 @@ class Main_Scene extends Scene
         this.shapes.jukebox.draw( context, program_state, model_transform, this.materials.jukebox );
         if (window.music_play==1) {
             window.music_play = 2
-            audio.src = sounds[Math.floor(Math.random() * sounds.length)];
+            audio.src = sounds[window.music_index];
             audio.loop = false;
             audio.play();
         } else if (window.music_play==0) {
@@ -190,45 +192,68 @@ class Main_Scene extends Scene
         }
 
         //KETCHUP + MUSTARD
-        var mov = 0;
-        if(window.ketchup_move== 1)
-        {
-            mov = 0.1*count;
-            var max_move = 6.9;
-            var max_move2 = 0.6;
-            var max_angle = 1.6;
-            if (mov > max_move) {
-                mov = max_move
-                angle += 0.06;
-                mov2 += 0.01;
-            }
-            if (angle > max_angle) {
-                angle = max_angle;
-                mov2 = max_move2;
-            }
-        }
-        count += 1.0;
+
+		var distance_cup = 10; // define the initial distance between cups
+        if(window.ketchup_move == 1) {
+			if (collision_occured) {
+			   //kup_mov = max_move
+	           var max_angle = 1.6;
+               mustard_angle += 0.04;
+			   if (mustard_angle < max_angle) {
+				   if (mustard_mov==0) mustard_mov = 0.8 // add initial jump right after collision.
+				   mustard_mov += 0.004;
+			   } else {
+				   mustard_angle = max_angle
+			   }
+              
+		   } else {
+               kup_mov += 0.1;
+		   }
+        } else {    // reset it to original position
+			kup_mov = 0
+			mustard_angle = 0
+			mustard_mov = 0
+			collision_occured = false
+		}
+		
+
+
         let transformTable =  Mat4.translation( -10, 7, -15 ).times(Mat4.rotation(-Math.PI/12,   0,1,0 ));
         transformTable = transformTable.times(Mat4.scale(15, 15, 15));
         this.shapes.table.draw(context, program_state, transformTable, this.materials.table);
-        const model_transform1 = Mat4.translation( 0, 10, mov )
-                .times(Mat4.scale(0.7,0.7,0.7))
-                .times(Mat4.translation(200,35,-15));
-        //model_transform1 is ketchup
+		
+		//model_transform1 is ketchup
+        const model_transform1 = Mat4.translation( 140, 38, kup_mov-20 )
+                .times(Mat4.scale(1.0,1.0,1.0))
+				//.times(Mat4.rotation(Math.PI/2, 1, 0, 0))
+				
+
         //model_transform2 is mustard
-        const model_transform2 =
-            Mat4.translation( 10, 10, 0 )
-                .times(Mat4.translation(0,0,mov2 - 1 ))
-                .times(Mat4.translation(0, -3.8, 0))
-                .times(Mat4.rotation(0, -angle, 0, 1))
-                .times(Mat4.translation(0, 3.8, 0))
-                .times(Mat4.scale(0.7,0.7,0.7))
-                .times(Mat4.translation(187, 35, -5));
-        var v1 = model_transform1.times( vec4( 1,1,1,1 ) );
-        var v2 = model_transform2.times( vec4( 1,1,1,1 ) );
-        var dist = Math.sqrt( (v1[0]-v2[0])**2 + (v1[1]-v2[1])**2 + (v1[2]-v2[2])**2 );
+        const model_transform2 = Mat4.translation( 140, 38, distance_cup-20+mustard_mov)
+		                .times(Mat4.translation(0, -5.8, 0))
+		                .times(Mat4.rotation(mustard_angle, 1, 0, 0))
+						.times(Mat4.translation(0, 5.8, 0))
+
+        var pos1 = model_transform1.times( vec4( 0,0,0,1 ) ); // get the coordinate of ketchup
+        var pos2 = model_transform2.times( vec4( 0,0,0,1 ) ); // get the coordinate of mustard
+		var dist = (pos1[0]-pos2[0])**2 + (pos1[1]-pos2[1])**2 + (pos1[2]-pos2[2])**2; // get the square of distance
+		var min_dist = 3 // minimum distance between cups, when distance is smaller than this, collision occurs
+		if (dist <= min_dist**2) collision_occured = true;
+		console.log("dist = " + Math.sqrt(dist))
+		console.log("pos1 = " + pos1)
+		console.log("pos2 = " + pos2)
+        var dist = Math.sqrt( (pos1[0]-pos2[0])**2 + (pos1[1]-pos2[1])**2 + (pos1[2]-pos2[2])**2 );
+		
         this.shapes.ketchup.draw( context, program_state, model_transform1, this.materials.ketchup );
         this.shapes.mustard.draw( context, program_state, model_transform2, this.materials.mustard );
+        var transformMustard = Mat4.identity();
+        transformMustard = transformMustard.times(Mat4.translation(116, 31, 31));
+        transformMustard = transformMustard.times(Mat4.rotation(-Math.PI/2, 0, 1, 0));
+        transformMustard = transformMustard.times(Mat4.rotation(-Math.PI/2, 1, 0, 0));
+        transformMustard = transformMustard.times(Mat4.scale(35, 35, 35));
+        if(mustard_angle == max_angle){
+            this.shapes.mustardSpill.draw(context, program_state, transformMustard, this.materials.mustardSpill);
+        }
 
         //BOOTH TABLE
         //var transformBoothTable = Mat4.identity();
@@ -237,22 +262,25 @@ class Main_Scene extends Scene
         //this.shapes.boothTable.draw(context, program_state, transformBoothTable, this.materials.boothTable);
 
         //BOOTH
-        const boothShiftFactor = 50;
-        const boothScaleFactor = Mat4.scale(30, 30, 30);
-        const boothTableScaleFactor = Mat4.scale(9, 9, 9);
+        //shift factor changes how far apart the same facing chair will be
+        const boothShiftFactor = 90;
+        const boothScaleFactor = Mat4.scale(45, 45, 45);
+        const boothTableScaleFactor = Mat4.scale(13, 13, 13);
         for (let i = 0 ; i < 3 ; i++ ){
-            //draw the two booth chairs
+            //draw the two booth chairs.
+            //front facing booth
             var boothTransform = Mat4.identity();
-            boothTransform = boothTransform.times(Mat4.translation(-170, 13, -58 - i * boothShiftFactor));
+            boothTransform = boothTransform.times(Mat4.translation(-155, 19, 60 - i * boothShiftFactor));
             this.shapes.booth.draw(context, program_state, boothTransform.times(boothScaleFactor), this.materials.booth);
+            //back facing booth
             boothTransform = Mat4.identity();
-            boothTransform = boothTransform.times(Mat4.translation(-170, 13, -88 - i * boothShiftFactor));
+            boothTransform = boothTransform.times(Mat4.translation(-155, 19, 5 - i * boothShiftFactor));
             boothTransform = boothTransform.times(Mat4.rotation(Math.PI, 0, 1, 0));
             this.shapes.booth.draw(context, program_state, boothTransform.times(boothScaleFactor), this.materials.booth);
 
             //draw the booth table between the two tables
             var transformBoothTable = Mat4.identity();
-            transformBoothTable = transformBoothTable.times(Mat4.translation(-170, 8.3, -73 - i * boothShiftFactor));
+            transformBoothTable = transformBoothTable.times(Mat4.translation(-155, 11, 33 - i * boothShiftFactor));
             this.shapes.boothTable.draw(context, program_state, transformBoothTable.times(boothTableScaleFactor), this.materials.boothTable);
         }
 
@@ -289,7 +317,7 @@ class Main_Scene extends Scene
         const menuAngle = Math.PI;
         // const upwardShift = Mat4.translation(-9, 12, -18);
         // model_transform = model_transform.times(upwardShift).times(changeRotationCorner);
-        // model_transform = model_transform.times(Mat4.rotation(-(angle/2) + (angle/2*Math.sin(6*Math.PI*t)) , Vec.of(0, 0, 1)));
+        // model_transform = model_transform.times(Mat4.rotation(-(mustard_angle/2) + (mustard_angle/2*Math.sin(6*Math.PI*t)) , Vec.of(0, 0, 1)));
         //     this.currentAngle = 6 * Math.PI * t;
 
         // model_transform = model_transform.times(extendLength).times(resetRotationCorner);
@@ -335,13 +363,7 @@ class Main_Scene extends Scene
         transformTallCup = transformTallCup.times(Mat4.translation(0,3,0));
         transformTallCup = transformTallCup.times(Mat4.rotation(Math.PI, 0, 1, 0));
         this.shapes.tallCup.draw(context, program_state, transformTallCup, this.materials.tallCup);
-
-        var transformMustard = Mat4.identity();
-        transformMustard = transformMustard.times(Mat4.translation(113, 31, 37));
-        transformMustard = transformMustard.times(Mat4.rotation(-Math.PI/2, 0, 1, 0));
-        transformMustard = transformMustard.times(Mat4.rotation(-Math.PI/2, 1, 0, 0));
-        transformMustard = transformMustard.times(Mat4.scale(35, 35, 35));
-        this.shapes.mustardSpill.draw(context, program_state, transformMustard, this.materials.mustardSpill);
+        
 
         //TODO: NEED TO FIX TransformFloor is placed here to cover the image wrapping issue for now
         //NOTE: order matters for the floor and back wall transformations cuz of png
