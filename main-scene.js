@@ -69,7 +69,7 @@ class Main_Scene extends Scene
         super();
         // Load the model file:
         this.shapes = {
-            jukebox: new Shape_From_File( "assets/jb.obj" ),
+            jukebox: new Shape_From_File( "assets/jukebox2.obj" ),
             table: new Shape_From_File("assets/table.obj"),
             ketchup: new Shape_From_File( "assets/kb.obj" ),
             mustard: new Shape_From_File( "assets/kb.obj"),
@@ -87,8 +87,8 @@ class Main_Scene extends Scene
         //this.widget_options = { make_controls: false };
         this.materials =
             {
-                jukebox: new Material( new defs.Textured_Phong( 1 ), { color: jukebox_color, ambient: 1, diffusivity: 1, specularity: 1, 
-                    texture: new Texture( "assets/pink.png" )}),
+                jukebox: new Material( new defs.Textured_Phong( 1 ), { color: jukebox_color, ambient: 0.4, specularity: 0,  
+                    texture: new Texture( "assets/jukebox_map.png" )}),
                 table: new Material( new defs.Textured_Phong( 1 ), {color: color(1, 0, 0, 1)}), //color of table rn is temp red
 
                 //KIMBERLY: adjust colors later
@@ -153,8 +153,8 @@ class Main_Scene extends Scene
             color( 1,.7,.7,1 ), 100000 ) ];
 
         //JUKEBOX
-        let model_transform = Mat4.translation(-90, 50, -80).times(Mat4.rotation(-Math.PI/2, 0, 1,0));
-        model_transform = model_transform.times(Mat4.scale(30,30,30));
+        let model_transform = Mat4.translation(-90, 42, -57).times(Mat4.rotation(-Math.PI/2, 0, 1,0));
+        model_transform = model_transform.times(Mat4.scale(20, 20, 20));
         this.shapes.jukebox.draw( context, program_state, model_transform, this.materials.jukebox );
         if (window.music_play==1) {
             window.music_play = 2
