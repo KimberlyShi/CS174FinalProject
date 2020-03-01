@@ -80,7 +80,8 @@ class Main_Scene extends Scene
             plane: new defs.Square(),
             menu: new Shape_From_File("assets/menu.obj"),
             coke: new defs.Square(),
-            openSign: new defs.Square(),
+            // openSign: new defs.Square(),
+            openSign: new Shape_From_File("assets/door.obj"),
             smiley: new defs.Square(),
         };
         // Don't create any DOM elements to control this scene:
@@ -121,8 +122,10 @@ class Main_Scene extends Scene
                     texture: new Texture("assets/booth_map.png")}),
                 coke: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
                     texture: new Texture("assets/coke_1.png")}),
+                // openSign: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: color(0, 0, 0, 1),
+                //                 //     texture: new Texture("assets/open_door.png")}),
                 openSign: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: color(0, 0, 0, 1),
-                    texture: new Texture("assets/open_door.png")}),
+                    texture: new Texture("assets/pink.png")}),
                 // smiley: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: color(0, 0, 0, 1),
                 //     texture: new Texture("assets/smiley_1.png")}),
                 smiley: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
@@ -282,8 +285,10 @@ class Main_Scene extends Scene
         this.shapes.coke.draw(context, program_state, transformCoke, myMaterial);
 
         var transformOpenSign = Mat4.identity();
-        transformOpenSign = transformOpenSign.times(Mat4.translation(100, 50, -99));
-        transformOpenSign = transformOpenSign.times(Mat4.scale(50, 50, 50));
+        transformOpenSign = transformOpenSign.times(Mat4.translation(150, 50, -199));
+        transformOpenSign = transformOpenSign.times(Mat4.rotation(Math.PI/2, 0, 1, 0));
+        // transformOpenSign = transformOpenSign.times(Mat4.scale(50, 50, 50));
+        transformOpenSign = transformOpenSign.times(Mat4.scale(30, 30, 30));
         this.shapes.openSign.draw(context, program_state, transformOpenSign, this.materials.openSign);
 
 
