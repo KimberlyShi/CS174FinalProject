@@ -130,6 +130,8 @@ class Main_Scene extends Scene
                     texture: new Texture("assets/pink.png")}),
                 // smiley: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: color(0, 0, 0, 1),
                 //     texture: new Texture("assets/smiley_1.png")}),
+                // smiley: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
+                //     texture: new Texture("assets/smiley_1.png")}),
                 smiley: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
                     texture: new Texture("assets/smiley_1.png")}),
                 tempBar: new Material( new defs.Textured_Phong( 1 ), { color: color(1, 0, 0, 1), ambient: 1, diffusivity: 1, specularity: 1}),
