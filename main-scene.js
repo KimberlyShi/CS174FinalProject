@@ -84,6 +84,7 @@ class Main_Scene extends Scene
             // openSign: new defs.Square(),
             openSign: new Shape_From_File("assets/door.obj"),
             smiley: new defs.Square(),
+            mustardSpill: new defs.Square()
         };
         // Don't create any DOM elements to control this scene:
         //this.widget_options = { make_controls: false };
@@ -132,6 +133,8 @@ class Main_Scene extends Scene
                 smiley: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
                     texture: new Texture("assets/smiley_1.png")}),
                 tempBar: new Material( new defs.Textured_Phong( 1 ), { color: color(1, 0, 0, 1), ambient: 1, diffusivity: 1, specularity: 1}),
+                mustardSpill: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
+                    texture: new Texture("assets/mustardspill_2.png")}),
 
             };
     }
@@ -192,17 +195,19 @@ class Main_Scene extends Scene
         let transformTable =  Mat4.translation( -10, 7, -15 ).times(Mat4.rotation(-Math.PI/12,   0,1,0 ));
         transformTable = transformTable.times(Mat4.scale(15, 15, 15));
         this.shapes.table.draw(context, program_state, transformTable, this.materials.table);
-        const model_transform1 = Mat4.translation( mov, 10, 0 )
-                .times(Mat4.scale(0.7,0.7,0.7));
+        const model_transform1 = Mat4.translation( 0, 10, mov )
+                .times(Mat4.scale(0.7,0.7,0.7))
+                .times(Mat4.translation(200,35,-15));
         //model_transform1 is ketchup
         //model_transform2 is mustard
         const model_transform2 =
             Mat4.translation( 10, 10, 0 )
-                .times(Mat4.translation(mov2 -1,0,0 ))
+                .times(Mat4.translation(0,0,mov2 - 1 ))
                 .times(Mat4.translation(0, -3.8, 0))
-                .times(Mat4.rotation(-angle, 0, 0, 1))
+                .times(Mat4.rotation(0, 0, 0, 1))
                 .times(Mat4.translation(0, 3.8, 0))
-                .times(Mat4.scale(0.7,0.7,0.7));
+                .times(Mat4.scale(0.7,0.7,0.7))
+                .times(Mat4.translation(187, 35, -5));
         var v1 = model_transform1.times( vec4( 1,1,1,1 ) );
         var v2 = model_transform2.times( vec4( 1,1,1,1 ) );
         var dist = Math.sqrt( (v1[0]-v2[0])**2 + (v1[1]-v2[1])**2 + (v1[2]-v2[2])**2 );
@@ -293,6 +298,13 @@ class Main_Scene extends Scene
         // transformOpenSign = transformOpenSign.times(Mat4.scale(50, 50, 50));
         transformOpenSign = transformOpenSign.times(Mat4.scale(30, 30, 30));
         this.shapes.openSign.draw(context, program_state, transformOpenSign, this.materials.openSign);
+
+        var transformMustard = Mat4.identity();
+        transformMustard = transformMustard.times(Mat4.translation(113, 31, 37));
+        transformMustard = transformMustard.times(Mat4.rotation(-Math.PI/2, 0, 1, 0));
+        transformMustard = transformMustard.times(Mat4.rotation(-Math.PI/2, 1, 0, 0));
+        transformMustard = transformMustard.times(Mat4.scale(35, 35, 35));
+        this.shapes.mustardSpill.draw(context, program_state, transformMustard, this.materials.mustardSpill);
 
 
         //TODO: NEED TO FIX TransformFloor is placed here to cover the image wrapping issue for now
