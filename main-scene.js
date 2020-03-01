@@ -156,7 +156,8 @@ class Main_Scene extends Scene
             color( 1,.7,.7,1 ), 100000 ) ];
 
         //JUKEBOX
-        let model_transform = Mat4.translation(-90, 42, -57).times(Mat4.rotation(-Math.PI/2, 0, 1,0));
+        // let model_transform = Mat4.translation(-90, 42, -57).times(Mat4.rotation(-Math.PI/2, 0, 1,0));
+        let model_transform = Mat4.translation(-60, 42, -170).times(Mat4.rotation(-Math.PI/2, 0, 1,0));
         model_transform = model_transform.times(Mat4.scale(20, 20, 20));
         this.shapes.jukebox.draw( context, program_state, model_transform, this.materials.jukebox );
         if (window.music_play==1) {
@@ -272,7 +273,8 @@ class Main_Scene extends Scene
         this.shapes.menu.draw( context, program_state, model_transform_menu_front, this.materials.menuFront);
 
         const transformCoke =
-            Mat4.translation(-20, 50, -99)
+            // Mat4.translation(-20, 50, -99)
+            Mat4.translation(-20, 50, -199)
                 .times(Mat4.scale(35, 35, 35));
         var myMaterial;
         if(window.change_coke == 0) {
