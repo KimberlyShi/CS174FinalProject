@@ -287,35 +287,37 @@ class Code_Widget
         }
       }
     }
-  display_code( class_to_display )
-    {                                           // display_code():  Populate the code textbox.
-                                                // Pass undefined to choose index.html source.
-      if( this.associated_editor_widget ) 
-        this.associated_editor_widget.select_class( class_to_display );
-      if( class_to_display ) this.format_code( class_to_display.toString() );
-      else fetch( document.location.href )
-                .then(   response => response.text() )
-                .then( pageSource => this.format_code( pageSource ) );
-    }
-  format_code( code_string )
-    {                                           // (Internal helper function)
-      this.code_display.innerHTML = "";
-      const color_map = { string: "chocolate", comment: "green", regex: "blue", number: "magenta", 
-                            name: "black", punctuator: "red", whitespace: "black" };
+  // display_code( class_to_display )
+  //   {                                           // display_code():  Populate the code textbox.
+  //                                               // Pass undefined to choose index.html source.
+  //     if( this.associated_editor_widget )
+  //       this.associated_editor_widget.select_class( class_to_display );
+  //     if( class_to_display ) this.format_code( class_to_display.toString() );
+  //     else fetch( document.location.href )
+  //               .then(   response => response.text() )
+  //               .then( pageSource => this.format_code( pageSource ) );
+  //   }
 
-      for( let t of new Code_Manager( code_string ).tokens )
-        if( t.type == "name" && [ ...Object.keys( tiny ), ...Object.keys( this.definitions ) ].includes( t.value ) )
-          { const link = this.code_display.appendChild( document.createElement( 'a' ) );
-            link.href = "javascript:void(0);"
-            link.addEventListener( 'click', () => this.display_code( tiny[t.value] || this.definitions[t.value] ) );
-            link.textContent = t.value;
-          }
-        else
-          { const span = this.code_display.appendChild( document.createElement( 'span' ) );
-            span.style.color = color_map[t.type];
-            span.textContent = t.value;
-          }
-    }
+
+  // format_code( code_string )
+  //   {                                           // (Internal helper function)
+  //     this.code_display.innerHTML = "";
+  //     const color_map = { string: "chocolate", comment: "green", regex: "blue", number: "magenta",
+  //                           name: "black", punctuator: "red", whitespace: "black" };
+  //
+  //     for( let t of new Code_Manager( code_string ).tokens )
+  //       if( t.type == "name" && [ ...Object.keys( tiny ), ...Object.keys( this.definitions ) ].includes( t.value ) )
+  //         { const link = this.code_display.appendChild( document.createElement( 'a' ) );
+  //           link.href = "javascript:void(0);"
+  //           link.addEventListener( 'click', () => this.display_code( tiny[t.value] || this.definitions[t.value] ) );
+  //           link.textContent = t.value;
+  //         }
+  //       else
+  //         { const span = this.code_display.appendChild( document.createElement( 'span' ) );
+  //           span.style.color = color_map[t.type];
+  //           span.textContent = t.value;
+  //         }
+  //   }
 }
 
 
