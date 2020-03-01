@@ -151,8 +151,9 @@ class Main_Scene extends Scene
             // Locate the camera here (inverted matrix).
             // program_state.set_camera(Mat4.translation(0, -100,-320 ));   //overview of room view without front wall
             // program_state.set_camera(Mat4.translation(40, -8,-80 )); //Original camera coord
-            program_state.set_camera(Mat4.translation(0, -70,-150 )); //DO THIS ONE for POV
+            // program_state.set_camera(Mat4.translation(0, -70,-150 )); //DO THIS ONE for POV
             // program_state.set_camera(Mat4.translation(0, -100,-500 )); //Current overview of front wall
+            program_state.set_camera(Mat4.translation(-50, -70,10 ).times(Mat4.rotation(Math.PI/2, 0, 1,0))); //view mustard POV
         }
         
         program_state.projection_transform = Mat4.perspective( Math.PI/4, context.width/context.height, 1, 500 );
