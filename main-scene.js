@@ -79,7 +79,7 @@ class Main_Scene extends Scene
             table: new Shape_From_File("assets/table.obj"),
             ketchup: new Shape_From_File( "assets/kb.obj" ),
             mustard: new Shape_From_File( "assets/kb.obj"),
-            booth: new Shape_From_File("assets/booth.obj"),
+            booth: new Shape_From_File("assets/booth2.obj"),
             stool: new Shape_From_File("assets/stool.obj"),
             bar: new Shape_From_File("assets/bar.obj")  ,  
             planeFloor: new defs.Square(), //used floor
@@ -88,7 +88,8 @@ class Main_Scene extends Scene
             coke: new defs.Square(),
             // openSign: new defs.Square(),
             openSign: new Shape_From_File("assets/door.obj"),
-            smiley: new defs.Square(),
+            // smiley: new defs.Square(),
+            cokeClue: new defs.Square(),
 
             boothTable: new Shape_From_File("assets/squareTable.obj"),
             tallCup: new Shape_From_File("assets/kcup.obj"),
@@ -129,7 +130,7 @@ class Main_Scene extends Scene
                 stool: new Material( new defs.Textured_Phong( 1 ), { color: jukebox_color, ambient: 1, diffusivity: 1, specularity: 1, 
                     texture: new Texture( "assets/stool_map.png" )}),
                 booth: new Material( new defs.Textured_Phong(1), {ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
-                    texture: new Texture("assets/booth_map.png")}),
+                    texture: new Texture("assets/booth2_map.png")}),
                 coke: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
                     texture: new Texture("assets/coke_1.png")}),
                 // openSign: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: color(0, 0, 0, 1),
@@ -140,8 +141,10 @@ class Main_Scene extends Scene
                 //     texture: new Texture("assets/smiley_1.png")}),
                 // smiley: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
                 //     texture: new Texture("assets/smiley_1.png")}),
-                smiley: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
-                    texture: new Texture("assets/smiley_1.png")}),
+                // smiley: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
+                //     texture: new Texture("assets/smiley_1.png")}),
+                cokeClue: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
+                    texture: new Texture("assets/cokeClue_1.png")}),
                 tempBar: new Material( new defs.Textured_Phong( 1 ), { color: color(1, 0, 0, 1), ambient: 1, diffusivity: 1, specularity: 1}),
 
                 tallCup: new Material( new defs.Textured_Phong( 1 ),  { ambient: 0.5, diffusivity: 1, specularity: 0.5, color: cup_color,
@@ -269,23 +272,24 @@ class Main_Scene extends Scene
         //BOOTH
         //shift factor changes how far apart the same facing chair will be
         const boothShiftFactor = 90;
+        const boothDifferenceFactor = 60;
         const boothScaleFactor = Mat4.scale(45, 45, 45);
-        const boothTableScaleFactor = Mat4.scale(13, 13, 13);
-        for (let i = 0 ; i < 3 ; i++ ){
+        const boothTableScaleFactor = Mat4.scale(13, 16, 13);
+        for (let i = -2 ; i < 3 ; i++ ){
             //draw the two booth chairs.
             //front facing booth
             var boothTransform = Mat4.identity();
-            boothTransform = boothTransform.times(Mat4.translation(-155, 19, 60 - i * boothShiftFactor));
+            boothTransform = boothTransform.times(Mat4.translation(-155, 25, 75 - i * boothShiftFactor));
             this.shapes.booth.draw(context, program_state, boothTransform.times(boothScaleFactor), this.materials.booth);
             //back facing booth
             boothTransform = Mat4.identity();
-            boothTransform = boothTransform.times(Mat4.translation(-155, 19, 5 - i * boothShiftFactor));
+            boothTransform = boothTransform.times(Mat4.translation(-155, 25, 75 - boothDifferenceFactor - i * boothShiftFactor));
             boothTransform = boothTransform.times(Mat4.rotation(Math.PI, 0, 1, 0));
             this.shapes.booth.draw(context, program_state, boothTransform.times(boothScaleFactor), this.materials.booth);
 
             //draw the booth table between the two tables
             var transformBoothTable = Mat4.identity();
-            transformBoothTable = transformBoothTable.times(Mat4.translation(-155, 11, 33 - i * boothShiftFactor));
+            transformBoothTable = transformBoothTable.times(Mat4.translation(-155, 11, 45 - i * boothShiftFactor));
             this.shapes.boothTable.draw(context, program_state, transformBoothTable.times(boothTableScaleFactor), this.materials.boothTable);
         }
 
@@ -349,7 +353,8 @@ class Main_Scene extends Scene
             myMaterial = this.materials.coke;
         }
         else if(window.change_coke == 1) {
-            myMaterial = this.materials.smiley;
+            // myMaterial = this.materials.smiley;
+            myMaterial = this.materials.cokeClue;
         }
 
         this.shapes.coke.draw(context, program_state, transformCoke, myMaterial);

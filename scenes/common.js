@@ -591,7 +591,7 @@ class Phong_Shader extends Shader
     }
   send_material( gl, gpu, material )
     {                                       // send_material(): Send the desired shape-wide material qualities to the
-                                            // graphics card, where they will tweak the Phong lighting formula.                                      
+                                            // graphics card, where they will tweak the Phong lighting formula.
       gl.uniform4fv( gpu.shape_color,    material.color       );
       gl.uniform1f ( gpu.ambient,        material.ambient     );
       gl.uniform1f ( gpu.diffusivity,    material.diffusivity );
@@ -603,9 +603,9 @@ class Phong_Shader extends Shader
       const O = vec4( 0,0,0,1 ), camera_center = gpu_state.camera_transform.times( O ).to3();
       gl.uniform3fv( gpu.camera_center, camera_center );
                                          // Use the squared scale trick from "Eric's blog" instead of inverse transpose matrix:
-      const squared_scale = model_transform.reduce( 
-                                         (acc,r) => { return acc.plus( vec4( ...r ).times_pairwise(r) ) }, vec4( 0,0,0,0 ) ).to3();                                            
-      gl.uniform3fv( gpu.squared_scale, squared_scale );     
+      const squared_scale = model_transform.reduce(
+                                         (acc,r) => { return acc.plus( vec4( ...r ).times_pairwise(r) ) }, vec4( 0,0,0,0 ) ).to3();
+      gl.uniform3fv( gpu.squared_scale, squared_scale );
                                                       // Send the current matrices to the shader.  Go ahead and pre-compute
                                                       // the products we'll need of the of the three special matrices and just
                                                       // cache and send those.  They will be the same throughout this draw
@@ -623,18 +623,18 @@ class Phong_Shader extends Shader
       for( var i = 0; i < 4 * gpu_state.lights.length; i++ )
         { light_positions_flattened                  .push( gpu_state.lights[ Math.floor(i/4) ].position[i%4] );
           light_colors_flattened                     .push( gpu_state.lights[ Math.floor(i/4) ].color[i%4] );
-        }      
+        }
       gl.uniform4fv( gpu.light_positions_or_vectors, light_positions_flattened );
       gl.uniform4fv( gpu.light_colors,               light_colors_flattened );
       gl.uniform1fv( gpu.light_attenuation_factors, gpu_state.lights.map( l => l.attenuation ) );
     }
   update_GPU( context, gpu_addresses, gpu_state, model_transform, material )
-    {             // update_GPU(): Define how to synchronize our JavaScript's variables to the GPU's.  This is where the shader 
+    {             // update_GPU(): Define how to synchronize our JavaScript's variables to the GPU's.  This is where the shader
                   // recieves ALL of its inputs.  Every value the GPU wants is divided into two categories:  Values that belong
-                  // to individual objects being drawn (which we call "Material") and values belonging to the whole scene or 
-                  // program (which we call the "Program_State").  Send both a material and a program state to the shaders 
-                  // within this function, one data field at a time, to fully initialize the shader for a draw.                  
-      
+                  // to individual objects being drawn (which we call "Material") and values belonging to the whole scene or
+                  // program (which we call the "Program_State").  Send both a material and a program state to the shaders
+                  // within this function, one data field at a time, to fully initialize the shader for a draw.
+
                   // Fill in any missing fields in the Material object with custom defaults for this shader:
       const defaults = { color: color( 0,0,0,1 ), ambient: 0, diffusivity: 1, specularity: 1, smoothness: 40 };
       material = Object.assign( {}, defaults, material );
@@ -736,9 +736,12 @@ class Movement_Controls extends Scene
                                         // button controls to help you explore what's in it.
   constructor()
     { super();
-      const data_members = { roll: 0, look_around_locked: true, 
+      const data_members = { roll: 0, look_around_locked: true,
                              thrust: vec3( 0,0,0 ), pos: vec3( 0,0,0 ), z_axis: vec3( 0,0,0 ),
                              radians_per_frame: 1/200, meters_per_frame: 20, speed_multiplier: 1 };
+      // const data_members = { roll: 0, pan: 0, look_around_locked: true,
+      //   thrust: vec3( 0,0,0 ), pos: vec3( 0,0,0 ), z_axis: vec3( 0,0,0 ),
+      //   radians_per_frame: 1/200, meters_per_frame: 20, speed_multiplier: 1 };
       Object.assign( this, data_members );
 
       this.mouse_enabled_canvases = new Set();
@@ -791,43 +794,47 @@ class Movement_Controls extends Scene
       this.key_triggered_button( "+",  [ "p" ], () =>
                                             this.speed_multiplier  *=  1.2, "green", undefined, undefined, speed_controls );
       this.new_line();
-      this.key_triggered_button( "Roll left",  [ "," ], () => this.roll =  1, undefined, () => this.roll = 0 );
-      this.key_triggered_button( "Roll right", [ "." ], () => this.roll = -1, undefined, () => this.roll = 0 );
-      this.new_line();
-      this.key_triggered_button( "(Un)freeze mouse look around", [ "f" ], () => this.look_around_locked ^=  1, "green" );
-      this.new_line();
-      this.live_string( box => box.textContent = "Position: " + this.pos[0].toFixed(2) + ", " + this.pos[1].toFixed(2)
-                                                       + ", " + this.pos[2].toFixed(2) );
-      this.new_line();
-                                                  // The facing directions are surprisingly affected by the left hand rule:
-      this.live_string( box => box.textContent = "Facing: " + ( ( this.z_axis[0] > 0 ? "West " : "East ")
-                   + ( this.z_axis[1] > 0 ? "Down " : "Up " ) + ( this.z_axis[2] > 0 ? "North" : "South" ) ) );
-      this.new_line();
-      this.key_triggered_button( "Go to world origin", [ "r" ], () => { this. matrix().set_identity( 4,4 );
-                                                                        this.inverse().set_identity( 4,4 ) }, "orange" );
-      this.new_line();
+      this.key_triggered_button( "Rotate left",  [ "," ], () => this.roll =  1, undefined, () => this.roll = 0 );
+      this.key_triggered_button( "Rotate right", [ "." ], () => this.roll = -1, undefined, () => this.roll = 0 );
 
-      this.key_triggered_button( "Look at origin from front", [ "1" ], () =>
-        { this.inverse().set( Mat4.look_at( vec3( 0,0,10 ), vec3( 0,0,0 ), vec3( 0,1,0 ) ) );
-          this. matrix().set( Mat4.inverse( this.inverse() ) );
-        }, "black" );
-      this.new_line();
-      this.key_triggered_button( "from right", [ "2" ], () =>
-        { this.inverse().set( Mat4.look_at( vec3( 10,0,0 ), vec3( 0,0,0 ), vec3( 0,1,0 ) ) );
-          this. matrix().set( Mat4.inverse( this.inverse() ) );
-        }, "black" );
-      this.key_triggered_button( "from rear", [ "3" ], () =>
-        { this.inverse().set( Mat4.look_at( vec3( 0,0,-10 ), vec3( 0,0,0 ), vec3( 0,1,0 ) ) );
-          this. matrix().set( Mat4.inverse( this.inverse() ) );
-        }, "black" );
-      this.key_triggered_button( "from left", [ "4" ], () =>
-        { this.inverse().set( Mat4.look_at( vec3( -10,0,0 ), vec3( 0,0,0 ), vec3( 0,1,0 ) ) );
-          this. matrix().set( Mat4.inverse( this.inverse() ) );
-        }, "black" );
-      this.new_line();
-      this.key_triggered_button( "Attach to global camera", [ "Shift", "R" ],
-                                                 () => { this.will_take_over_graphics_state = true }, "blue" );
-      this.new_line();
+      // this.key_triggered_button( "Roll left",  [ "," ], () => this.pan =  1, undefined, () => this.pan = 0 );
+      // this.key_triggered_button( "Roll right", [ "." ], () => this.pan = -1, undefined, () => this.pan = 0 );
+
+      // this.new_line();
+      // this.key_triggered_button( "(Un)freeze mouse look around", [ "f" ], () => this.look_around_locked ^=  1, "green" );
+      // this.new_line();
+      // this.live_string( box => box.textContent = "Position: " + this.pos[0].toFixed(2) + ", " + this.pos[1].toFixed(2)
+      //                                                  + ", " + this.pos[2].toFixed(2) );
+      // this.new_line();
+                                                  // The facing directions are surprisingly affected by the left hand rule:
+      // this.live_string( box => box.textContent = "Facing: " + ( ( this.z_axis[0] > 0 ? "West " : "East ")
+      //              + ( this.z_axis[1] > 0 ? "Down " : "Up " ) + ( this.z_axis[2] > 0 ? "North" : "South" ) ) );
+      // this.new_line();
+      // this.key_triggered_button( "Go to world origin", [ "r" ], () => { this. matrix().set_identity( 4,4 );
+      //                                                                   this.inverse().set_identity( 4,4 ) }, "orange" );
+      // this.new_line();
+
+      // this.key_triggered_button( "Look at origin from front", [ "1" ], () =>
+      //   { this.inverse().set( Mat4.look_at( vec3( 0,0,10 ), vec3( 0,0,0 ), vec3( 0,1,0 ) ) );
+      //     this. matrix().set( Mat4.inverse( this.inverse() ) );
+      //   }, "black" );
+      // this.new_line();
+      // this.key_triggered_button( "from right", [ "2" ], () =>
+      //   { this.inverse().set( Mat4.look_at( vec3( 10,0,0 ), vec3( 0,0,0 ), vec3( 0,1,0 ) ) );
+      //     this. matrix().set( Mat4.inverse( this.inverse() ) );
+      //   }, "black" );
+      // this.key_triggered_button( "from rear", [ "3" ], () =>
+      //   { this.inverse().set( Mat4.look_at( vec3( 0,0,-10 ), vec3( 0,0,0 ), vec3( 0,1,0 ) ) );
+      //     this. matrix().set( Mat4.inverse( this.inverse() ) );
+      //   }, "black" );
+      // this.key_triggered_button( "from left", [ "4" ], () =>
+      //   { this.inverse().set( Mat4.look_at( vec3( -10,0,0 ), vec3( 0,0,0 ), vec3( 0,1,0 ) ) );
+      //     this. matrix().set( Mat4.inverse( this.inverse() ) );
+      //   }, "black" );
+      // this.new_line();
+      // this.key_triggered_button( "Attach to global camera", [ "Shift", "R" ],
+      //                                            () => { this.will_take_over_graphics_state = true }, "blue" );
+      // this.new_line();
     }
   first_person_flyaround( radians_per_frame, meters_per_frame, leeway = 70 )
     {                                                     // (Internal helper function)
@@ -847,8 +854,19 @@ class Movement_Controls extends Scene
           this.matrix().post_multiply( Mat4.rotation( -velocity,   i, 1-i, 0 ) );
           this.inverse().pre_multiply( Mat4.rotation( +velocity,   i, 1-i, 0 ) );
         }
-      this.matrix().post_multiply( Mat4.rotation( -.1 * this.roll,   0,0,1 ) );
-      this.inverse().pre_multiply( Mat4.rotation( +.1 * this.roll,   0,0,1 ) );
+      // this.matrix().post_multiply( Mat4.rotation( -.1 * this.roll,   0,0,1 ) );
+      // this.inverse().pre_multiply( Mat4.rotation( +.1 * this.roll,   0,0,1 ) );
+
+      this.matrix().post_multiply( Mat4.rotation( +.1 * this.roll,   0,1,0 ) );
+      this.inverse().pre_multiply( Mat4.rotation( -.1 * this.roll,   0,1,0 ) );
+
+
+      //ADDED by kim
+      this.matrix().post_multiply( Mat4.rotation( -.1 * this.pan,   0,0,1 ) );
+      this.matrix().pre_multiply( Mat4.rotation( +.1 * this.pan,   0,0,1 ) );
+
+
+
                                     // Now apply translation movement of the camera, in the newest local coordinate frame.
       this.matrix().post_multiply( Mat4.translation( ...this.thrust.times( -meters_per_frame ) ) );
       this.inverse().pre_multiply( Mat4.translation( ...this.thrust.times( +meters_per_frame ) ) );
@@ -870,6 +888,7 @@ class Movement_Controls extends Scene
       this. matrix().post_multiply( Mat4.translation( 0,0, +25 ) );
       this.inverse().pre_multiply(  Mat4.translation( 0,0, -25 ) );
     }
+  // display( context, graphics_state, dt = graphics_state.animation_delta_time / 1000 )
   display( context, graphics_state, dt = graphics_state.animation_delta_time / 1000 )
     {                                                            // The whole process of acting upon controls begins here.
       const m = this.speed_multiplier * this. meters_per_frame,
@@ -907,6 +926,6 @@ class Program_State_Viewer extends Scene
       this.key_triggered_button( "(Un)pause animation", ["Alt", "a"], () => this.program_state.animate ^= 1 );    
     }
   display( context, program_state )
-    { this.program_state = program_state;      
+    { this.program_state = program_state;
     }
 }
