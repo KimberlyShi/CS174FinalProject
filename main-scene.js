@@ -93,7 +93,9 @@ class Main_Scene extends Scene
 
             boothTable: new Shape_From_File("assets/squareTable.obj"),
             tallCup: new Shape_From_File("assets/kcup.obj"),
-            mustardSpill: new defs.Square()
+            mustardSpill: new defs.Square(),
+            light: new Shape_From_File("assets/light.obj"),
+            bulb: new Shape_From_File("assets/bulb.obj"),
         };
         // Don't create any DOM elements to control this scene:
         //this.widget_options = { make_controls: false };
@@ -154,6 +156,10 @@ class Main_Scene extends Scene
 
                 mustardSpill: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
                     texture: new Texture("assets/mustardspill_2.png")}),
+                light: new Material( new defs.Textured_Phong( 1 ),  { ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
+                    texture: new Texture("assets/pink.png")}),
+                bulb: new Material( new defs.Textured_Phong( 1 ),  { ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
+                    texture: new Texture("assets/pink.png")}),
             };
     }
 
@@ -291,6 +297,17 @@ class Main_Scene extends Scene
             var transformBoothTable = Mat4.identity();
             transformBoothTable = transformBoothTable.times(Mat4.translation(-155, 11, 45 - i * boothShiftFactor));
             this.shapes.boothTable.draw(context, program_state, transformBoothTable.times(boothTableScaleFactor), this.materials.boothTable);
+
+            var transformLight = Mat4.identity();
+            transformLight = transformLight.times(Mat4.translation(-155, 110, 45 - i * boothShiftFactor));
+            transformLight = transformLight.times(Mat4.rotation(Math.PI/4, 0, 1, 0));
+            transformLight = transformLight.times(Mat4.scale(2.5,2.5, 2.5));
+            this.shapes.light.draw(context, program_state, transformLight.times(boothTableScaleFactor), this.materials.light);
+
+            var transformBulb = Mat4.identity();
+            transformBulb = transformBulb.times(Mat4.translation(-155, 80, 45 - i * boothShiftFactor));
+            transformBulb = transformBulb.times(Mat4.scale(0.4,0.4, 0.4));
+            this.shapes.bulb.draw(context, program_state, transformBulb.times(boothTableScaleFactor), this.materials.bulb);
         }
 
         //STOOLS
