@@ -104,6 +104,7 @@ class Main_Scene extends Scene
             light: new Shape_From_File("assets/light.obj"),
             bulb: new Shape_From_File("assets/bulb.obj"),
             carDeco: new defs.Square(),
+            smoothie: new Shape_From_File("assets/drink.obj")
         };
         
         this.camera_x = -50
@@ -153,31 +154,33 @@ class Main_Scene extends Scene
                 // openSign: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: color(0, 0, 0, 1),
                 //                 //     texture: new Texture("assets/open_door.png")}),
                 openSign: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: color(0, 0, 0, 1),
-                    texture: new Texture("assets/pink.png")}),
+                    texture: new Texture("assets/door_map.png")}),
                 // smiley: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: color(0, 0, 0, 1),
                 //     texture: new Texture("assets/smiley_1.png")}),
                 // smiley: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
                 //     texture: new Texture("assets/smiley_1.png")}),
                 // smiley: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
                 //     texture: new Texture("assets/smiley_1.png")}),
+                smoothie: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1,
+                    texture: new Texture("assets/drink1_map.png")}),
+                smoothie2: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1,
+                    texture: new Texture("assets/drink2_map.png")}),
                 cokeClue: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
                     texture: new Texture("assets/cokeClue_1.png")}),
-                tempBar: new Material( new defs.Textured_Phong( 1 ), { color: color(1, 0, 0, 1), ambient: 1, diffusivity: 1, specularity: 1}),
-
+                tallTable: new Material( new defs.Textured_Phong( 1 ), {ambient: 1, diffusivity: 1, specularity: 1,
+                    texture: new Texture("assets/pink.png")}),
                 tallCup: new Material( new defs.Textured_Phong( 1 ),  { ambient: 0.5, diffusivity: 1, specularity: 0.5, color: cup_color,
                     texture: new Texture("assets/pink.png")}),
                 boothTable: new Material( new defs.Textured_Phong( 1 ),  { ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
                     texture: new Texture("assets/pink.png")}),
-
                 mustardSpill: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
                     texture: new Texture("assets/mustardspill_2.png")}),
-
                 light: new Material( new defs.Textured_Phong( 1 ),  { ambient: 1, diffusivity: 1, specularity: 0, color: color(0, 0, 0, 1),
                     texture: new Texture("assets/light_map.png")}),
                 bulb: new Material( new defs.Textured_Phong( 1 ),  { ambient: 1, diffusivity: 1, specularity: 1, color: color(0, 0, 0, 1),
                     texture: new Texture("assets/bulb_map.png")}),
                 diamond: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: diamond_color,
-                    texture: new Texture("assets/pink.png")}),
+                    texture: new Texture("assets/diamond_map.png")}),
                 note: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
                     texture: new Texture("assets/note.png")}),
                 carDeco: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
@@ -414,7 +417,27 @@ class Main_Scene extends Scene
             transformBulb = transformBulb.times(Mat4.translation(-155, 80, 45 - i * boothShiftFactor));
             transformBulb = transformBulb.times(Mat4.scale(0.4,0.4, 0.4));
             this.shapes.bulb.draw(context, program_state, transformBulb.times(boothTableScaleFactor), this.materials.bulb);
+
+            var transformSmoothie2 = Mat4.identity();
+            transformSmoothie2 = transformSmoothie2.times(Mat4.translation(-10, 0, 0));
+            var transformSmoothie = Mat4.identity();
+            transformSmoothie = transformSmoothie.times(Mat4.translation(-125, 50, 45 - i * boothShiftFactor));
+            transformSmoothie = transformSmoothie.times(Mat4.scale(0.075,0.075, 0.075));
+            transformSmoothie = transformSmoothie.times(boothScaleFactor);
+            this.shapes.smoothie.draw(context, program_state, transformSmoothie, this.materials.smoothie);
+            this.shapes.smoothie.draw(context, program_state, Mat4.translation(-4, 0, 8).times(transformSmoothie), this.materials.smoothie2);
         }
+
+        // TALL TABLE
+        let tallTableTransform = Mat4.identity();
+        tallTableTransform = tallTableTransform.times(Mat4.translation(141, 30, 12));
+        tallTableTransform = tallTableTransform.times(Mat4.scale(1, 2, 15));
+        // tallTableTransform = tallTableTransform.times(Mat4.rotation(Math.PI/2, 0, 0, 1));
+        tallTableTransform = tallTableTransform.times(Mat4.rotation(Math.PI/2, 0, 0, 1));
+        tallTableTransform = tallTableTransform.times(Mat4.scale(10, 10, 10));
+        this.shapes.menu.draw(context, program_state, tallTableTransform, this.materials.tallTable);
+
+
 
         //STOOLS
         let stoolShiftFactor = 30;
@@ -428,21 +451,10 @@ class Main_Scene extends Scene
 
         //BAR
         var barTransform = Mat4.identity();
-        barTransform = barTransform.times(Mat4.translation(10, 40, 160))
+        barTransform = barTransform.times(Mat4.translation(10, 15, 160))
                                    .times(Mat4.rotation(-Math.PI/2, 0, 1, 0))
                                    .times(Mat4.scale(20,20,20));
-
         this.shapes.bar.draw(context, program_state, barTransform, this.materials.bar);
-
-        //BAR STAND (TEMP)
-        let barStandTransform = Mat4.identity();
-        barStandTransform = barStandTransform.times(Mat4.translation(141, 30, 12));
-        barStandTransform = barStandTransform.times(Mat4.scale(1, 2, 15));
-        // barStandTransform = barStandTransform.times(Mat4.rotation(Math.PI/2, 0, 0, 1));
-        barStandTransform = barStandTransform.times(Mat4.rotation(Math.PI/2, 0, 0, 1));
-        barStandTransform = barStandTransform.times(Mat4.scale(10, 10, 10));
-        this.shapes.menu.draw(context, program_state, barStandTransform, this.materials.tempBar);
-
 
         //MENU
         var model_transform_menu_front = Mat4.identity();
