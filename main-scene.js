@@ -160,10 +160,10 @@ class Main_Scene extends Scene
                 mustardSpill: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
                     texture: new Texture("assets/mustardspill_2.png")}),
 
-                light: new Material( new defs.Textured_Phong( 1 ),  { ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
-                    texture: new Texture("assets/pink.png")}),
-                bulb: new Material( new defs.Textured_Phong( 1 ),  { ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
-                    texture: new Texture("assets/pink.png")}),
+                light: new Material( new defs.Textured_Phong( 1 ),  { ambient: 1, diffusivity: 1, specularity: 0, color: color(0, 0, 0, 1),
+                    texture: new Texture("assets/light_map.png")}),
+                bulb: new Material( new defs.Textured_Phong( 1 ),  { ambient: 1, diffusivity: 1, specularity: 1, color: color(0, 0, 0, 1),
+                    texture: new Texture("assets/bulb_map.png")}),
                 diamond: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: diamond_color,
                     texture: new Texture("assets/pink.png")}),
             };
