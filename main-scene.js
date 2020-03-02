@@ -103,12 +103,13 @@ class Main_Scene extends Scene
             note: new defs.Square(),
             light: new Shape_From_File("assets/light.obj"),
             bulb: new Shape_From_File("assets/bulb.obj"),
+            carDeco: new defs.Square(),
         };
         // Don't create any DOM elements to control this scene:
         //this.widget_options = { make_controls: false };
         this.materials =
             {
-                jukebox: new Material( new defs.Textured_Phong( 1 ), { color: jukebox_color, ambient: 0.4, specularity: 0,  
+                jukebox: new Material( new defs.Textured_Phong( 1 ), { color: jukebox_color, ambient: 0.5, specularity: 0,
                     texture: new Texture( "assets/jukebox_map.png" )}),
                 table: new Material( new defs.Textured_Phong( 1 ), {color: color(1, 0, 0, 1)}), //color of table rn is temp red
 
@@ -127,18 +128,18 @@ class Main_Scene extends Scene
                     ambient: 1, diffusivity: 1, specularity: 1, texture: new Texture( "assets/pink.png" ) }),
                 bar: new Material(new defs.Textured_Phong(1), {color: color(0, 0, 0, 1), ambient: 1, diffusivity: 1, specularity: 1, 
                     texture: new Texture("assets/pink.png")}),
-                backWall: new Material( new defs.Textured_Phong( 1 ), { ambient: .9, color: color( 1,0,0, 1 ) }),
-                leftWall: new Material( new defs.Textured_Phong( 1 ), { ambient: 1, diffusivity: 1, specularity: .5, color: color( 0, 0, 1, 1 ) }),
-                rightWall: new Material( new defs.Textured_Phong( 1 ), { ambient: .9, color: color( 0,1,0, 1 ) }),
-                ceiling: new Material( new defs.Textured_Phong( 1 ), { ambient: .9, color: color( 0,1,1, 1 ) }),
-                frontWall: new Material( new defs.Textured_Phong( 1 ), { ambient: .9, color: color( 0,1,1, 1 ) }),
+                backWall: new Material( new defs.Textured_Phong( 1 ), { ambient: 1, diffusivity: 1, specularity: .5, color: color( 0, 0, 0.1, 1 ) }),
+                leftWall: new Material( new defs.Textured_Phong( 1 ), { ambient: 1, diffusivity: 1, specularity: .5, color: color( 0.1, 0, 0.1, 1 ) }),
+                rightWall: new Material( new defs.Textured_Phong( 1 ), { ambient: 1, diffusivity: 1, specularity: .5, color: color( 0.1, 0, 0.1, 1 ) }),
+                ceiling: new Material( new defs.Textured_Phong( 1 ), { ambient: .9, color: color( 0,0,0.2, 1 ) }),
+                frontWall: new Material( new defs.Textured_Phong( 1 ), { ambient: 1, diffusivity: 1, specularity: .5, color: color( 0, 0, 0.1, 1 ) }),
                 menuFront: new Material( new defs.Textured_Phong(1), {ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
                     texture: new Texture("assets/menufront.png")}),
                 menuBack: new Material( new defs.Textured_Phong(1), {ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
                     texture: new Texture("assets/menuback.png")}),
                 stool: new Material( new defs.Textured_Phong( 1 ), { color: jukebox_color, ambient: 1, diffusivity: 1, specularity: 1, 
                     texture: new Texture( "assets/stool_map.png" )}),
-                booth: new Material( new defs.Textured_Phong(1), {ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
+                booth: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 0.6, specularity: 0.5, color: color(0, 0, 0, 1),
                     texture: new Texture("assets/booth2_map.png")}),
                 coke: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
                     texture: new Texture("assets/coke_1.png")}),
@@ -172,6 +173,8 @@ class Main_Scene extends Scene
                     texture: new Texture("assets/pink.png")}),
                 note: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
                     texture: new Texture("assets/note.png")}),
+                carDeco: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
+                    texture: new Texture("assets/carDeco_1.png")}),
             };
     }
 
@@ -185,9 +188,9 @@ class Main_Scene extends Scene
             // Locate the camera here (inverted matrix).
             // program_state.set_camera(Mat4.translation(0, -100,-320 ));   //overview of room view without front wall
             // program_state.set_camera(Mat4.translation(40, -8,-80 )); //Original camera coord
-            // program_state.set_camera(Mat4.translation(0, -70,-150 )); //DO THIS ONE for POV
+            program_state.set_camera(Mat4.translation(0, -70,-150 )); //DO THIS ONE for POV
             // program_state.set_camera(Mat4.translation(0, -100,-500 )); //Current overview of front wall
-            program_state.set_camera(Mat4.translation(-50, -70,10 ).times(Mat4.rotation(Math.PI/2, 0, 1,0))); //view mustard POV
+            // program_state.set_camera(Mat4.translation(-50, -70,10 ).times(Mat4.rotation(Math.PI/2, 0, 1,0))); //view mustard POV
         }
         
         program_state.projection_transform = Mat4.perspective( Math.PI/4, context.width/context.height, 1, 500 );
@@ -417,6 +420,13 @@ class Main_Scene extends Scene
         this.shapes.openSign.draw(context, program_state, transformOpenSign, this.materials.openSign);
 
 
+        //CAR DECO
+        var transformCarDeco = Mat4.identity();
+        transformCarDeco = transformCarDeco.times(Mat4.translation(80, 50, -199));
+        // transformCarDeco = transformCarDeco.times(Mat4.rotation(Math.PI/2, 0, 1, 0));
+        // transformOpenSign = transformOpenSign.times(Mat4.scale(50, 50, 50));
+        transformCarDeco = transformCarDeco.times(Mat4.scale(30, 30, 30));
+        this.shapes.carDeco.draw(context, program_state, transformCarDeco, this.materials.carDeco);
         //TALL CUP
         var transformTallCup = Mat4.identity();
         transformTallCup = transformTallCup.times(Mat4.translation(0,3,0));
