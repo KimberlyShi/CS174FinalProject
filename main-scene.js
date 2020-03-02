@@ -36,6 +36,8 @@ window.music_index = music_index;
 var mustard_spill = 0;
 window.mustard_spill = mustard_spill;
 var mustard_spill_timer = 0
+var diamond_click = 0;
+window.diamond_click = 0;
 
 const jukebox_color = color(127/255, 124/255, 127/255, 250/255); // change alpha from 255 to 250 for pick color
 const ketchup_color = color(255/255, 0/255, 0/255, 251/255);
@@ -50,6 +52,7 @@ window.ketchup_color = ketchup_color;
 window.mustard_color = mustard_color;
 window.coke_color = coke_color;
 window.cup_color = cup_color;
+window.diamond_color = diamond_color;
 // window.smile_color = smile_color;
 
 var collision_occured = false;
@@ -96,7 +99,8 @@ class Main_Scene extends Scene
             diamond: new Shape_From_File("assets/diamond.obj"),
             boothTable: new Shape_From_File("assets/squareTable.obj"),
             tallCup: new Shape_From_File("assets/kcup.obj"),
-            mustardSpill: new defs.Square()
+            mustardSpill: new defs.Square(),
+            note: new defs.Square()
         };
         // Don't create any DOM elements to control this scene:
         //this.widget_options = { make_controls: false };
@@ -159,6 +163,8 @@ class Main_Scene extends Scene
                     texture: new Texture("assets/mustardspill_2.png")}),
                 diamond: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: diamond_color,
                     texture: new Texture("assets/pink.png")}),
+                note: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
+                    texture: new Texture("assets/note.png")}),
             };
     }
 
@@ -218,6 +224,12 @@ class Main_Scene extends Scene
         let diamondTransform = Mat4.identity();
         diamondTransform = diamondTransform.times(Mat4.translation(120,40,50));
         this.shapes.diamond.draw(context, program_state, diamondTransform, this.materials.diamond);
+
+        //note
+        // let noteTransform = Mat4.identity();
+        // noteTransform = noteTransform.times(Mat4.scale(35,35,35));
+        // noteTransform = noteTransform.times(Mat4.translation(120,40,50));
+        // this.shapes.note.draw(context, program_state, noteTransform, this.materials.note);
 
         let transformTable =  Mat4.translation( -10, 7, -15 ).times(Mat4.rotation(-Math.PI/12,   0,1,0 ));
         transformTable = transformTable.times(Mat4.scale(15, 15, 15));

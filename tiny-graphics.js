@@ -1077,6 +1077,14 @@ class Webgl_Manager
           }
         }
 
+        if(this.color_match(window.diamond_color,data)){
+          if(window.diamond_click ==1) {
+            window.diamond_click = 0;
+          } else {
+            window.diamond_click = 1;
+          }
+        }
+
         //console.log(rect)
         //console.log(data)
     }  
