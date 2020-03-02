@@ -33,6 +33,7 @@ var change_coke = 0;
 window.change_coke = change_coke;
 var music_index = -1;
 window.music_index = music_index;
+var mustard_spill = 0;
 
 const jukebox_color = color(127/255, 124/255, 127/255, 250/255); // change alpha from 255 to 250 for pick color
 const ketchup_color = color(255/255, 0/255, 0/255, 251/255);
@@ -190,17 +191,22 @@ class Main_Scene extends Scene
 
         //KETCHUP + MUSTARD
 
+        let mustardsplat = new Audio("assets/sound/mustardsplat.wav");
+
 		var distance_cup = 10; // define the initial distance between cups
         if(window.ketchup_move == 1) {
 			if (collision_occured) {
 			   //kup_mov = max_move
 	           var max_angle = 1.6;
                mustard_angle += 0.04;
+               mustardsplat.loop = false;
+               mustardsplat.play();
 			   if (mustard_angle < max_angle) {
 				   if (mustard_mov==0) mustard_mov = 0.8 // add initial jump right after collision.
 				   mustard_mov += 0.004;
 			   } else {
-				   mustard_angle = max_angle
+                   mustard_angle = max_angle;
+                   mustardsplat.pause();
 			   }
               
 		   } else {
@@ -248,9 +254,11 @@ class Main_Scene extends Scene
         transformMustard = transformMustard.times(Mat4.rotation(-Math.PI/2, 0, 1, 0));
         transformMustard = transformMustard.times(Mat4.rotation(-Math.PI/2, 1, 0, 0));
         transformMustard = transformMustard.times(Mat4.scale(35, 35, 35));
+      
         if(mustard_angle == max_angle){
             this.shapes.mustardSpill.draw(context, program_state, transformMustard, this.materials.mustardSpill);
         }
+     
 
         //BOOTH TABLE
         //var transformBoothTable = Mat4.identity();

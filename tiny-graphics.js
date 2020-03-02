@@ -1052,7 +1052,12 @@
                                 if (window.music_play ==0)
                                 {
                                    window.music_play = 1;
+                                   if(window.music_index > 7)
+                                   {
+                                     window.music_index = 0;
+                                   }
                                    window.music_index += 1;
+
                                 }
                                    
                                    else
