@@ -100,7 +100,7 @@ class Main_Scene extends Scene
             boothTable: new Shape_From_File("assets/squareTable.obj"),
             tallCup: new Shape_From_File("assets/kcup.obj"),
             mustardSpill: new defs.Square(),
-            note: new defs.Square()
+            note: new defs.Square(),
             light: new Shape_From_File("assets/light.obj"),
             bulb: new Shape_From_File("assets/bulb.obj"),
         };
