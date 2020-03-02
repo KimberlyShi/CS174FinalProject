@@ -87,7 +87,7 @@ class Main_Scene extends Scene
             mustard: new Shape_From_File( "assets/kb.obj"),
             booth: new Shape_From_File("assets/booth2.obj"),
             stool: new Shape_From_File("assets/stool.obj"),
-            bar: new Shape_From_File("assets/bar.obj")  ,  
+            bar: new Shape_From_File("assets/bar_withoutdrinks.obj")  ,  
             planeFloor: new defs.Square(), //used floor
             plane: new defs.Square(),
             menu: new Shape_From_File("assets/menu.obj"),
@@ -103,12 +103,19 @@ class Main_Scene extends Scene
             note: new defs.Square(),
             light: new Shape_From_File("assets/light.obj"),
             bulb: new Shape_From_File("assets/bulb.obj"),
+            carDeco: new defs.Square(),
         };
+        
+        this.camera_x = -50
+        this.camera_y = -70
+        this.camera_z = 10
+        this.camera_angle = Math.PI/2
+        this.cameraReset=-1
         // Don't create any DOM elements to control this scene:
         //this.widget_options = { make_controls: false };
         this.materials =
             {
-                jukebox: new Material( new defs.Textured_Phong( 1 ), { color: jukebox_color, ambient: 0.4, specularity: 0,  
+                jukebox: new Material( new defs.Textured_Phong( 1 ), { color: jukebox_color, ambient: 0.5, specularity: 0,
                     texture: new Texture( "assets/jukebox_map.png" )}),
                 table: new Material( new defs.Textured_Phong( 1 ), {color: color(1, 0, 0, 1)}), //color of table rn is temp red
 
@@ -126,19 +133,20 @@ class Main_Scene extends Scene
                 ketchup: new Material( new defs.Textured_Phong( 1 ),  { color: ketchup_color,
                     ambient: 1, diffusivity: 1, specularity: 1, texture: new Texture( "assets/pink.png" ) }),
                 bar: new Material(new defs.Textured_Phong(1), {color: color(0, 0, 0, 1), ambient: 1, diffusivity: 1, specularity: 1, 
-                    texture: new Texture("assets/pink.png")}),
-                backWall: new Material( new defs.Textured_Phong( 1 ), { ambient: .9, color: color( 1,0,0, 1 ) }),
-                leftWall: new Material( new defs.Textured_Phong( 1 ), { ambient: 1, diffusivity: 1, specularity: .5, color: color( 0, 0, 1, 1 ) }),
-                rightWall: new Material( new defs.Textured_Phong( 1 ), { ambient: .9, color: color( 0,1,0, 1 ) }),
-                ceiling: new Material( new defs.Textured_Phong( 1 ), { ambient: .9, color: color( 0,1,1, 1 ) }),
-                frontWall: new Material( new defs.Textured_Phong( 1 ), { ambient: .9, color: color( 0,1,1, 1 ) }),
+                    texture: new Texture("assets/bar_map.png")}),
+                backWall: new Material( new defs.Textured_Phong( 1 ), { ambient: 0.92, diffusivity: 1, specularity: .5, color: color( 0, 0, 0.1, 1 ) }),
+                leftWall: new Material( new defs.Textured_Phong( 1 ), { ambient: 1, diffusivity: 1, specularity: .5, color: color( 0, 0, 0.1, 1 ) }),
+                rightWall: new Material( new defs.Textured_Phong( 1 ), { ambient: 1, diffusivity: 1, specularity: .5, color: color( 0, 0, 0.1, 1 ) }),
+                ceiling: new Material( new defs.Textured_Phong( 1 ), { ambient: .9, color: color( 0,0,0.2, 1 ) }),
+                frontWall: new Material( new defs.Textured_Phong( 1 ), { ambient: 0.92, diffusivity: 1, specularity: .5, color: color( 0, 0, 0.1, 1 ) }),
+
                 menuFront: new Material( new defs.Textured_Phong(1), {ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
                     texture: new Texture("assets/menufront.png")}),
                 menuBack: new Material( new defs.Textured_Phong(1), {ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
                     texture: new Texture("assets/menuback.png")}),
                 stool: new Material( new defs.Textured_Phong( 1 ), { color: jukebox_color, ambient: 1, diffusivity: 1, specularity: 1, 
                     texture: new Texture( "assets/stool_map.png" )}),
-                booth: new Material( new defs.Textured_Phong(1), {ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
+                booth: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 0.6, specularity: 0.5, color: color(0, 0, 0, 1),
                     texture: new Texture("assets/booth2_map.png")}),
                 coke: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
                     texture: new Texture("assets/coke_1.png")}),
@@ -172,9 +180,70 @@ class Main_Scene extends Scene
                     texture: new Texture("assets/pink.png")}),
                 note: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
                     texture: new Texture("assets/note.png")}),
+                carDeco: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
+                    texture: new Texture("assets/carDeco_1.png")}),
             };
     }
 
+    setCamera1() {
+        this.camera_x = -50
+        this.camera_y = -70
+        this.camera_z = 10
+        this.camera_angle = Math.PI/2
+        this.cameraReset=1
+    }
+    
+    setCamera2() {
+        this.camera_x = -50
+        this.camera_y = -70
+        this.camera_z = -100
+        this.camera_angle = Math.PI/2
+        this.cameraReset=2
+    }
+
+    setCamera3() {
+        this.camera_x = -50
+        this.camera_y = -70
+        this.camera_z = -200
+        this.camera_angle = Math.PI/2
+        this.cameraReset=3
+    }
+
+    setCamera4() {
+        this.camera_x = -50
+        this.camera_y = -10
+        this.camera_z = -150
+        this.camera_angle = Math.PI/2
+        this.cameraReset=4
+    }
+        
+    setCamera5() {
+        this.camera_x = 0
+        this.camera_y = -70
+        this.camera_z = -150
+        this.camera_angle = 0
+        this.cameraReset=5
+    }
+    
+    setCamera6() {
+        this.camera_x = 0
+        this.camera_y = -70
+        this.camera_z = -150
+        this.camera_angle = Math.PI/2
+        this.cameraReset=6
+    }
+    
+    make_control_panel()
+      { 
+
+         this.key_triggered_button("Camera 1", ["1"], this.setCamera1);
+         this.key_triggered_button("Camera 2", ["2"], this.setCamera2);
+         this.key_triggered_button("Camera 3", ["3"], this.setCamera3);
+         this.new_line();
+         this.key_triggered_button("Camera 4", ["4"], this.setCamera4);
+         this.key_triggered_button("Camera 5", ["5"], this.setCamera5);
+         this.key_triggered_button("Camera 6", ["6"], this.setCamera6);
+      }
 
     display( context, program_state ) { 
         const t = program_state.animation_time/1000;
@@ -187,9 +256,13 @@ class Main_Scene extends Scene
             // program_state.set_camera(Mat4.translation(40, -8,-80 )); //Original camera coord
             // program_state.set_camera(Mat4.translation(0, -70,-150 )); //DO THIS ONE for POV
             // program_state.set_camera(Mat4.translation(0, -100,-500 )); //Current overview of front wall
-            program_state.set_camera(Mat4.translation(-50, -70,10 ).times(Mat4.rotation(Math.PI/2, 0, 1,0))); //view mustard POV
+            program_state.set_camera(Mat4.translation(this.camera_x, this.camera_y,this.camera_z ).times(Mat4.rotation(this.camera_angle, 0, 1,0))); //view mustard POV
         }
         
+        if (this.cameraReset>=0) {
+            program_state.set_camera(Mat4.translation(this.camera_x, this.camera_y,this.camera_z ).times(Mat4.rotation(this.camera_angle, 0, 1,0))); //view mustard POV
+            this.cameraReset = -1
+        }
         program_state.projection_transform = Mat4.perspective( Math.PI/4, context.width/context.height, 1, 500 );
         // A spinning light to show off the bump map:
         program_state.lights = [ new Light(
@@ -204,29 +277,29 @@ class Main_Scene extends Scene
 
         //KETCHUP + MUSTARD
 
-		var distance_cup = 10; // define the initial distance between cups
+        var distance_cup = 10; // define the initial distance between cups
         if(window.ketchup_move == 1) {
-			if (collision_occured) {
-			   //kup_mov = max_move
-	           var max_angle = 1.6;
+            if (collision_occured) {
+               //kup_mov = max_move
+               var max_angle = 1.6;
                mustard_angle += 0.04;
-			   if (mustard_angle < max_angle) {
-				   if (mustard_mov==0) mustard_mov = 0.8 // add initial jump right after collision.
-				   mustard_mov += 0.004;
-			   } else {
-				   mustard_angle = max_angle
-			   }
+               if (mustard_angle < max_angle) {
+                   if (mustard_mov==0) mustard_mov = 0.8 // add initial jump right after collision.
+                   mustard_mov += 0.004;
+               } else {
+                   mustard_angle = max_angle
+               }
               
-		   } else {
+           } else {
                kup_mov += 0.1;
-		   }
+           }
         } else {    // reset it to original position
-			kup_mov = 0
-			mustard_angle = 0
-			mustard_mov = 0
-			collision_occured = false
-		}
-		
+            kup_mov = 0
+            mustard_angle = 0
+            mustard_mov = 0
+            collision_occured = false
+        }
+        
         //diamond
         let diamondTransform = Mat4.identity();
         diamondTransform = diamondTransform.times(Mat4.translation(120,40,50));
@@ -241,29 +314,29 @@ class Main_Scene extends Scene
         let transformTable =  Mat4.translation( -10, 7, -15 ).times(Mat4.rotation(-Math.PI/12,   0,1,0 ));
         transformTable = transformTable.times(Mat4.scale(15, 15, 15));
         this.shapes.table.draw(context, program_state, transformTable, this.materials.table);
-		
-		//model_transform1 is ketchup
+        
+        //model_transform1 is ketchup
         const model_transform1 = Mat4.translation( 140, 38, kup_mov-20 )
                 .times(Mat4.scale(1.0,1.0,1.0))
-				//.times(Mat4.rotation(Math.PI/2, 1, 0, 0))
-				
+                //.times(Mat4.rotation(Math.PI/2, 1, 0, 0))
+                
 
         //model_transform2 is mustard
         const model_transform2 = Mat4.translation( 140, 38, distance_cup-20+mustard_mov)
-		                .times(Mat4.translation(0, -5.8, 0))
-		                .times(Mat4.rotation(mustard_angle, 1, 0, 0))
-						.times(Mat4.translation(0, 5.8, 0))
+                        .times(Mat4.translation(0, -5.8, 0))
+                        .times(Mat4.rotation(mustard_angle, 1, 0, 0))
+                        .times(Mat4.translation(0, 5.8, 0))
 
         var pos1 = model_transform1.times( vec4( 0,0,0,1 ) ); // get the coordinate of ketchup
         var pos2 = model_transform2.times( vec4( 0,0,0,1 ) ); // get the coordinate of mustard
-		var dist = (pos1[0]-pos2[0])**2 + (pos1[1]-pos2[1])**2 + (pos1[2]-pos2[2])**2; // get the square of distance
-		var min_dist = 3 // minimum distance between cups, when distance is smaller than this, collision occurs
-		if (dist <= min_dist**2) collision_occured = true;
-		//console.log("dist = " + Math.sqrt(dist))
-		//console.log("pos1 = " + pos1)
-		//console.log("pos2 = " + pos2)
+        var dist = (pos1[0]-pos2[0])**2 + (pos1[1]-pos2[1])**2 + (pos1[2]-pos2[2])**2; // get the square of distance
+        var min_dist = 3 // minimum distance between cups, when distance is smaller than this, collision occurs
+        if (dist <= min_dist**2) collision_occured = true;
+        //console.log("dist = " + Math.sqrt(dist))
+        //console.log("pos1 = " + pos1)
+        //console.log("pos2 = " + pos2)
         var dist = Math.sqrt( (pos1[0]-pos2[0])**2 + (pos1[1]-pos2[1])**2 + (pos1[2]-pos2[2])**2 );
-		
+        
         this.shapes.ketchup.draw( context, program_state, model_transform1, this.materials.ketchup );
         this.shapes.mustard.draw( context, program_state, model_transform2, this.materials.mustard );
         var transformMustard = Mat4.identity();
@@ -275,24 +348,24 @@ class Main_Scene extends Scene
             this.shapes.mustardSpill.draw(context, program_state, transformMustard, this.materials.mustardSpill);
             if (window.mustard_spill==0) window.mustard_spill = 1;
         }
-	    //console.log("window.mustard_spill ***" + window.mustard_spill)
+        //console.log("window.mustard_spill ***" + window.mustard_spill)
         if(window.mustard_spill == 1)
         {
-			window.mustard_spill = 2
-			mustard_spill_timer = 1
+            window.mustard_spill = 2
+            mustard_spill_timer = 1
             audio.src = "assets/sound/mustardsplat.wav";
             audio.loop = false;
             if (audio.paused) audio.play();
         }
 
         if (mustard_spill_timer>0) mustard_spill_timer += 1;
-		//console.log("play !!!!" + mustard_spill_timer)
-	    //console.log("window.mustard_spill !!!!" + window.mustard_spill)
-		if (mustard_spill_timer>100) {
-			mustard_spill_timer = 0;
-			audio.pause();
-		}
-		
+        //console.log("play !!!!" + mustard_spill_timer)
+        //console.log("window.mustard_spill !!!!" + window.mustard_spill)
+        if (mustard_spill_timer>100) {
+            mustard_spill_timer = 0;
+            audio.pause();
+        }
+        
         if (window.music_play==1) {
             window.music_play = 2
             audio.src = sounds[window.music_index];
@@ -356,7 +429,7 @@ class Main_Scene extends Scene
         //BAR
         var barTransform = Mat4.identity();
         barTransform = barTransform.times(Mat4.translation(10, 40, 160))
-                                   .times(Mat4.rotation(-Math.PI/3, 0, 1, 0))
+                                   .times(Mat4.rotation(-Math.PI/2, 0, 1, 0))
                                    .times(Mat4.scale(20,20,20));
 
         this.shapes.bar.draw(context, program_state, barTransform, this.materials.bar);
@@ -417,6 +490,13 @@ class Main_Scene extends Scene
         this.shapes.openSign.draw(context, program_state, transformOpenSign, this.materials.openSign);
 
 
+        //CAR DECO
+        var transformCarDeco = Mat4.identity();
+        transformCarDeco = transformCarDeco.times(Mat4.translation(80, 50, -199));
+        // transformCarDeco = transformCarDeco.times(Mat4.rotation(Math.PI/2, 0, 1, 0));
+        // transformOpenSign = transformOpenSign.times(Mat4.scale(50, 50, 50));
+        transformCarDeco = transformCarDeco.times(Mat4.scale(30, 30, 30));
+        this.shapes.carDeco.draw(context, program_state, transformCarDeco, this.materials.carDeco);
         //TALL CUP
         var transformTallCup = Mat4.identity();
         transformTallCup = transformTallCup.times(Mat4.translation(0,3,0));
