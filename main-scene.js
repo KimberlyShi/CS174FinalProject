@@ -87,7 +87,7 @@ class Main_Scene extends Scene
             mustard: new Shape_From_File( "assets/kb.obj"),
             booth: new Shape_From_File("assets/booth2.obj"),
             stool: new Shape_From_File("assets/stool.obj"),
-            bar: new Shape_From_File("assets/bar.obj")  ,  
+            bar: new Shape_From_File("assets/bar_withoutdrinks.obj")  ,  
             planeFloor: new defs.Square(), //used floor
             plane: new defs.Square(),
             menu: new Shape_From_File("assets/menu.obj"),
@@ -126,13 +126,14 @@ class Main_Scene extends Scene
                     ambient: 1, diffusivity: 1, specularity: 1, texture: new Texture( "assets/pink.png" ) }),
                 ketchup: new Material( new defs.Textured_Phong( 1 ),  { color: ketchup_color,
                     ambient: 1, diffusivity: 1, specularity: 1, texture: new Texture( "assets/pink.png" ) }),
-                bar: new Material(new defs.Textured_Phong(1), {color: color(0, 0, 0, 1), ambient: 1, diffusivity: 1, specularity: 1, 
-                    texture: new Texture("assets/pink.png")}),
+                bar: new Material(new defs.Textured_Phong(1), {color: color(0, 0, 0, 1), ambient: 1, diffusivity: 1, specularity: 1,
+                    texture: new Texture("assets/bar_map.png")}),
                 backWall: new Material( new defs.Textured_Phong( 1 ), { ambient: 1, diffusivity: 1, specularity: .5, color: color( 0, 0, 0.1, 1 ) }),
                 leftWall: new Material( new defs.Textured_Phong( 1 ), { ambient: 1, diffusivity: 1, specularity: .5, color: color( 0.1, 0, 0.1, 1 ) }),
                 rightWall: new Material( new defs.Textured_Phong( 1 ), { ambient: 1, diffusivity: 1, specularity: .5, color: color( 0.1, 0, 0.1, 1 ) }),
                 ceiling: new Material( new defs.Textured_Phong( 1 ), { ambient: .9, color: color( 0,0,0.2, 1 ) }),
                 frontWall: new Material( new defs.Textured_Phong( 1 ), { ambient: 1, diffusivity: 1, specularity: .5, color: color( 0, 0, 0.1, 1 ) }),
+
                 menuFront: new Material( new defs.Textured_Phong(1), {ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
                     texture: new Texture("assets/menufront.png")}),
                 menuBack: new Material( new defs.Textured_Phong(1), {ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
@@ -359,7 +360,7 @@ class Main_Scene extends Scene
         //BAR
         var barTransform = Mat4.identity();
         barTransform = barTransform.times(Mat4.translation(10, 40, 160))
-                                   .times(Mat4.rotation(-Math.PI/3, 0, 1, 0))
+                                   .times(Mat4.rotation(-Math.PI/2, 0, 1, 0))
                                    .times(Mat4.scale(20,20,20));
 
         this.shapes.bar.draw(context, program_state, barTransform, this.materials.bar);
