@@ -132,7 +132,7 @@ class Main_Scene extends Scene
                     ambient: 1, diffusivity: 1, specularity: 1, texture: new Texture( "assets/pink.png" ) }),
                 ketchup: new Material( new defs.Textured_Phong( 1 ),  { color: ketchup_color,
                     ambient: 1, diffusivity: 1, specularity: 1, texture: new Texture( "assets/pink.png" ) }),
-                bar: new Material(new defs.Textured_Phong(1), {color: color(0, 0, 0, 1), ambient: 1, diffusivity: 1, specularity: 1, 
+                bar: new Material(new defs.Textured_Phong(1), {color: color(0, 0, 0, 1), ambient: 1, diffusivity: 1, specularity: 1,
                     texture: new Texture("assets/bar_map.png")}),
                 backWall: new Material( new defs.Textured_Phong( 1 ), { ambient: 0.92, diffusivity: 1, specularity: .5, color: color( 0, 0, 0.1, 1 ) }),
                 leftWall: new Material( new defs.Textured_Phong( 1 ), { ambient: 1, diffusivity: 1, specularity: .5, color: color( 0, 0, 0.1, 1 ) }),
@@ -254,9 +254,9 @@ class Main_Scene extends Scene
             // Locate the camera here (inverted matrix).
             // program_state.set_camera(Mat4.translation(0, -100,-320 ));   //overview of room view without front wall
             // program_state.set_camera(Mat4.translation(40, -8,-80 )); //Original camera coord
-            // program_state.set_camera(Mat4.translation(0, -70,-150 )); //DO THIS ONE for POV
+            program_state.set_camera(Mat4.translation(0, -70,-150 )); //DO THIS ONE for POV
             // program_state.set_camera(Mat4.translation(0, -100,-500 )); //Current overview of front wall
-            program_state.set_camera(Mat4.translation(this.camera_x, this.camera_y,this.camera_z ).times(Mat4.rotation(this.camera_angle, 0, 1,0))); //view mustard POV
+            // program_state.set_camera(Mat4.translation(-50, -70,10 ).times(Mat4.rotation(Math.PI/2, 0, 1,0))); //view mustard POV
         }
         
         if (this.cameraReset>=0) {
