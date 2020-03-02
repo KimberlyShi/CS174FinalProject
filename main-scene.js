@@ -34,12 +34,15 @@ window.change_coke = change_coke;
 var music_index = -1;
 window.music_index = music_index;
 var mustard_spill = 0;
+window.mustard_spill = mustard_spill;
+var mustard_spill_timer = 0
 
 const jukebox_color = color(127/255, 124/255, 127/255, 250/255); // change alpha from 255 to 250 for pick color
 const ketchup_color = color(255/255, 0/255, 0/255, 251/255);
 const mustard_color = color(255/255, 255/255, 0/255, 255/255);
 const coke_color = color(0/255,0/255, 0/255, 252/255);
 const cup_color = color(190/255, 223/255, 221/255);
+const diamond_color = color(0/255,0/255, 0/255, 254/255)
 // const smile_color = color(0/255,0/255, 0/255, 253/255);
 
 window.jukebox_color = jukebox_color;
@@ -90,7 +93,7 @@ class Main_Scene extends Scene
             openSign: new Shape_From_File("assets/door.obj"),
             // smiley: new defs.Square(),
             cokeClue: new defs.Square(),
-
+            diamond: new Shape_From_File("assets/diamond.obj"),
             boothTable: new Shape_From_File("assets/squareTable.obj"),
             tallCup: new Shape_From_File("assets/kcup.obj"),
             mustardSpill: new defs.Square(),
@@ -156,9 +159,12 @@ class Main_Scene extends Scene
 
                 mustardSpill: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
                     texture: new Texture("assets/mustardspill_2.png")}),
+
                 light: new Material( new defs.Textured_Phong( 1 ),  { ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
                     texture: new Texture("assets/pink.png")}),
                 bulb: new Material( new defs.Textured_Phong( 1 ),  { ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
+                    texture: new Texture("assets/pink.png")}),
+                diamond: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: diamond_color,
                     texture: new Texture("assets/pink.png")}),
             };
     }
@@ -189,18 +195,8 @@ class Main_Scene extends Scene
         let model_transform = Mat4.translation(-60, 42, -170).times(Mat4.rotation(-Math.PI/2, 0, 1,0));
         model_transform = model_transform.times(Mat4.scale(20, 20, 20));
         this.shapes.jukebox.draw( context, program_state, model_transform, this.materials.jukebox );
-        if (window.music_play==1) {
-            window.music_play = 2
-            audio.src = sounds[window.music_index];
-            audio.loop = false;
-            audio.play();
-        } else if (window.music_play==0) {
-            audio.pause();
-        }
 
         //KETCHUP + MUSTARD
-
-        let mustardsplat = new Audio("assets/sound/mustardsplat.wav");
 
 		var distance_cup = 10; // define the initial distance between cups
         if(window.ketchup_move == 1) {
@@ -208,14 +204,11 @@ class Main_Scene extends Scene
 			   //kup_mov = max_move
 	           var max_angle = 1.6;
                mustard_angle += 0.04;
-               mustardsplat.loop = false;
-               mustardsplat.play();
 			   if (mustard_angle < max_angle) {
 				   if (mustard_mov==0) mustard_mov = 0.8 // add initial jump right after collision.
 				   mustard_mov += 0.004;
 			   } else {
-                   mustard_angle = max_angle;
-                   mustardsplat.pause();
+				   mustard_angle = max_angle
 			   }
               
 		   } else {
@@ -228,7 +221,10 @@ class Main_Scene extends Scene
 			collision_occured = false
 		}
 		
-
+        //diamond
+        let diamondTransform = Mat4.identity();
+        diamondTransform = diamondTransform.times(Mat4.translation(120,40,50));
+        this.shapes.diamond.draw(context, program_state, diamondTransform, this.materials.diamond);
 
         let transformTable =  Mat4.translation( -10, 7, -15 ).times(Mat4.rotation(-Math.PI/12,   0,1,0 ));
         transformTable = transformTable.times(Mat4.scale(15, 15, 15));
@@ -251,9 +247,9 @@ class Main_Scene extends Scene
 		var dist = (pos1[0]-pos2[0])**2 + (pos1[1]-pos2[1])**2 + (pos1[2]-pos2[2])**2; // get the square of distance
 		var min_dist = 3 // minimum distance between cups, when distance is smaller than this, collision occurs
 		if (dist <= min_dist**2) collision_occured = true;
-		console.log("dist = " + Math.sqrt(dist))
-		console.log("pos1 = " + pos1)
-		console.log("pos2 = " + pos2)
+		//console.log("dist = " + Math.sqrt(dist))
+		//console.log("pos1 = " + pos1)
+		//console.log("pos2 = " + pos2)
         var dist = Math.sqrt( (pos1[0]-pos2[0])**2 + (pos1[1]-pos2[1])**2 + (pos1[2]-pos2[2])**2 );
 		
         this.shapes.ketchup.draw( context, program_state, model_transform1, this.materials.ketchup );
@@ -263,11 +259,36 @@ class Main_Scene extends Scene
         transformMustard = transformMustard.times(Mat4.rotation(-Math.PI/2, 0, 1, 0));
         transformMustard = transformMustard.times(Mat4.rotation(-Math.PI/2, 1, 0, 0));
         transformMustard = transformMustard.times(Mat4.scale(35, 35, 35));
-      
         if(mustard_angle == max_angle){
             this.shapes.mustardSpill.draw(context, program_state, transformMustard, this.materials.mustardSpill);
+            if (window.mustard_spill==0) window.mustard_spill = 1;
         }
-     
+	    //console.log("window.mustard_spill ***" + window.mustard_spill)
+        if(window.mustard_spill == 1)
+        {
+			window.mustard_spill = 2
+			mustard_spill_timer = 1
+            audio.src = "assets/sound/mustardsplat.wav";
+            audio.loop = false;
+            if (audio.paused) audio.play();
+        }
+
+        if (mustard_spill_timer>0) mustard_spill_timer += 1;
+		//console.log("play !!!!" + mustard_spill_timer)
+	    //console.log("window.mustard_spill !!!!" + window.mustard_spill)
+		if (mustard_spill_timer>100) {
+			mustard_spill_timer = 0;
+			audio.pause();
+		}
+		
+        if (window.music_play==1) {
+            window.music_play = 2
+            audio.src = sounds[window.music_index];
+            audio.loop = false;
+            audio.play();
+        } else if (window.music_play==0 && window.mustard_spill==0) {
+            audio.pause();
+        }
 
         //BOOTH TABLE
         //var transformBoothTable = Mat4.identity();
