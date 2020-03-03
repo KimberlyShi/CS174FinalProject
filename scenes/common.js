@@ -884,9 +884,10 @@ class Movement_Controls extends Scene
       this.matrix().pre_multiply( Mat4.rotation( +.1 * this.pan,   0,0,1 ) );
 
 
-
                                     // Now apply translation movement of the camera, in the newest local coordinate frame.
-      if(this.pos[2].toFixed(2) < -233.65) {
+
+      //restrict camera front and back wall
+      if(this.pos[2] < -150 || this.pos[2] > 150) {
         // this.pos[2] = this.pos[2] -1;
         // var temp = this.thrust[2];
         this.thrust[2] = 0;
@@ -894,9 +895,32 @@ class Movement_Controls extends Scene
         this.matrix().post_multiply(Mat4.translation(...this.thrust.times(-meters_per_frame)));
         this.inverse().pre_multiply(Mat4.translation(...this.thrust.times(+meters_per_frame)));
         // this.thrust[2] = temp;
-        this.pos[2] = -232;
+
+        if(this.pos[2] < -150) {
+          this.pos[2] = -149;
+          this.thrust[2] = 1;
+        }
+        if (this.pos[2] > 150) {
+          this.pos[2] = 149;
+          this.thrust[2] = -1;
+        }
+
 
       }
+
+      // else if(this.pos[2] > 116) {
+      //   // this.pos[2] = this.pos[2] -1;
+      //   // var temp = this.thrust[2];
+      //   this.thrust[2] = 0;
+      //   // this.pos[2] = this.pos[2] + 1;
+      //   this.matrix().post_multiply(Mat4.translation(...this.thrust.times(-meters_per_frame)));
+      //   this.inverse().pre_multiply(Mat4.translation(...this.thrust.times(+meters_per_frame)));
+      //   // this.thrust[2] = temp;
+      //   this.pos[2] = 115;
+      //   this.thrust[2] = -1;
+      //
+      // }
+
 
         this.matrix().post_multiply(Mat4.translation(...this.thrust.times(-meters_per_frame)));
         this.inverse().pre_multiply(Mat4.translation(...this.thrust.times(+meters_per_frame)));
