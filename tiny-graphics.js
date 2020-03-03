@@ -1048,6 +1048,7 @@ class Webgl_Manager
         console.log(mx,my)
         this.gl.readPixels(mx, my, 1, 1, this.gl.RGBA, this.gl.UNSIGNED_BYTE, data);
 
+        //console.log("alpha="+data)
         if (this.color_match(window.jukebox_color,data)) {
             if (window.music_play ==0)
             {
@@ -1077,7 +1078,9 @@ class Webgl_Manager
           }
         }
 
-        if(this.color_match(window.diamond_color,data)){
+        // for diamond color check, loose the checking
+        //if(this.color_match(window.diamond_color,data)){
+		if (data[3] > window.diamond_color[3]*255 -15 &&  data[3] < window.diamond_color[3]*255 +15) {
           if(window.diamond_click ==1) {
             window.diamond_click = 0;
           } else {

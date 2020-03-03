@@ -44,7 +44,7 @@ const ketchup_color = color(255/255, 0/255, 0/255, 251/255);
 const mustard_color = color(255/255, 255/255, 0/255, 255/255);
 const coke_color = color(0/255,0/255, 0/255, 252/255);
 const cup_color = color(190/255, 223/255, 221/255);
-const diamond_color = color(10/255,80/255, 70/255, 238/255);
+const diamond_color = color(10/255,80/255, 70/255, 200/255);
 // const smile_color = color(0/255,0/255, 0/255, 253/255);
 
 window.jukebox_color = jukebox_color;
@@ -179,7 +179,7 @@ class Main_Scene extends Scene
                     texture: new Texture("assets/light_map.png")}),
                 bulb: new Material( new defs.Textured_Phong( 1 ),  { ambient: 1, diffusivity: 1, specularity: 1, color: color(0, 0, 0, 1),
                     texture: new Texture("assets/bulb_map.png")}),
-                diamond: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: diamond_color,
+                diamond: new Material( new defs.Phong_Shader(), {ambient: 1, diffusivity: 1, specularity: 1, color: diamond_color, 
                     texture: new Texture("assets/diamond_map.png")}),
                 note: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
                     texture: new Texture("assets/note.png")}),
@@ -273,6 +273,9 @@ class Main_Scene extends Scene
         
         if (this.cameraReset>=0) {
             program_state.set_camera(Mat4.translation(this.camera_x, this.camera_y,this.camera_z ).times(Mat4.rotation(this.camera_angle, 0, 1,0))); //view mustard POV
+			if ( this.cameraReset ==7) 
+				this.camera_angle += 0.003
+			else
             this.cameraReset = -1
         }
         program_state.projection_transform = Mat4.perspective( Math.PI/4, context.width/context.height, 1, 500 );
@@ -314,7 +317,7 @@ class Main_Scene extends Scene
         
         //diamond
         let diamondTransform = Mat4.identity();
-        diamondTransform = diamondTransform.times(Mat4.translation(120,40,50));
+        diamondTransform = diamondTransform.times(Mat4.translation(120,40,50)).times(Mat4.scale(2, 2, 2));
         this.shapes.diamond.draw(context, program_state, diamondTransform, this.materials.diamond);
 
         //note
