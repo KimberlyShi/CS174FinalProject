@@ -44,7 +44,7 @@ const ketchup_color = color(255/255, 0/255, 0/255, 251/255);
 const mustard_color = color(255/255, 255/255, 0/255, 255/255);
 const coke_color = color(0/255,0/255, 0/255, 252/255);
 const cup_color = color(190/255, 223/255, 221/255);
-const diamond_color = color(0/255,0/255, 0/255, 254/255)
+const diamond_color = color(10/255,80/255, 70/255, 238/255);
 // const smile_color = color(0/255,0/255, 0/255, 253/255);
 
 window.jukebox_color = jukebox_color;
@@ -235,6 +235,13 @@ class Main_Scene extends Scene
         this.camera_angle = 3*Math.PI/4
         this.cameraReset=6
     }
+    setCamera7() {
+        this.camera_x = 0
+        this.camera_y = -70
+        this.camera_z = -150
+        this.camera_angle = 0
+        this.cameraReset=7
+    }
     
     make_control_panel()
       { 
@@ -246,6 +253,8 @@ class Main_Scene extends Scene
          this.key_triggered_button("Camera 4: Booths/Jukebox", ["4"], this.setCamera4);
          this.key_triggered_button("Camera 5: Posters", ["5"], this.setCamera5);
          this.key_triggered_button("Camera 6: Bottom Corner", ["6"], this.setCamera6);
+         this.new_line();
+         this.key_triggered_button("Rotate Camera", ["r"], this.setCamera7);
       }
 
     display( context, program_state ) { 
@@ -309,10 +318,15 @@ class Main_Scene extends Scene
         this.shapes.diamond.draw(context, program_state, diamondTransform, this.materials.diamond);
 
         //note
-        // let noteTransform = Mat4.identity();
-        // noteTransform = noteTransform.times(Mat4.scale(35,35,35));
-        // noteTransform = noteTransform.times(Mat4.translation(120,40,50));
-        // this.shapes.note.draw(context, program_state, noteTransform, this.materials.note);
+        let noteTransform = Mat4.identity();
+        noteTransform = noteTransform.times(Mat4.translation(0,50,-70));
+        noteTransform = noteTransform.times(Mat4.scale(90, 90, 90));
+        if(window.diamond_click == 1)
+        {
+            console.log("diamond = " + window.diamond_click);
+            this.shapes.note.draw(context, program_state, noteTransform, this.materials.note);
+
+        }
 
         let transformTable =  Mat4.translation( -10, 7, -15 ).times(Mat4.rotation(-Math.PI/12,   0,1,0 ));
         transformTable = transformTable.times(Mat4.scale(15, 15, 15));
@@ -503,12 +517,12 @@ class Main_Scene extends Scene
 
 
         //CAR DECO
-        var transformCarDeco = Mat4.identity();
-        transformCarDeco = transformCarDeco.times(Mat4.translation(80, 50, -199));
+        // var transformCarDeco = Mat4.identity();
+        // transformCarDeco = transformCarDeco.times(Mat4.translation(80, 50, -199));
         // transformCarDeco = transformCarDeco.times(Mat4.rotation(Math.PI/2, 0, 1, 0));
         // transformOpenSign = transformOpenSign.times(Mat4.scale(50, 50, 50));
-        transformCarDeco = transformCarDeco.times(Mat4.scale(30, 30, 30));
-        this.shapes.carDeco.draw(context, program_state, transformCarDeco, this.materials.carDeco);
+        // transformCarDeco = transformCarDeco.times(Mat4.scale(30, 30, 30));
+        // this.shapes.note.draw(context, program_state, transformCarDeco, this.materials.note);
         //TALL CUP
         var transformTallCup = Mat4.identity();
         transformTallCup = transformTallCup.times(Mat4.translation(0,3,0));
