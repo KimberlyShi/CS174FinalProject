@@ -189,17 +189,17 @@ class Main_Scene extends Scene
     }
 
     setCamera1() {
-        this.camera_x = -50
-        this.camera_y = -70
+        this.camera_x = 0
+        this.camera_y = -60
         this.camera_z = 10
-        this.camera_angle = Math.PI/2
+        this.camera_angle = Math.PI
         this.cameraReset=1
     }
     
     setCamera2() {
         this.camera_x = -50
         this.camera_y = -70
-        this.camera_z = -100
+        this.camera_z = -120
         this.camera_angle = Math.PI/2
         this.cameraReset=2
     }
@@ -208,15 +208,15 @@ class Main_Scene extends Scene
         this.camera_x = -50
         this.camera_y = -70
         this.camera_z = -200
-        this.camera_angle = Math.PI/2
+        this.camera_angle = Math.PI/4
         this.cameraReset=3
     }
 
     setCamera4() {
-        this.camera_x = -50
+        this.camera_x = 0
         this.camera_y = -10
         this.camera_z = -150
-        this.camera_angle = Math.PI/2
+        this.camera_angle = -Math.PI/4
         this.cameraReset=4
     }
         
@@ -232,20 +232,20 @@ class Main_Scene extends Scene
         this.camera_x = 0
         this.camera_y = -70
         this.camera_z = -150
-        this.camera_angle = Math.PI/2
+        this.camera_angle = 3*Math.PI/4
         this.cameraReset=6
     }
     
     make_control_panel()
       { 
 
-         this.key_triggered_button("Camera 1", ["1"], this.setCamera1);
-         this.key_triggered_button("Camera 2", ["2"], this.setCamera2);
-         this.key_triggered_button("Camera 3", ["3"], this.setCamera3);
+         this.key_triggered_button("Camera 1: Bar", ["1"], this.setCamera1);
+         this.key_triggered_button("Camera 2: Bar Stand", ["2"], this.setCamera2);
+         this.key_triggered_button("Camera 3: Right Corner", ["3"], this.setCamera3);
          this.new_line();
-         this.key_triggered_button("Camera 4", ["4"], this.setCamera4);
-         this.key_triggered_button("Camera 5", ["5"], this.setCamera5);
-         this.key_triggered_button("Camera 6", ["6"], this.setCamera6);
+         this.key_triggered_button("Camera 4: Booths/Jukebox", ["4"], this.setCamera4);
+         this.key_triggered_button("Camera 5: Posters", ["5"], this.setCamera5);
+         this.key_triggered_button("Camera 6: Bottom Corner", ["6"], this.setCamera6);
       }
 
     display( context, program_state ) { 
