@@ -142,9 +142,9 @@ class Main_Scene extends Scene
                 frontWall: new Material( new defs.Textured_Phong( 1 ), { ambient: 0.92, diffusivity: 1, specularity: .5, color: color( 0, 0, 0.1, 1 ) }),
 
                 menuFront: new Material( new defs.Textured_Phong(1), {ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
-                    texture: new Texture("assets/menufront.png")}),
+                    texture: new Texture("assets/menufront2.png")}),
                 menuBack: new Material( new defs.Textured_Phong(1), {ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
-                    texture: new Texture("assets/menuback.png")}),
+                    texture: new Texture("assets/menuback2.png")}),
                 stool: new Material( new defs.Textured_Phong( 1 ), { color: jukebox_color, ambient: 1, diffusivity: 1, specularity: 1, 
                     texture: new Texture( "assets/stool_map.png" )}),
                 booth: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 0.6, specularity: 0.5, color: color(0, 0, 0, 1),
@@ -421,7 +421,7 @@ class Main_Scene extends Scene
             var transformSmoothie2 = Mat4.identity();
             transformSmoothie2 = transformSmoothie2.times(Mat4.translation(-10, 0, 0));
             var transformSmoothie = Mat4.identity();
-            transformSmoothie = transformSmoothie.times(Mat4.translation(-125, 50, 45 - i * boothShiftFactor));
+            transformSmoothie = transformSmoothie.times(Mat4.translation(-125, 50, 40 - i * boothShiftFactor));
             transformSmoothie = transformSmoothie.times(Mat4.scale(0.075,0.075, 0.075));
             transformSmoothie = transformSmoothie.times(boothScaleFactor);
             this.shapes.smoothie.draw(context, program_state, transformSmoothie, this.materials.smoothie);
