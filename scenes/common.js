@@ -764,13 +764,13 @@ class Movement_Controls extends Scene
     {                                       // add_mouse_controls():  Attach HTML mouse events to the drawing canvas.
                                             // First, measure mouse steering, for rotating the flyaround camera:
       this.mouse = { "from_center": vec( 0,0 ) };
-      const mouse_position = ( e, rect = canvas.getBoundingClientRect() ) => 
+      const mouse_position = ( e, rect = canvas.getBoundingClientRect() ) =>
                                    vec( e.clientX - (rect.left + rect.right)/2, e.clientY - (rect.bottom + rect.top)/2 );
                                 // Set up mouse response.  The last one stops us from reacting if the mouse leaves the canvas:
-      document.addEventListener( "mouseup",   e => { this.mouse.anchor = undefined; } );
-      canvas  .addEventListener( "mousedown", e => { e.preventDefault(); this.mouse.anchor      = mouse_position(e); } );
-      canvas  .addEventListener( "mousemove", e => { e.preventDefault(); this.mouse.from_center = mouse_position(e); } );
-      canvas  .addEventListener( "mouseout",  e => { if( !this.mouse.anchor ) this.mouse.from_center.scale_by(0) } );
+      // document.addEventListener( "mouseup",   e => { this.mouse.anchor = undefined; } );
+      // canvas  .addEventListener( "mousedown", e => { e.preventDefault(); this.mouse.anchor      = mouse_position(e); } );
+      // canvas  .addEventListener( "mousemove", e => { e.preventDefault(); this.mouse.from_center = mouse_position(e); } );
+      // canvas  .addEventListener( "mouseout",  e => { if( !this.mouse.anchor ) this.mouse.from_center.scale_by(0) } );
     }
   show_explanation( document_element ) { }
   make_control_panel()
@@ -811,8 +811,8 @@ class Movement_Controls extends Scene
       this.key_triggered_button( "+",  [ "p" ], () =>
                                             this.speed_multiplier  *=  1.2, "green", undefined, undefined, speed_controls );
       this.new_line();
-      this.key_triggered_button( "Rotate left",  [ "," ], () => this.roll =  1, undefined, () => this.roll = 0 );
-      this.key_triggered_button( "Rotate right", [ "." ], () => this.roll = -1, undefined, () => this.roll = 0 );
+      // this.key_triggered_button( "Rotate left",  [ "," ], () => this.roll =  1, undefined, () => this.roll = 0 );
+      // this.key_triggered_button( "Rotate right", [ "." ], () => this.roll = -1, undefined, () => this.roll = 0 );
 
       // this.key_triggered_button( "Roll left",  [ "," ], () => this.pan =  1, undefined, () => this.pan = 0 );
       // this.key_triggered_button( "Roll right", [ "." ], () => this.pan = -1, undefined, () => this.pan = 0 );
@@ -874,14 +874,45 @@ class Movement_Controls extends Scene
       // this.matrix().post_multiply( Mat4.rotation( -.1 * this.roll,   0,0,1 ) );
       // this.inverse().pre_multiply( Mat4.rotation( +.1 * this.roll,   0,0,1 ) );
 
-      if(this.pos[2].toFixed(2) > -233.65) {
-        this.matrix().post_multiply(Mat4.rotation(+.01 * this.roll, 0, 1, 0));
-        this.inverse().pre_multiply(Mat4.rotation(-.01 * this.roll, 0, 1, 0));
-      }
+      // if(this.pos[2] >= -150 && this.pos[2] <= 150 &&
+      //     this.pos[0] >= -100 && this.pos[0] <= 100) {
+      //
+      //   this.matrix().post_multiply(Mat4.rotation(+.01 * this.roll, 0, 1, 0));
+      //   this.inverse().pre_multiply(Mat4.rotation(-.01 * this.roll, 0, 1, 0));
+      // }
+
+      // if(this.pos[2] < -150 || this.pos[2] > 150 || this.pos[0] < -100 || this.pos[0] > 100)
+      // {
+      //   this.roll = 0;
+      //   this.matrix().post_multiply(Mat4.rotation(+.01 * this.roll, 0, 1, 0));
+      //   this.inverse().pre_multiply(Mat4.rotation(-.01 * this.roll, 0, 1, 0));
+      //
+      //   if(this.pos[2] < -150) {
+      //     this.pos[2] = -149;
+      //     this.roll = -1;
+      //   }
+      //   else if (this.pos[2] > 150) {
+      //     this.pos[2] = 149;
+      //     this.roll = 1;
+      //   }
+      //   else if (this.pos[0] < -100) {
+      //     this.pos[0] = -99;
+      //     this.roll = 1;
+      //   }
+      //   else if (this.pos[0] > 100) {
+      //     this.pos[0] = 99;
+      //     this.roll = -1;
+      //   }
+      //
+      // }
+      // this.matrix().post_multiply(Mat4.rotation(+.01 * this.roll, 0, 1, 0));
+      // this.inverse().pre_multiply(Mat4.rotation(-.01 * this.roll, 0, 1, 0));
+
+
 
       //ADDED by kim
-      this.matrix().post_multiply( Mat4.rotation( -.1 * this.pan,   0,0,1 ) );
-      this.matrix().pre_multiply( Mat4.rotation( +.1 * this.pan,   0,0,1 ) );
+      // this.matrix().post_multiply( Mat4.rotation( -.1 * this.pan,   0,0,1 ) );
+      // this.matrix().pre_multiply( Mat4.rotation( +.1 * this.pan,   0,0,1 ) );
 
 
                                     // Now apply translation movement of the camera, in the newest local coordinate frame.
@@ -907,23 +938,37 @@ class Movement_Controls extends Scene
 
 
       }
-
-      // else if(this.pos[2] > 116) {
-      //   // this.pos[2] = this.pos[2] -1;
-      //   // var temp = this.thrust[2];
-      //   this.thrust[2] = 0;
-      //   // this.pos[2] = this.pos[2] + 1;
-      //   this.matrix().post_multiply(Mat4.translation(...this.thrust.times(-meters_per_frame)));
-      //   this.inverse().pre_multiply(Mat4.translation(...this.thrust.times(+meters_per_frame)));
-      //   // this.thrust[2] = temp;
-      //   this.pos[2] = 115;
-      //   this.thrust[2] = -1;
-      //
-      // }
-
-
+      this.matrix().post_multiply(Mat4.translation(...this.thrust.times(-meters_per_frame)));
+      this.inverse().pre_multiply(Mat4.translation(...this.thrust.times(+meters_per_frame)));
+      if(this.pos[0] < -100 || this.pos[0] > 100) {
+        // this.pos[2] = this.pos[2] -1;
+        // var temp = this.thrust[2];
+        this.thrust[0] = 0;
+        // this.pos[2] = this.pos[2] + 1;
         this.matrix().post_multiply(Mat4.translation(...this.thrust.times(-meters_per_frame)));
         this.inverse().pre_multiply(Mat4.translation(...this.thrust.times(+meters_per_frame)));
+        // this.thrust[2] = temp;
+
+        if(this.pos[0] < -100) {
+          this.pos[0] = -99;
+          this.thrust[0] = 1;
+        }
+        if (this.pos[0] > 100) {
+          this.pos[0] = 99;
+          this.thrust[0] = -1;
+        }
+
+
+      }
+
+      this.matrix().post_multiply(Mat4.translation(...this.thrust.times(-meters_per_frame)));
+      this.inverse().pre_multiply(Mat4.translation(...this.thrust.times(+meters_per_frame)));
+        // this.matrix().post_multiply(Mat4.rotation(+.01 * this.roll, 0, 1, 0));
+        // this.inverse().pre_multiply(Mat4.rotation(-.01 * this.roll, 0, 1, 0));
+
+
+
+
 
 
     }
