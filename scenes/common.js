@@ -874,10 +874,41 @@ class Movement_Controls extends Scene
       // this.matrix().post_multiply( Mat4.rotation( -.1 * this.roll,   0,0,1 ) );
       // this.inverse().pre_multiply( Mat4.rotation( +.1 * this.roll,   0,0,1 ) );
 
-      if(this.pos[2].toFixed(2) > -233.65) {
-        this.matrix().post_multiply(Mat4.rotation(+.01 * this.roll, 0, 1, 0));
-        this.inverse().pre_multiply(Mat4.rotation(-.01 * this.roll, 0, 1, 0));
-      }
+      // if(this.pos[2] >= -150 && this.pos[2] <= 150 &&
+      //     this.pos[0] >= -100 && this.pos[0] <= 100) {
+      //
+      //   this.matrix().post_multiply(Mat4.rotation(+.01 * this.roll, 0, 1, 0));
+      //   this.inverse().pre_multiply(Mat4.rotation(-.01 * this.roll, 0, 1, 0));
+      // }
+
+      // if(this.pos[2] < -150 || this.pos[2] > 150 || this.pos[0] < -100 || this.pos[0] > 100)
+      // {
+      //   this.roll = 0;
+      //   this.matrix().post_multiply(Mat4.rotation(+.01 * this.roll, 0, 1, 0));
+      //   this.inverse().pre_multiply(Mat4.rotation(-.01 * this.roll, 0, 1, 0));
+      //
+      //   if(this.pos[2] < -150) {
+      //     this.pos[2] = -149;
+      //     this.roll = -1;
+      //   }
+      //   else if (this.pos[2] > 150) {
+      //     this.pos[2] = 149;
+      //     this.roll = 1;
+      //   }
+      //   else if (this.pos[0] < -100) {
+      //     this.pos[0] = -99;
+      //     this.roll = 1;
+      //   }
+      //   else if (this.pos[0] > 100) {
+      //     this.pos[0] = 99;
+      //     this.roll = -1;
+      //   }
+      //
+      // }
+      // this.matrix().post_multiply(Mat4.rotation(+.01 * this.roll, 0, 1, 0));
+      // this.inverse().pre_multiply(Mat4.rotation(-.01 * this.roll, 0, 1, 0));
+
+
 
       //ADDED by kim
       this.matrix().post_multiply( Mat4.rotation( -.1 * this.pan,   0,0,1 ) );
@@ -907,23 +938,37 @@ class Movement_Controls extends Scene
 
 
       }
-
-      // else if(this.pos[2] > 116) {
-      //   // this.pos[2] = this.pos[2] -1;
-      //   // var temp = this.thrust[2];
-      //   this.thrust[2] = 0;
-      //   // this.pos[2] = this.pos[2] + 1;
-      //   this.matrix().post_multiply(Mat4.translation(...this.thrust.times(-meters_per_frame)));
-      //   this.inverse().pre_multiply(Mat4.translation(...this.thrust.times(+meters_per_frame)));
-      //   // this.thrust[2] = temp;
-      //   this.pos[2] = 115;
-      //   this.thrust[2] = -1;
-      //
-      // }
-
-
+      this.matrix().post_multiply(Mat4.translation(...this.thrust.times(-meters_per_frame)));
+      this.inverse().pre_multiply(Mat4.translation(...this.thrust.times(+meters_per_frame)));
+      if(this.pos[0] < -100 || this.pos[0] > 100) {
+        // this.pos[2] = this.pos[2] -1;
+        // var temp = this.thrust[2];
+        this.thrust[0] = 0;
+        // this.pos[2] = this.pos[2] + 1;
         this.matrix().post_multiply(Mat4.translation(...this.thrust.times(-meters_per_frame)));
         this.inverse().pre_multiply(Mat4.translation(...this.thrust.times(+meters_per_frame)));
+        // this.thrust[2] = temp;
+
+        if(this.pos[0] < -100) {
+          this.pos[0] = -99;
+          this.thrust[0] = 1;
+        }
+        if (this.pos[0] > 100) {
+          this.pos[0] = 99;
+          this.thrust[0] = -1;
+        }
+
+
+      }
+
+      this.matrix().post_multiply(Mat4.translation(...this.thrust.times(-meters_per_frame)));
+      this.inverse().pre_multiply(Mat4.translation(...this.thrust.times(+meters_per_frame)));
+        this.matrix().post_multiply(Mat4.rotation(+.01 * this.roll, 0, 1, 0));
+        this.inverse().pre_multiply(Mat4.rotation(-.01 * this.roll, 0, 1, 0));
+
+
+
+
 
 
     }
