@@ -468,12 +468,12 @@ class Main_Scene extends Scene
 
         //BAR
         var barTransform = Mat4.identity();
-        barTransform = barTransform.times(Mat4.translation(10, 15, 160))
+        barTransform = barTransform.times(Mat4.translation(40, 22, 200))
                                    .times(Mat4.rotation(-Math.PI/2, 0, 1, 0))
-                                   .times(Mat4.scale(20,20,20));
+                                   .times(Mat4.scale(25, 35, 45));
         this.shapes.bar.draw(context, program_state, barTransform, this.materials.bar);
 
-        //MENU
+        //MENUr4
         var model_transform_menu_front = Mat4.identity();
         const menuAngle = Math.PI;
         // const upwardShift = Mat4.translation(-9, 12, -18);
