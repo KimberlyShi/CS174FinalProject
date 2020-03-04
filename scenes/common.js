@@ -940,6 +940,8 @@ class Movement_Controls extends Scene
       }
       this.matrix().post_multiply(Mat4.translation(...this.thrust.times(-meters_per_frame)));
       this.inverse().pre_multiply(Mat4.translation(...this.thrust.times(+meters_per_frame)));
+
+      //Left and right wall boundaries
       if(this.pos[0] < -100 || this.pos[0] > 100) {
         // this.pos[2] = this.pos[2] -1;
         // var temp = this.thrust[2];
@@ -966,6 +968,27 @@ class Movement_Controls extends Scene
         // this.matrix().post_multiply(Mat4.rotation(+.01 * this.roll, 0, 1, 0));
         // this.inverse().pre_multiply(Mat4.rotation(-.01 * this.roll, 0, 1, 0));
 
+
+      // //up and down wall
+      if(this.pos[1] < -150 || this.pos[1] > 0) {
+        this.thrust[1] = 0;
+
+        this.matrix().post_multiply(Mat4.translation(...this.thrust.times(-meters_per_frame)));
+        this.inverse().pre_multiply(Mat4.translation(...this.thrust.times(+meters_per_frame)));
+
+        if(this.pos[1] < -150) {
+          this.pos[1] = -149;
+          this.thrust[1] = 1;
+        }
+        if (this.pos[1] > 0) {
+          this.pos[1] = -1;
+          this.thrust[1] = -1;
+        }
+
+
+      }
+        this.matrix().post_multiply(Mat4.translation(...this.thrust.times(-meters_per_frame)));
+        this.inverse().pre_multiply(Mat4.translation(...this.thrust.times(+meters_per_frame)));
 
 
 
