@@ -49,7 +49,7 @@ const ketchup_color = color(255/255, 0/255, 0/255, 251/255);
 const mustard_color = color(255/255, 255/255, 0/255, 255/255);
 const coke_color = color(2/255,2/255, 2/255, 252/255);
 const cup_color = color(190/255, 223/255, 221/255);
-const diamond_color = color(10/255,80/255, 70/255, 200/255);
+// const diamond_color = color(10/255,80/255, 70/255, 200/255);
 const napkin_color = color(20/255, 40/255, 60/255, 230/255);
 const diamond_color = color(227/255, 255/255, 254/255, 201/255);
 const door_color = color(1/255, 1/255, 1/255, 253/255);
@@ -117,7 +117,7 @@ class Main_Scene extends Scene
             bulb: new Shape_From_File("assets/bulb.obj"),
             carDeco: new defs.Square(),
             smoothie: new Shape_From_File("assets/drink.obj"),
-            napkin: new Shape_From_File("assets/napkin.obj")
+            napkin: new Shape_From_File("assets/napkin.obj"),
             endScene: new defs.Square(),
             fadeToBlack: new defs.Square(),
         };

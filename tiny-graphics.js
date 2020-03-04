@@ -1077,8 +1077,15 @@ class Webgl_Manager
             window.change_coke = 1;
           }
         }
+        if(this.color_match(window.napkin_color,data)){
+          if(window.napkin_click == 1) {
+            window.napkin_click = 0;
+          } else {
+            window.napkin_click = 1;
+          }
+        }
 
-        // for diamond color check, loose the checking
+        // for diamond color check, lose the checking
         //if(this.color_match(window.diamond_color,data)){
 		if (data[3] > window.diamond_color[3]*255 -15 &&  data[3] < window.diamond_color[3]*255 +15) {
           if(window.diamond_click ==1) {
@@ -1088,15 +1095,11 @@ class Webgl_Manager
           }
         }
 
-		if(this.color_match(window.door_color, data)) {
-		  if(window.door_click == 0) {
-		    window.door_click = 1;
-          }
-        }
-
         //console.log(rect)
         //console.log(data)
     }  
+
+   
   set_size( dimensions = [ 1080, 600 ] )
     {                                   // set_size():  Allows you to re-size the canvas anytime.  To work, it must change the
                                         // size in CSS, wait for style to re-flow, and then change the size again within canvas 
