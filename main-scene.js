@@ -333,13 +333,16 @@ class Main_Scene extends Scene
 
         //napkin
         let napkinTransform = Mat4.identity();
-        napkinTransform = napkinTransform.times(Mat4.translation(140, 40, 70)).times(Mat4.scale(4,4,4));
+        napkinTransform = napkinTransform.times(Mat4.translation(140, 40, 70)).times(Mat4.scale(4,4,4))
+                                         
+        if(window.napkin_click == 1){
+            napkinTransform = napkinTransform.times(Mat4.rotation(Math.PI, 0, 1, 0));
+        }
+        else if(window.napkin_click == 0){
+            napkinTransform = napkinTransform.times(Mat4.rotation(-Math.PI/2, 0, 1, 0));
+        }
         this.shapes.napkin.draw(context, program_state, napkinTransform, this.materials.napkin);
 
-        if(window.napkin_click == 1)
-        {
-            this.shapes.napkin.draw(context, program_state, napkinTransform, this.materials.napkin);
-        }
         
         //diamond
         let diamondTransform = Mat4.identity();
