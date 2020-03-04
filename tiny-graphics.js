@@ -1088,6 +1088,12 @@ class Webgl_Manager
           }
         }
 
+		if(this.color_match(window.door_color, data)) {
+		  if(window.door_click == 0) {
+		    window.door_click = 1;
+          }
+        }
+
         //console.log(rect)
         //console.log(data)
     }  
