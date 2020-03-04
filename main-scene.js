@@ -38,6 +38,8 @@ window.mustard_spill = mustard_spill;
 var mustard_spill_timer = 0
 var diamond_click = 0;
 window.diamond_click = 0;
+var napkin_click = 0;
+window.napkin_click = napkin_click;
 
 const jukebox_color = color(127/255, 124/255, 127/255, 250/255); // change alpha from 255 to 250 for pick color
 const ketchup_color = color(255/255, 0/255, 0/255, 251/255);
@@ -45,6 +47,7 @@ const mustard_color = color(255/255, 255/255, 0/255, 255/255);
 const coke_color = color(0/255,0/255, 0/255, 252/255);
 const cup_color = color(190/255, 223/255, 221/255);
 const diamond_color = color(10/255,80/255, 70/255, 200/255);
+const napkin_color = color(20/255, 40/255, 60/255, 230/255);
 // const smile_color = color(0/255,0/255, 0/255, 253/255);
 
 window.jukebox_color = jukebox_color;
@@ -53,6 +56,7 @@ window.mustard_color = mustard_color;
 window.coke_color = coke_color;
 window.cup_color = cup_color;
 window.diamond_color = diamond_color;
+window.napkin_color = napkin_color;
 // window.smile_color = smile_color;
 
 var collision_occured = false;
@@ -104,7 +108,8 @@ class Main_Scene extends Scene
             light: new Shape_From_File("assets/light.obj"),
             bulb: new Shape_From_File("assets/bulb.obj"),
             carDeco: new defs.Square(),
-            smoothie: new Shape_From_File("assets/drink.obj")
+            smoothie: new Shape_From_File("assets/drink.obj"),
+            napkin: new Shape_From_File("assets/napkin.obj")
         };
         
         this.camera_x = -50
@@ -185,6 +190,8 @@ class Main_Scene extends Scene
                     texture: new Texture("assets/note.png")}),
                 carDeco: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
                     texture: new Texture("assets/carDeco_1.png")}),
+                napkin: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
+                    texture: new Texture("assets/napkin_map.png")}),
             };
     }
 
@@ -314,6 +321,16 @@ class Main_Scene extends Scene
             mustard_mov = 0
             collision_occured = false
         }
+
+        //napkin
+        let napkinTransform = Mat4.identity();
+        napkinTransform = napkinTransform.times(Mat4.translation(140, 40, 70)).times(Mat4.scale(4,4,4));
+        this.shapes.napkin.draw(context, program_state, napkinTransform, this.materials.napkin);
+
+        if(window.napkin_click == 1)
+        {
+            this.shapes.napkin.draw(context, program_state, napkinTransform, this.materials.napkin);
+        }
         
         //diamond
         let diamondTransform = Mat4.identity();
@@ -328,7 +345,7 @@ class Main_Scene extends Scene
         {
             console.log("diamond = " + window.diamond_click);
             this.shapes.note.draw(context, program_state, noteTransform, this.materials.note);
-
+            this.setCamera5();
         }
 
         let transformTable =  Mat4.translation( -10, 7, -15 ).times(Mat4.rotation(-Math.PI/12,   0,1,0 ));
