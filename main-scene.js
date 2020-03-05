@@ -46,6 +46,8 @@ var note_click = 0;
 window.note_click = note_click;
 var bottle_click = 0;
 window.bottle_click = bottle_click;
+var stool_click = 0;
+window.stool_click = stool_click;
 
 //NUMS: 200, 212, 221, 249, 250, 251, 252, 254, 255,
 const jukebox_color = color(127/255, 124/255, 127/255, 250/255); // change alpha from 255 to 250 for pick color
@@ -61,6 +63,7 @@ const note_color = color(2/255, 2/255, 2/255, 249/255);
 
 const start_color = color(2/255, 3/255, 2/255, 245/255);
 const bottle_color = color(3/255, 4/255, 5/255, 240/255);
+const stool_color = color(126/255, 125/255, 126/255, 247/255);
 
 // const smile_color = color(0/255,0/255, 0/255, 253/255);
 
@@ -74,6 +77,7 @@ window.napkin_color = napkin_color;
 window.door_color = door_color;
 window.note_color = note_color;
 window.bottle_color = bottle_color;
+window.stool_color = stool_color;
 // window.smile_color = smile_color;
 
 var collision_occured = false;
@@ -223,7 +227,7 @@ class Main_Scene extends Scene
                     texture: new Texture("assets/shards_map.png")}),
                 bottle: new Material(new defs.Textured_Phong( 1 ),  { ambient: 1, diffusivity: 1, specularity: 1, color: bottle_color,
                     texture: new Texture("assets/shards_map.png")}),
-                stoolclue: new Material( new defs.Textured_Phong( 1 ), { color: jukebox_color, ambient: 1, diffusivity: 1, specularity: 1, 
+                stoolclue: new Material( new defs.Textured_Phong( 1 ), { color: stool_color, ambient: 1, diffusivity: 1, specularity: 1, 
                     texture: new Texture( "assets/stool_map.png" )}),
 
 
@@ -541,13 +545,22 @@ class Main_Scene extends Scene
 
         //STOOLS
         let stoolShiftFactor = 30;
-        var stool_move = 0;
+        var stool_pos = 0;
+        var stool_move = 0.1;
+        var max_stool_dist = 0.8;
+        if(stool_pos < max_stool_dist)
+        {
+            stool_pos += stool_move;
+        }
         let stoolTransform = Mat4.translation(123, 14, 80 + stoolShiftFactor);
         let stoolClueTransform = Mat4.translation(123, 14, 80 - stoolShiftFactor * 4);
 
         // stoolClueTransform = stoolClueTransform.times(Mat4.translation(0, 0, -stoolShiftFactor));
         stoolClueTransform = stoolClueTransform.times(Mat4.scale(10, 10, 10));
         this.shapes.stoolclue.draw(context, program_state, stoolClueTransform, this.materials.stoolclue);
+        if(window.stool_click == 1){
+            stoolClueTransform = stoolClueTransform.times(Mat4.translation(0, 0, -stool_pos));
+        }
 
         for (let i = 0; i < 4; i++ ) {
             stoolTransform = stoolTransform.times(Mat4.translation(0, 0, -stoolShiftFactor));
