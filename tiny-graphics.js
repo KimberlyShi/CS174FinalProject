@@ -1080,8 +1080,16 @@ class Webgl_Manager
         if(this.color_match(window.napkin_color,data)){
           if(window.napkin_click == 1) {
             window.napkin_click = 0;
+            console.log("napkin = " + window.napkin_click);
           } else {
             window.napkin_click = 1;
+          }
+        }
+        if(this.color_match(window.note_color,data)){
+          if(window.note_click == 1) {
+            window.note_click = 0;
+          } else {
+            window.note_click = 1;
           }
         }
 
