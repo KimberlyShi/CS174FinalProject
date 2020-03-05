@@ -1126,6 +1126,19 @@ class Webgl_Manager
           }
         }
 
+		if(this.color_match(window.start_color, data)) {
+		  if(window.start_click == 0) {
+		    window.rules_click =1;
+          }
+        }
+
+		if(this.color_match(window.rules_color, data)) {
+		  if(window.rules_click == 1) {
+		    window.rules_click = 0;
+          }
+        }
+
+
         //console.log(rect)
         //console.log(data)
     }  
