@@ -57,7 +57,7 @@ const diamond_color = color(227/255, 255/255, 254/255, 201/255);
 const door_color = color(1/255, 1/255, 1/255, 253/255);
 const note_color = color(2/255, 2/255, 2/255, 249/255);
 
-const start_color = color(3/255, 3/255, 2/255, 245/255);
+const start_color = color(2/255, 3/255, 2/255, 245/255);
 
 // const smile_color = color(0/255,0/255, 0/255, 253/255);
 
@@ -211,7 +211,7 @@ class Main_Scene extends Scene
                 fadeToBlack: new Material( new defs.Textured_Phong( 1 ), { ambient: 0.92, diffusivity: 1, specularity: .5, color: color( 0, 0, 0, 1 ),
                     texture: new Texture("assets/black_1.png")}),
                 beginScreen: new Material( new defs.Textured_Phong( 1 ), { ambient: 0.92, diffusivity: 1, specularity: .5, color: start_color,
-                    texture: new Texture("assets/beginScreen_1.png")}),
+                    texture: new Texture("assets/beginScreen.png")}),
 
                 shards: new Material( new defs.Textured_Phong( 1 ),  { ambient: 1, diffusivity: 1, specularity: 1, color: color(0, 0, 0, 1),
                     texture: new Texture("assets/shards_map.png")}),
@@ -315,6 +315,12 @@ class Main_Scene extends Scene
         program_state.lights = [ new Light(
             Mat4.rotation( t/300,   1,0,0 ).times( vec4( 3,2,10,1 ) ),
             color( 1,.7,.7,1 ), 100000 ) ];
+
+        //begin screen
+        let transformBeginScreen = Mat4.identity();
+        transformBeginScreen = transformBeginScreen.times(Mat4.translation(0,70, 40));
+        transformBeginScreen= transformBeginScreen.times(Mat4.scale(50, 50, 50));
+        this.shapes.beginScreen.draw(context, program_state, transformBeginScreen, this.materials.beginScreen);
 
         //JUKEBOX
         // let model_transform = Mat4.translation(-90, 42, -57).times(Mat4.rotation(-Math.PI/2, 0, 1,0));
@@ -502,8 +508,6 @@ class Main_Scene extends Scene
         tallTableTransform = tallTableTransform.times(Mat4.scale(10, 10, 10));
         this.shapes.menu.draw(context, program_state, tallTableTransform, this.materials.tallTable);
 
-
-
         //STOOLS
         let stoolShiftFactor = 30;
         let stoolTransform = Mat4.translation(123, 14, 80 + stoolShiftFactor);
@@ -573,9 +577,10 @@ class Main_Scene extends Scene
         transformOpenSign = transformOpenSign.times(Mat4.scale(30, 30, 30));
         this.shapes.openSign.draw(context, program_state, transformOpenSign, this.materials.openSign);
 
-        var transformBeginScreen = Mat4.identity();
-        transformBeginScreen = transformBeginScreen.times(Mat4.translation(10,50, 40));
-        transformBeginScreen= transformBeginScreen.times(Mat4.scale(50, 50, 50));
+
+        // var transformBeginScreen = Mat4.identity();
+        // transformBeginScreen = transformBeginScreen.times(Mat4.translation(10,50, 40));
+        // transformBeginScreen= transformBeginScreen.times(Mat4.scale(50, 50, 50));
         // this.shapes.beginScreen.draw(context, program_state, transformBeginScreen, this.materials.beginScreen);
 
 
