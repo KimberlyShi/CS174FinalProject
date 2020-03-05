@@ -44,8 +44,15 @@ var door_click = 0;
 window.door_click = 0;
 var note_click = 0;
 window.note_click = note_click;
+var start_click = 0;
+window.start_click = start_click;
+var rules_click = 0;
+window.rules_click = rules_click;
 
-//NUMS: 200, 212, 221, 249, 250, 251, 252, 254, 255,
+
+
+
+//NUMS: 200, 212, 221, 245,246, 249, 250, 251, 252, 254, 255,
 const jukebox_color = color(127/255, 124/255, 127/255, 250/255); // change alpha from 255 to 250 for pick color
 const ketchup_color = color(255/255, 0/255, 0/255, 251/255);
 const mustard_color = color(255/255, 255/255, 0/255, 255/255);
@@ -58,6 +65,7 @@ const door_color = color(1/255, 1/255, 1/255, 253/255);
 const note_color = color(2/255, 2/255, 2/255, 249/255);
 
 const start_color = color(2/255, 3/255, 2/255, 245/255);
+const rules_color = color(3/255, 4/255, 3/255, 246/255);
 
 // const smile_color = color(0/255,0/255, 0/255, 253/255);
 
@@ -70,6 +78,9 @@ window.diamond_color = diamond_color;
 window.napkin_color = napkin_color;
 window.door_color = door_color;
 window.note_color = note_color;
+window.start_color = start_color;
+window.rules_color = rules_color;
+
 // window.smile_color = smile_color;
 
 var collision_occured = false;
@@ -128,6 +139,7 @@ class Main_Scene extends Scene
             fadeToBlack: new defs.Square(),
             beginScreen: new defs.Square(),
             shards: new Shape_From_File("assets/shards.obj"),
+            instructions: new defs.Square(),
         };
         
         this.camera_x = -50
@@ -205,15 +217,17 @@ class Main_Scene extends Scene
                 // endScene: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: door_color,
                 //     texture: new Texture("assets/carDeco_1.png")}),
                 endScene: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: door_color,
-                    texture: new Texture("assets/finish_1.png")}),
+                    texture: new Texture("assets/finish_rect_1.png")}),
                 napkin: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: napkin_color,
                     texture: new Texture("assets/napkin_map.png")}),
                 fadeToBlack: new Material( new defs.Textured_Phong( 1 ), { ambient: 0.92, diffusivity: 1, specularity: .5, color: color( 0, 0, 0, 1 ),
                     texture: new Texture("assets/black_1.png")}),
                 beginScreen: new Material( new defs.Textured_Phong( 1 ), { ambient: 0.92, diffusivity: 1, specularity: .5, color: start_color,
-                    texture: new Texture("assets/beginScreen.png")}),
+                    texture: new Texture("assets/beginsceen_rect.png")}),
+                instructions: new Material( new defs.Textured_Phong( 1 ), { ambient: 0.92, diffusivity: 1, specularity: .5, color: rules_color,
+                    texture: new Texture("assets/rules_rect_1.png")}),
 
-                shards: new Material( new defs.Textured_Phong( 1 ),  { ambient: 1, diffusivity: 1, specularity: 1, color: color(0, 0, 0, 1),
+                shards: new Material( new defs.Textured_Phong( 1 ),  { ambient: 1, diffusivity: 1, specularity: 1, color: rules_color,
                     texture: new Texture("assets/shards_map.png")}),
 
 
@@ -318,9 +332,27 @@ class Main_Scene extends Scene
 
         //begin screen
         let transformBeginScreen = Mat4.identity();
-        transformBeginScreen = transformBeginScreen.times(Mat4.translation(0,70, 40));
-        transformBeginScreen= transformBeginScreen.times(Mat4.scale(50, 50, 50));
-        this.shapes.beginScreen.draw(context, program_state, transformBeginScreen, this.materials.beginScreen);
+        transformBeginScreen = transformBeginScreen.times(Mat4.translation(0,71, 40));
+        transformBeginScreen= transformBeginScreen.times(Mat4.scale(82, 80, 80));
+
+        if(window.start_click == 0) {
+            this.shapes.beginScreen.draw(context, program_state, transformBeginScreen, this.materials.beginScreen);
+            this.setCamera5();
+        }
+        if(window.rules_click == 1) {
+            window.start_click = 1;
+            this.shapes.instructions.draw(context, program_state, transformBeginScreen, this.materials.instructions);
+            this.setCamera5();
+            // window.rules_click = 0;
+
+        }
+
+        // let transformRules = Mat4.identity();
+        // transformRules = transformRules.times(Mat4.translation(0,70,41));
+        // transformRules = transformRules.times(Mat4.scale(20,20,20));
+        // this.shapes.instructions.draw(context, program_state, transformRules, this.materials.instructions);
+
+
 
         //JUKEBOX
         // let model_transform = Mat4.translation(-90, 42, -57).times(Mat4.rotation(-Math.PI/2, 0, 1,0));
@@ -578,11 +610,6 @@ class Main_Scene extends Scene
         this.shapes.openSign.draw(context, program_state, transformOpenSign, this.materials.openSign);
 
 
-        // var transformBeginScreen = Mat4.identity();
-        // transformBeginScreen = transformBeginScreen.times(Mat4.translation(10,50, 40));
-        // transformBeginScreen= transformBeginScreen.times(Mat4.scale(50, 50, 50));
-        // this.shapes.beginScreen.draw(context, program_state, transformBeginScreen, this.materials.beginScreen);
-
 
         //CAR DECO
         // var transformCarDeco = Mat4.identity();
@@ -667,7 +694,7 @@ class Main_Scene extends Scene
         transformEndScene = transformEndScene.times(Mat4.translation(0, 70, 30));
         // transformEndScene = transformEndScene.times(Mat4.rotation(Math.PI/2, 0, 1, 0));
         // transformEndScene = transformEndScene.times(Mat4.scale(400, 800, 50));
-        transformEndScene = transformEndScene.times(Mat4.scale(50, 50, 50));
+        transformEndScene = transformEndScene.times(Mat4.scale(100, 100, 100));
 
         var transformBlack = Mat4.identity();
         transformBlack = transformBlack.times(Mat4.translation(0,70, 10));
@@ -684,6 +711,7 @@ class Main_Scene extends Scene
 
             this.setCamera5();
         }
+
 
 
     }
