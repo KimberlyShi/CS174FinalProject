@@ -195,7 +195,7 @@ class Main_Scene extends Scene
 
                 // carDeco: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
                 //     texture: new Texture("assets/carDeco_1.png")}),
-                endScene: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: color(0,0,0,1),
+                endScene: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: door_color,
                     texture: new Texture("assets/carDeco_1.png")}),
                 napkin: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
                     texture: new Texture("assets/napkin_map.png")}),
@@ -545,9 +545,10 @@ class Main_Scene extends Scene
         this.shapes.openSign.draw(context, program_state, transformOpenSign, this.materials.openSign);
 
         var transformEndScene = Mat4.identity();
-        transformEndScene = transformEndScene.times(Mat4.translation(40, 50, -10));
+        transformEndScene = transformEndScene.times(Mat4.translation(0, 70, 30));
         // transformEndScene = transformEndScene.times(Mat4.rotation(Math.PI/2, 0, 1, 0));
-        transformEndScene = transformEndScene.times(Mat4.scale(400, 800, 50));
+        // transformEndScene = transformEndScene.times(Mat4.scale(400, 800, 50));
+        transformEndScene = transformEndScene.times(Mat4.scale(100, 100, 100));
 
         // var scaleSize = 50;
         // let fading = 0;
@@ -562,6 +563,7 @@ class Main_Scene extends Scene
 //             }
             // this.shapes.endScene.draw(context, program_state, transformEndScene, this.materials.endScene);
 //             this.shapes.endScene.draw(context, program_state, transformEndScene, this.materials.endScene.override(color(1,1,1,.1)));
+            this.setCamera5();
         }
 
 
