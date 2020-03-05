@@ -1099,6 +1099,15 @@ class Webgl_Manager
             window.bottle_click = 1;
           }
         }
+        if(this.color_match(window.stool_color,data)){
+          if(window.stool_click == 1){
+            window.stool_click = 0;
+          }  
+            else{
+              window.stool_click = 1;
+            }
+          
+        }
 
         // for diamond color check, lose the checking
         //if(this.color_match(window.diamond_color,data)){
