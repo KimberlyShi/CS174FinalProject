@@ -133,6 +133,7 @@ class Main_Scene extends Scene
             beginScreen: new defs.Square(),
             shards: new Shape_From_File("assets/shards.obj"),
             bottle: new Shape_From_File("assets/bottle.obj"),
+            stoolclue: new Shape_From_File("assets/stoolclue.obj")
         };
         
         this.camera_x = -50
@@ -221,7 +222,9 @@ class Main_Scene extends Scene
                 shards: new Material( new defs.Textured_Phong( 1 ),  { ambient: 1, diffusivity: 1, specularity: 1, color: color(0, 0, 0, 1),
                     texture: new Texture("assets/shards_map.png")}),
                 bottle: new Material(new defs.Textured_Phong( 1 ),  { ambient: 1, diffusivity: 1, specularity: 1, color: bottle_color,
-                    texture: new Texture("assets/shards_map.png")})
+                    texture: new Texture("assets/shards_map.png")}),
+                stoolclue: new Material( new defs.Textured_Phong( 1 ), { color: jukebox_color, ambient: 1, diffusivity: 1, specularity: 1, 
+                    texture: new Texture( "assets/stool_map.png" )}),
 
 
             };
@@ -538,10 +541,13 @@ class Main_Scene extends Scene
 
         //STOOLS
         let stoolShiftFactor = 30;
+        var stool_move = 0;
         let stoolTransform = Mat4.translation(123, 14, 80 + stoolShiftFactor);
-        // stoolTransform = stoolTransform.times(Mat4.translation(0, 0, -stoolShiftFactor));
-        // stoolTransform = stoolTransform.times(Mat4.scale(10, 10, 10));
-        // this.shapes.stool.draw(context, program_state, stoolTransform, this.materials.stool);
+        let stoolClueTransform = Mat4.translation(123, 14, 80 - stoolShiftFactor * 4);
+
+        // stoolClueTransform = stoolClueTransform.times(Mat4.translation(0, 0, -stoolShiftFactor));
+        stoolClueTransform = stoolClueTransform.times(Mat4.scale(10, 10, 10));
+        this.shapes.stoolclue.draw(context, program_state, stoolClueTransform, this.materials.stoolclue);
 
         for (let i = 0; i < 4; i++ ) {
             stoolTransform = stoolTransform.times(Mat4.translation(0, 0, -stoolShiftFactor));
