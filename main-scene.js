@@ -42,6 +42,8 @@ var napkin_click = 0;
 window.napkin_click = napkin_click;
 var door_click = 0;
 window.door_click = 0;
+var note_click = 0;
+window.note_click = note_click;
 
 //NUMS: 200, 221, 250, 251, 252, 254, 255,
 const jukebox_color = color(127/255, 124/255, 127/255, 250/255); // change alpha from 255 to 250 for pick color
@@ -50,9 +52,10 @@ const mustard_color = color(255/255, 255/255, 0/255, 255/255);
 const coke_color = color(2/255,2/255, 2/255, 252/255);
 const cup_color = color(190/255, 223/255, 221/255);
 // const diamond_color = color(10/255,80/255, 70/255, 200/255);
-const napkin_color = color(20/255, 40/255, 60/255, 230/255);
+const napkin_color = color(20/255, 40/255, 60/255, 248/255);
 const diamond_color = color(227/255, 255/255, 254/255, 201/255);
 const door_color = color(1/255, 1/255, 1/255, 253/255);
+const note_color = color(2/255, 2/255, 2/255, 249/255);
 
 // const smile_color = color(0/255,0/255, 0/255, 253/255);
 
@@ -64,6 +67,7 @@ window.cup_color = cup_color;
 window.diamond_color = diamond_color;
 window.napkin_color = napkin_color;
 window.door_color = door_color;
+window.note_color = note_color;
 // window.smile_color = smile_color;
 
 var collision_occured = false;
@@ -189,15 +193,14 @@ class Main_Scene extends Scene
                 diamond: new Material( new defs.Phong_Shader(), {ambient: 1, diffusivity: 1, specularity: 1, color: diamond_color, 
                     texture: new Texture("assets/diamond_map.png")}),
 
-                //MAGGIE: for note color, did you mean diamond_color??? -K
-                note: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 0.6, color: coke_color,
+                note: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 0.6, color: note_color,
                     texture: new Texture("assets/note.png")}),
 
                 // carDeco: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
                 //     texture: new Texture("assets/carDeco_1.png")}),
                 endScene: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: door_color,
                     texture: new Texture("assets/carDeco_1.png")}),
-                napkin: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
+                napkin: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: napkin_color,
                     texture: new Texture("assets/napkin_map.png")}),
                 fadeToBlack: new Material( new defs.Textured_Phong( 1 ), { ambient: 0.92, diffusivity: 1, specularity: .5, color: color( 0, 0, 0, this.fading ) }),
 
@@ -336,10 +339,12 @@ class Main_Scene extends Scene
         napkinTransform = napkinTransform.times(Mat4.translation(140, 40, 70)).times(Mat4.scale(4,4,4))
                                          
         if(window.napkin_click == 1){
+            console.log("napkin = " + window.napkin_click);
             napkinTransform = napkinTransform.times(Mat4.rotation(Math.PI, 0, 1, 0));
         }
         else if(window.napkin_click == 0){
-            napkinTransform = napkinTransform.times(Mat4.rotation(-Math.PI/2, 0, 1, 0));
+            napkinTransform = Mat4.identity().times(Mat4.translation(140, 40, 70).times(Mat4.scale(4,4,4)));
+            napkinTransform = napkinTransform.times(Mat4.rotation(Math.PI/2, 0, 1, 0));
         }
         this.shapes.napkin.draw(context, program_state, napkinTransform, this.materials.napkin);
 
@@ -359,6 +364,10 @@ class Main_Scene extends Scene
             console.log("diamond = " + window.diamond_click);
             this.shapes.note.draw(context, program_state, noteTransform, this.materials.note);
             this.setCamera5();
+        }
+        if(window.note_click == 1)
+        {
+            window.diamond_click = 0;
         }
         
         //model_transform1 is ketchup
