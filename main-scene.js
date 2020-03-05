@@ -45,7 +45,7 @@ window.door_click = 0;
 var note_click = 0;
 window.note_click = note_click;
 
-//NUMS: 200, 221, 250, 251, 252, 254, 255,
+//NUMS: 200, 212, 221, 249, 250, 251, 252, 254, 255,
 const jukebox_color = color(127/255, 124/255, 127/255, 250/255); // change alpha from 255 to 250 for pick color
 const ketchup_color = color(255/255, 0/255, 0/255, 251/255);
 const mustard_color = color(255/255, 255/255, 0/255, 255/255);
@@ -56,6 +56,8 @@ const napkin_color = color(20/255, 40/255, 60/255, 248/255);
 const diamond_color = color(227/255, 255/255, 254/255, 201/255);
 const door_color = color(1/255, 1/255, 1/255, 253/255);
 const note_color = color(2/255, 2/255, 2/255, 249/255);
+
+const start_color = color(3/255, 3/255, 2/255, 245/255);
 
 // const smile_color = color(0/255,0/255, 0/255, 253/255);
 
@@ -124,6 +126,7 @@ class Main_Scene extends Scene
             napkin: new Shape_From_File("assets/napkin.obj"),
             endScene: new defs.Square(),
             fadeToBlack: new defs.Square(),
+            beginScreen: new defs.Square(),
         };
         
         this.camera_x = -50
@@ -206,6 +209,8 @@ class Main_Scene extends Scene
                     texture: new Texture("assets/napkin_map.png")}),
                 fadeToBlack: new Material( new defs.Textured_Phong( 1 ), { ambient: 0.92, diffusivity: 1, specularity: .5, color: color( 0, 0, 0, 1 ),
                     texture: new Texture("assets/black_1.png")}),
+                beginScreen: new Material( new defs.Textured_Phong( 1 ), { ambient: 0.92, diffusivity: 1, specularity: .5, color: start_color,
+                    texture: new Texture("assets/beginScreen_1.png")}),
 
             };
     }
@@ -556,28 +561,10 @@ class Main_Scene extends Scene
         transformOpenSign = transformOpenSign.times(Mat4.scale(30, 30, 30));
         this.shapes.openSign.draw(context, program_state, transformOpenSign, this.materials.openSign);
 
-        var transformEndScene = Mat4.identity();
-        transformEndScene = transformEndScene.times(Mat4.translation(0, 70, 30));
-        // transformEndScene = transformEndScene.times(Mat4.rotation(Math.PI/2, 0, 1, 0));
-        // transformEndScene = transformEndScene.times(Mat4.scale(400, 800, 50));
-        transformEndScene = transformEndScene.times(Mat4.scale(50, 50, 50));
-
-        var transformBlack = Mat4.identity();
-        transformBlack = transformBlack.times(Mat4.translation(0,70, 10));
-        transformBlack = transformBlack.times(Mat4.scale(120, 80, 80));
-
-        // var scaleSize = 50;
-        // let fading = 0;
-        if(window.door_click == 1) {
-
-//             opacity
-                this.fading = this.fading + 0.5/255;
-                this.shapes.endScene.draw(context, program_state, transformEndScene, this.materials.endScene.override(color(0,0,0,this.fading)));
-            this.shapes.fadeToBlack.draw(context, program_state, transformBlack, this.materials.fadeToBlack.override(color(0,0,0,this.fading)));
-
-            this.setCamera5();
-        }
-
+        var transformBeginScreen = Mat4.identity();
+        transformBeginScreen = transformBeginScreen.times(Mat4.translation(10,50, 40));
+        transformBeginScreen= transformBeginScreen.times(Mat4.scale(50, 50, 50));
+        this.shapes.beginScreen.draw(context, program_state, transformBeginScreen, this.materials.beginScreen);
 
 
         //CAR DECO
@@ -592,6 +579,7 @@ class Main_Scene extends Scene
 
 
 
+        //TODO: Figure out what this Tall Cup is for?? -Kim
         //TALL CUP
         var transformTallCup = Mat4.identity();
         transformTallCup = transformTallCup.times(Mat4.translation(0,3,0));
@@ -655,6 +643,30 @@ class Main_Scene extends Scene
         transformChecks = transformChecks.times(Mat4.scale(200, 300, 0));
         this.shapes.planeFloor.draw(context, program_state, transformChecks, this.materials.floorTile);
 
+
+
+        //END SCREEN
+        var transformEndScene = Mat4.identity();
+        transformEndScene = transformEndScene.times(Mat4.translation(0, 70, 30));
+        // transformEndScene = transformEndScene.times(Mat4.rotation(Math.PI/2, 0, 1, 0));
+        // transformEndScene = transformEndScene.times(Mat4.scale(400, 800, 50));
+        transformEndScene = transformEndScene.times(Mat4.scale(50, 50, 50));
+
+        var transformBlack = Mat4.identity();
+        transformBlack = transformBlack.times(Mat4.translation(0,70, 10));
+        transformBlack = transformBlack.times(Mat4.scale(120, 80, 80));
+
+        // var scaleSize = 50;
+        // let fading = 0;
+        if(window.door_click == 1) {
+
+//             opacity
+            this.fading = this.fading + 0.5/255;
+            this.shapes.endScene.draw(context, program_state, transformEndScene, this.materials.endScene.override(color(0,0,0,this.fading)));
+            this.shapes.fadeToBlack.draw(context, program_state, transformBlack, this.materials.fadeToBlack.override(color(0,0,0,this.fading)));
+
+            this.setCamera5();
+        }
 
 
     }
