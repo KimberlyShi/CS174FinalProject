@@ -91,6 +91,7 @@ var collision_occured = false;
 var mustard_angle = 0;
 var mustard_mov = 0;
 var kup_mov = 0;
+var stool_move = 0
 
 
 const Minimal_Webgl_Demo = defs.Minimal_Webgl_Demo;
@@ -572,22 +573,24 @@ class Main_Scene extends Scene
 
         //STOOLS
         let stoolShiftFactor = 30;
-        var stool_pos = 0;
-        var stool_move = 0.1;
-        var max_stool_dist = 0.8;
-        if(stool_pos < max_stool_dist)
-        {
-            stool_pos += stool_move;
-        }
+        
+        var max_stool_dist = 2.8;
         let stoolTransform = Mat4.translation(123, 14, 80 + stoolShiftFactor);
         let stoolClueTransform = Mat4.translation(123, 14, 80 - stoolShiftFactor * 4);
 
         // stoolClueTransform = stoolClueTransform.times(Mat4.translation(0, 0, -stoolShiftFactor));
         stoolClueTransform = stoolClueTransform.times(Mat4.scale(10, 10, 10));
+		if(window.stool_click == 1){
+			//console.log("stool_click")
+			if (stool_move<max_stool_dist)
+				stool_move += 0.1;
+			console.log("stool_click" , stool_move)
+            stoolClueTransform = stoolClueTransform.times(Mat4.translation(0, 0, -stool_move));
+        } else {
+			stool_move = 0;
+		}
+		
         this.shapes.stoolclue.draw(context, program_state, stoolClueTransform, this.materials.stoolclue);
-        if(window.stool_click == 1){
-            stoolClueTransform = stoolClueTransform.times(Mat4.translation(0, 0, -stool_pos));
-        }
 
         for (let i = 0; i < 4; i++ ) {
             stoolTransform = stoolTransform.times(Mat4.translation(0, 0, -stoolShiftFactor));
