@@ -127,6 +127,7 @@ class Main_Scene extends Scene
             endScene: new defs.Square(),
             fadeToBlack: new defs.Square(),
             beginScreen: new defs.Square(),
+            shards: new Shape_From_File("assets/shards.obj"),
         };
         
         this.camera_x = -50
@@ -211,6 +212,10 @@ class Main_Scene extends Scene
                     texture: new Texture("assets/black_1.png")}),
                 beginScreen: new Material( new defs.Textured_Phong( 1 ), { ambient: 0.92, diffusivity: 1, specularity: .5, color: start_color,
                     texture: new Texture("assets/beginScreen_1.png")}),
+
+                shards: new Material( new defs.Textured_Phong( 1 ),  { ambient: 1, diffusivity: 1, specularity: 1, color: color(0, 0, 0, 1),
+                    texture: new Texture("assets/shards_map.png")}),
+
 
             };
     }
@@ -511,10 +516,17 @@ class Main_Scene extends Scene
 
         //BAR
         var barTransform = Mat4.identity();
-        barTransform = barTransform.times(Mat4.translation(40, 22, 200))
+        barTransform = barTransform.times(Mat4.translation(40, 27, 200))
                                    .times(Mat4.rotation(-Math.PI/2, 0, 1, 0))
-                                   .times(Mat4.scale(25, 35, 45));
+                                   .times(Mat4.scale(40, 40, 45));
         this.shapes.bar.draw(context, program_state, barTransform, this.materials.bar);
+
+        //SHARDS
+        var transformShards = Mat4.identity();
+        transformShards = transformShards.times(Mat4.translation(45, 52, 160));
+        transformShards = transformShards.times(Mat4.scale(10,10,10));
+        this.shapes.shards.draw(context,program_state, transformShards, this.materials.shards);
+
 
         //MENUr4
         var model_transform_menu_front = Mat4.identity();
@@ -564,7 +576,7 @@ class Main_Scene extends Scene
         var transformBeginScreen = Mat4.identity();
         transformBeginScreen = transformBeginScreen.times(Mat4.translation(10,50, 40));
         transformBeginScreen= transformBeginScreen.times(Mat4.scale(50, 50, 50));
-        this.shapes.beginScreen.draw(context, program_state, transformBeginScreen, this.materials.beginScreen);
+        // this.shapes.beginScreen.draw(context, program_state, transformBeginScreen, this.materials.beginScreen);
 
 
         //CAR DECO
