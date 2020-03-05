@@ -44,6 +44,8 @@ var door_click = 0;
 window.door_click = 0;
 var note_click = 0;
 window.note_click = note_click;
+var bottle_click = 0;
+window.bottle_click = bottle_click;
 
 //NUMS: 200, 212, 221, 249, 250, 251, 252, 254, 255,
 const jukebox_color = color(127/255, 124/255, 127/255, 250/255); // change alpha from 255 to 250 for pick color
@@ -58,6 +60,7 @@ const door_color = color(1/255, 1/255, 1/255, 253/255);
 const note_color = color(2/255, 2/255, 2/255, 249/255);
 
 const start_color = color(2/255, 3/255, 2/255, 245/255);
+const bottle_color = color(3/255, 4/255, 5/255, 240/255);
 
 // const smile_color = color(0/255,0/255, 0/255, 253/255);
 
@@ -70,6 +73,7 @@ window.diamond_color = diamond_color;
 window.napkin_color = napkin_color;
 window.door_color = door_color;
 window.note_color = note_color;
+window.bottle_color = bottle_color;
 // window.smile_color = smile_color;
 
 var collision_occured = false;
@@ -128,6 +132,7 @@ class Main_Scene extends Scene
             fadeToBlack: new defs.Square(),
             beginScreen: new defs.Square(),
             shards: new Shape_From_File("assets/shards.obj"),
+            bottle: new Shape_From_File("assets/bottle.obj"),
         };
         
         this.camera_x = -50
@@ -215,6 +220,8 @@ class Main_Scene extends Scene
 
                 shards: new Material( new defs.Textured_Phong( 1 ),  { ambient: 1, diffusivity: 1, specularity: 1, color: color(0, 0, 0, 1),
                     texture: new Texture("assets/shards_map.png")}),
+                bottle: new Material(new defs.Textured_Phong( 1 ),  { ambient: 1, diffusivity: 1, specularity: 1, color: bottle_color,
+                    texture: new Texture("assets/shards_map.png")})
 
 
             };
@@ -317,10 +324,10 @@ class Main_Scene extends Scene
             color( 1,.7,.7,1 ), 100000 ) ];
 
         //begin screen
-        let transformBeginScreen = Mat4.identity();
-        transformBeginScreen = transformBeginScreen.times(Mat4.translation(0,70, 40));
-        transformBeginScreen= transformBeginScreen.times(Mat4.scale(50, 50, 50));
-        this.shapes.beginScreen.draw(context, program_state, transformBeginScreen, this.materials.beginScreen);
+        // let transformBeginScreen = Mat4.identity();
+        // transformBeginScreen = transformBeginScreen.times(Mat4.translation(0,70, 40));
+        // transformBeginScreen= transformBeginScreen.times(Mat4.scale(50, 50, 50));
+        // this.shapes.beginScreen.draw(context, program_state, transformBeginScreen, this.materials.beginScreen);
 
         //JUKEBOX
         // let model_transform = Mat4.translation(-90, 42, -57).times(Mat4.rotation(-Math.PI/2, 0, 1,0));
@@ -367,11 +374,32 @@ class Main_Scene extends Scene
         }
         this.shapes.napkin.draw(context, program_state, napkinTransform, this.materials.napkin);
 
-        
         //diamond
         let diamondTransform = Mat4.identity();
-        diamondTransform = diamondTransform.times(Mat4.translation(120,40,50)).times(Mat4.scale(2, 2, 2));
-        this.shapes.diamond.draw(context, program_state, diamondTransform, this.materials.diamond);
+        diamondTransform = diamondTransform.times(Mat4.translation(45,50,150)).times(Mat4.scale(2, 2, 2));
+        //   this.shapes.diamond.draw(context, program_state, diamondTransform, this.materials.diamond);
+
+        //BOTTLE
+        var transformBottle = Mat4.identity();
+        transformBottle = transformBottle.times(Mat4.translation(45, 60, 160));
+        transformBottle = transformBottle.times(Mat4.scale(5,5,5));
+        if(window.bottle_click == 0)
+        {
+            this.shapes.bottle.draw(context, program_state, transformBottle, this.materials.bottle);
+
+        }
+ 
+        //SHARDS
+        var transformShards = Mat4.identity();
+        transformShards = transformShards.times(Mat4.translation(45, 52, 160));            
+        transformShards = transformShards.times(Mat4.scale(10,10,10));
+        if(window.bottle_click == 1)
+        {
+            this.shapes.shards.draw(context,program_state, transformShards, this.materials.shards);
+            this.shapes.diamond.draw(context, program_state, diamondTransform, this.materials.diamond);
+ 
+        }
+
 
         //note
         let noteTransform = Mat4.identity();
@@ -511,7 +539,11 @@ class Main_Scene extends Scene
         //STOOLS
         let stoolShiftFactor = 30;
         let stoolTransform = Mat4.translation(123, 14, 80 + stoolShiftFactor);
-        for (let i = 0; i < 5; i++ ) {
+        // stoolTransform = stoolTransform.times(Mat4.translation(0, 0, -stoolShiftFactor));
+        // stoolTransform = stoolTransform.times(Mat4.scale(10, 10, 10));
+        // this.shapes.stool.draw(context, program_state, stoolTransform, this.materials.stool);
+
+        for (let i = 0; i < 4; i++ ) {
             stoolTransform = stoolTransform.times(Mat4.translation(0, 0, -stoolShiftFactor));
             stoolTransform = stoolTransform.times(Mat4.scale(10, 10, 10));
             this.shapes.stool.draw(context, program_state, stoolTransform, this.materials.stool);
@@ -524,12 +556,6 @@ class Main_Scene extends Scene
                                    .times(Mat4.rotation(-Math.PI/2, 0, 1, 0))
                                    .times(Mat4.scale(40, 40, 45));
         this.shapes.bar.draw(context, program_state, barTransform, this.materials.bar);
-
-        //SHARDS
-        var transformShards = Mat4.identity();
-        transformShards = transformShards.times(Mat4.translation(45, 52, 160));
-        transformShards = transformShards.times(Mat4.scale(10,10,10));
-        this.shapes.shards.draw(context,program_state, transformShards, this.materials.shards);
 
 
         //MENUr4
