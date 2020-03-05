@@ -1129,6 +1129,15 @@ class Webgl_Manager
           }
         }
 
+		if(this.color_match(window.menu_color, data)) {
+		  if(window.menu_click == 1) {
+		    window.menu_click = 0;
+          }
+		  if(window.menu_click == 0) {
+		    window.menu_click = 1;
+          }
+        }
+
 
         //console.log(rect)
         //console.log(data)

@@ -50,9 +50,11 @@ var rules_click = 0;
 window.rules_click = rules_click;
 var bottle_click = 0;
 window.bottle_click = bottle_click;
+var menu_click = 0;
+window.menu_click = menu_click;
 
 
-//NUMS: 200, 212, 221, 245,246, 249, 250, 251, 252, 254, 255,
+//NUMS: 200, 212, 221, 241, 245,246, 249, 250, 251, 252, 254, 255,
 const jukebox_color = color(127/255, 124/255, 127/255, 250/255); // change alpha from 255 to 250 for pick color
 const ketchup_color = color(255/255, 0/255, 0/255, 251/255);
 const mustard_color = color(255/255, 255/255, 0/255, 255/255);
@@ -66,6 +68,7 @@ const note_color = color(2/255, 2/255, 2/255, 249/255);
 const start_color = color(2/255, 3/255, 2/255, 245/255);
 const rules_color = color(3/255, 4/255, 3/255, 246/255);
 const bottle_color = color(3/255, 4/255, 5/255, 240/255);
+const menu_color = color(4/255, 3/255, 2/255, 241/255);
 
 // const smile_color = color(0/255,0/255, 0/255, 253/255);
 
@@ -81,6 +84,7 @@ window.note_color = note_color;
 window.start_color = start_color;
 window.rules_color = rules_color;
 window.bottle_color = bottle_color;
+window.menu_color = menu_color;
 
 var collision_occured = false;
 var mustard_angle = 0;
@@ -174,9 +178,13 @@ class Main_Scene extends Scene
                 ceiling: new Material( new defs.Textured_Phong( 1 ), { ambient: .9, color: color( 0,0,0.2, 1 ) }),
                 frontWall: new Material( new defs.Textured_Phong( 1 ), { ambient: 0.92, diffusivity: 1, specularity: .5, color: color( 0, 0, 0.1, 1 ) }),
 
-                menuFront: new Material( new defs.Textured_Phong(1), {ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
+                // menuFront: new Material( new defs.Textured_Phong(1), {ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
+                //     texture: new Texture("assets/menufront2.png")}),
+                // menuBack: new Material( new defs.Textured_Phong(1), {ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
+                //     texture: new Texture("assets/menuback2.png")}),
+                menuFront: new Material( new defs.Textured_Phong(1), {ambient: 0.5, diffusivity: 1, specularity: 0.5, color: menu_color,
                     texture: new Texture("assets/menufront2.png")}),
-                menuBack: new Material( new defs.Textured_Phong(1), {ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
+                menuBack: new Material( new defs.Textured_Phong(1), {ambient: 0.5, diffusivity: 1, specularity: 0.5, color: menu_color,
                     texture: new Texture("assets/menuback2.png")}),
                 stool: new Material( new defs.Textured_Phong( 1 ), { color: jukebox_color, ambient: 1, diffusivity: 1, specularity: 1, 
                     texture: new Texture( "assets/stool_map.png" )}),
@@ -587,6 +595,8 @@ class Main_Scene extends Scene
 
 
         //MENUr4
+
+        /*
         var model_transform_menu_front = Mat4.identity();
         const menuAngle = Math.PI;
         // const upwardShift = Mat4.translation(-9, 12, -18);
@@ -607,7 +617,41 @@ class Main_Scene extends Scene
         model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(-(menuAngle/2) + (menuAngle/2*Math.sin(Math.PI*t)) , 0, 1, 0));
         model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(0, 0, 2.2));
         model_transform_menu_front = model_transform_menu_front.times(Mat4.scale(4, 4, 4));
-        this.shapes.menu.draw( context, program_state, model_transform_menu_front, this.materials.menuFront);
+        this.shapes.menu.draw( context, program_state, model_transform_menu_front, this.materials.menuFront); */
+
+        var model_transform_menu_front = Mat4.identity();
+        const menuAngle = Math.PI;
+        // model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(-9, 12, -18));
+        // model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(Math.PI/2, 0, 1, 0));
+        // model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(-Math.PI/2, 0, 0, 1));
+        // var model_transform_menu_back = model_transform_menu_front;
+        // model_transform_menu_back = model_transform_menu_back.times(Mat4.translation(0.05, 0, 0));
+        // model_transform_menu_back = model_transform_menu_back.times(Mat4.scale(4, 4, 4));
+        if(window.menu_click == 0) {
+            model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(-9, 12, -18));
+            model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(Math.PI/2, 0, 1, 0));
+            model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(-Math.PI/2, 0, 0, 1));
+            var model_transform_menu_back = model_transform_menu_front;
+            model_transform_menu_back = model_transform_menu_back.times(Mat4.translation(0.05, 0, 0));
+            model_transform_menu_back = model_transform_menu_back.times(Mat4.scale(4, 4, 4));
+            this.shapes.menu.draw(context, program_state, model_transform_menu_back, this.materials.menuBack);
+        }
+        // this.shapes.menu.draw(context, program_state, model_transform_menu_back, this.materials.menuBack);
+        // model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(0, 0, -2.2));
+        // model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(-(menuAngle/2) + (menuAngle/2*Math.sin(Math.PI*t)) , 0, 1, 0));
+        // model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(0, 0, 2.2));
+        // model_transform_menu_front = model_transform_menu_front.times(Mat4.scale(4, 4, 4));
+        if(window.menu_click == 1) {
+            model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(0, 0, -2.2));
+            model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(-(menuAngle/2) + (menuAngle/2*Math.sin(Math.PI*t)) , 0, 1, 0));
+            model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(0, 0, 2.2));
+            model_transform_menu_front = model_transform_menu_front.times(Mat4.scale(4, 4, 4));
+            this.shapes.menu.draw( context, program_state, model_transform_menu_front, this.materials.menuFront);
+        }
+        // this.shapes.menu.draw( context, program_state, model_transform_menu_front, this.materials.menuFront);
+
+
+
 
         const transformCoke =
             // Mat4.translation(-20, 50, -99)
