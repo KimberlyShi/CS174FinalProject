@@ -114,6 +114,21 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                                                            // regular texture and Phong lighting.
     constructor() {
         super();
+
+
+        //CLUE Variables
+        this.clue1 = 0;
+        this.clue2 = 0;
+        this.clue3 = 0;
+        this.clue4 = 0;
+        this.clue5 = 0;
+        this.clue6 = 0;
+        this.clue7 = 0;
+        this.clue8 = 0;
+
+
+
+
         this.fading = 0;
         this.startFade = 255 / 255;
         this.instructFade = 0;
@@ -165,7 +180,6 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                     color: jukebox_color, ambient: 0.5, specularity: 0,
                     texture: new Texture("assets/jukebox_map.png")
                 }),
-                // table: new Material( new defs.Textured_Phong( 1 ), {color: color(1, 0, 0, 1)}), //color of table rn is temp red
                 floor: new Material(new defs.Phong_Shader(), {
                     ambient: 1, diffusivity: 1, specularity: 0.5,
                     color: color(0.78, 0.8, 0.6, 1)
@@ -215,11 +229,6 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                     specularity: .5,
                     color: color(0, 0, 0.1, 1)
                 }),
-
-                // menuFront: new Material( new defs.Textured_Phong(1), {ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
-                //     texture: new Texture("assets/menufront2.png")}),
-                // menuBack: new Material( new defs.Textured_Phong(1), {ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
-                //     texture: new Texture("assets/menuback2.png")}),
                 menuFront: new Material(new defs.Textured_Phong(1), {
                     ambient: 0.5, diffusivity: 1, specularity: 0.5, color: menu_color,
                     texture: new Texture("assets/menufront2.png")
@@ -240,10 +249,6 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                     ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
                     texture: new Texture("assets/coke_1.png")
                 }),
-                // openSign: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: color(0, 0, 0, 1),
-                //                 //     texture: new Texture("assets/open_door.png")}),
-                // openSign: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: color(0, 0, 0, 1),
-                //     texture: new Texture("assets/door_map.png")}),
                 openSign: new Material(new defs.Textured_Phong(1), {
                     ambient: 1, diffusivity: 1, specularity: 1, color: door_color,
                     texture: new Texture("assets/door_map.png")
@@ -293,11 +298,6 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                     ambient: 1, diffusivity: 1, specularity: 0.6, color: note_color,
                     texture: new Texture("assets/note.png")
                 }),
-
-                // carDeco: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
-                //     texture: new Texture("assets/carDeco_1.png")}),
-                // endScene: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: door_color,
-                //     texture: new Texture("assets/carDeco_1.png")}),
                 endScene: new Material(new defs.Textured_Phong(1), {
                     ambient: 1, diffusivity: 1, specularity: 1, color: door_color,
                     texture: new Texture("assets/finish_rect_notext.png")
@@ -477,86 +477,139 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             this.startFade = this.startFade - 1 / 255;
             this.shapes.instructions.draw(context, program_state, transformBeginScreen, this.materials.instructions);
             this.setCamera5();
+
+            //set first clue
+            this.clue1 = 1;
         }
 
+        //TODO: TEMPORARY => set everything to true so all clues will be displayed
+
+        this.clue1 = 1;
+        this.clue2 = 1;
+        this.clue3 = 1;
+        this.clue4 = 1;
+        this.clue5 = 1;
+        this.clue6 = 1;
+        this.clue7 = 1;
+        this.clue8 = 1;
+        //TODO: get rid of the above section after all clues are complete so that all clues are initialized to 0
 
 
         //CLUES!!
+        //Still need to complete chair (Clue 1) and menu (Clue 2)
+
         //TODO: Clue #1: Chair
 
+        if(this.clue1 == 1) {
+            //place chair code
+
+            //set next clue
+            this.clue2 = 1;
+        }
 
         //TODO: Clue #2: Menu
-        //MENUr4
+        if(this.clue2 == 1) {
+            //MENUr4
 
-        /*
-        var model_transform_menu_front = Mat4.identity();
-        const menuAngle = Math.PI;
-        // const upwardShift = Mat4.translation(-9, 12, -18);
-        // model_transform = model_transform.times(upwardShift).times(changeRotationCorner);
-        // model_transform = model_transform.times(Mat4.rotation(-(mustard_angle/2) + (mustard_angle/2*Math.sin(6*Math.PI*t)) , Vec.of(0, 0, 1)));
-        //     this.currentAngle = 6 * Math.PI * t;
+            /*
+            var model_transform_menu_front = Mat4.identity();
+            const menuAngle = Math.PI;
+            // const upwardShift = Mat4.translation(-9, 12, -18);
+            // model_transform = model_transform.times(upwardShift).times(changeRotationCorner);
+            // model_transform = model_transform.times(Mat4.rotation(-(mustard_angle/2) + (mustard_angle/2*Math.sin(6*Math.PI*t)) , Vec.of(0, 0, 1)));
+            //     this.currentAngle = 6 * Math.PI * t;
 
-        // model_transform = model_transform.times(extendLength).times(resetRotationCorner);
+            // model_transform = model_transform.times(extendLength).times(resetRotationCorner);
 
-        model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(-9, 12, -18));
-        model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(Math.PI/2, 0, 1, 0));
-        model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(-Math.PI/2, 0, 0, 1));
-        var model_transform_menu_back = model_transform_menu_front;
-        model_transform_menu_back = model_transform_menu_back.times(Mat4.translation(0.05, 0, 0));
-        model_transform_menu_back = model_transform_menu_back.times(Mat4.scale(4, 4, 4));
-        this.shapes.menu.draw(context, program_state, model_transform_menu_back, this.materials.menuBack);
-        model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(0, 0, -2.2));
-        model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(-(menuAngle/2) + (menuAngle/2*Math.sin(Math.PI*t)) , 0, 1, 0));
-        model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(0, 0, 2.2));
-        model_transform_menu_front = model_transform_menu_front.times(Mat4.scale(4, 4, 4));
-        this.shapes.menu.draw( context, program_state, model_transform_menu_front, this.materials.menuFront); */
-
-        var model_transform_menu_front = Mat4.identity();
-        const menuAngle = Math.PI;
-        // model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(-9, 12, -18));
-        // model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(Math.PI/2, 0, 1, 0));
-        // model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(-Math.PI/2, 0, 0, 1));
-        // var model_transform_menu_back = model_transform_menu_front;
-        // model_transform_menu_back = model_transform_menu_back.times(Mat4.translation(0.05, 0, 0));
-        // model_transform_menu_back = model_transform_menu_back.times(Mat4.scale(4, 4, 4));
-        if (window.menu_click == 0) {
             model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(-9, 12, -18));
-            model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(Math.PI / 2, 0, 1, 0));
-            model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(-Math.PI / 2, 0, 0, 1));
+            model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(Math.PI/2, 0, 1, 0));
+            model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(-Math.PI/2, 0, 0, 1));
             var model_transform_menu_back = model_transform_menu_front;
             model_transform_menu_back = model_transform_menu_back.times(Mat4.translation(0.05, 0, 0));
             model_transform_menu_back = model_transform_menu_back.times(Mat4.scale(4, 4, 4));
             this.shapes.menu.draw(context, program_state, model_transform_menu_back, this.materials.menuBack);
-        }
-        // this.shapes.menu.draw(context, program_state, model_transform_menu_back, this.materials.menuBack);
-        // model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(0, 0, -2.2));
-        // model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(-(menuAngle/2) + (menuAngle/2*Math.sin(Math.PI*t)) , 0, 1, 0));
-        // model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(0, 0, 2.2));
-        // model_transform_menu_front = model_transform_menu_front.times(Mat4.scale(4, 4, 4));
-        if (window.menu_click == 1) {
             model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(0, 0, -2.2));
-            model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(-(menuAngle / 2) + (menuAngle / 2 * Math.sin(Math.PI * t)), 0, 1, 0));
+            model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(-(menuAngle/2) + (menuAngle/2*Math.sin(Math.PI*t)) , 0, 1, 0));
             model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(0, 0, 2.2));
             model_transform_menu_front = model_transform_menu_front.times(Mat4.scale(4, 4, 4));
-            this.shapes.menu.draw(context, program_state, model_transform_menu_front, this.materials.menuFront);
-        }
-        // this.shapes.menu.draw( context, program_state, model_transform_menu_front, this.materials.menuFront);
+            this.shapes.menu.draw( context, program_state, model_transform_menu_front, this.materials.menuFront); */
 
+            var model_transform_menu_front = Mat4.identity();
+            const menuAngle = Math.PI;
+            // model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(-9, 12, -18));
+            // model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(Math.PI/2, 0, 1, 0));
+            // model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(-Math.PI/2, 0, 0, 1));
+            // var model_transform_menu_back = model_transform_menu_front;
+            // model_transform_menu_back = model_transform_menu_back.times(Mat4.translation(0.05, 0, 0));
+            // model_transform_menu_back = model_transform_menu_back.times(Mat4.scale(4, 4, 4));
+            if (window.menu_click == 0) {
+                model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(-9, 12, -18));
+                model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(Math.PI / 2, 0, 1, 0));
+                model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(-Math.PI / 2, 0, 0, 1));
+                var model_transform_menu_back = model_transform_menu_front;
+                model_transform_menu_back = model_transform_menu_back.times(Mat4.translation(0.05, 0, 0));
+                model_transform_menu_back = model_transform_menu_back.times(Mat4.scale(4, 4, 4));
+                this.shapes.menu.draw(context, program_state, model_transform_menu_back, this.materials.menuBack);
+            }
+            // this.shapes.menu.draw(context, program_state, model_transform_menu_back, this.materials.menuBack);
+            // model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(0, 0, -2.2));
+            // model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(-(menuAngle/2) + (menuAngle/2*Math.sin(Math.PI*t)) , 0, 1, 0));
+            // model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(0, 0, 2.2));
+            // model_transform_menu_front = model_transform_menu_front.times(Mat4.scale(4, 4, 4));
+            if (window.menu_click == 1) {
+                model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(0, 0, -2.2));
+                model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(-(menuAngle / 2) + (menuAngle / 2 * Math.sin(Math.PI * t)), 0, 1, 0));
+                model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(0, 0, 2.2));
+                model_transform_menu_front = model_transform_menu_front.times(Mat4.scale(4, 4, 4));
+                this.shapes.menu.draw(context, program_state, model_transform_menu_front, this.materials.menuFront);
+            }
+            // this.shapes.menu.draw( context, program_state, model_transform_menu_front, this.materials.menuFront);
+
+
+            //Set next clue
+            this.clue3 = 1;
+        }
         //TODO: Clue #3: Coke Poster
+
         //COKE
+        // const transformCoke =
+        //     // Mat4.translation(-20, 50, -99)
+        //     Mat4.translation(-20, 50, -199)
+        //         .times(Mat4.scale(35, 35, 35));
+        // this.shapes.coke.draw(context, program_state, transformCoke, this.materials.coke);
+
+        var myMaterial;
         const transformCoke =
             // Mat4.translation(-20, 50, -99)
             Mat4.translation(-20, 50, -199)
                 .times(Mat4.scale(35, 35, 35));
-        var myMaterial;
-        if (window.change_coke == 0) {
+
+        if(this.clue3 == 1) {
+
+
+            // //COKE
+            // const transformCoke =
+            //     // Mat4.translation(-20, 50, -99)
+            //     Mat4.translation(-20, 50, -199)
+            //         .times(Mat4.scale(35, 35, 35));
+
+            if (window.change_coke == 0) {
+                myMaterial = this.materials.coke;
+            } else if (window.change_coke == 1) {
+                // myMaterial = this.materials.smiley;
+                myMaterial = this.materials.cokeClue;
+
+                //set the next clue once the clue is revealed
+                this.clue4 = 1;
+            }
+            this.shapes.coke.draw(context, program_state, transformCoke, myMaterial);
+
+
+
+        } else {
             myMaterial = this.materials.coke;
-        } else if (window.change_coke == 1) {
-            // myMaterial = this.materials.smiley;
-            myMaterial = this.materials.cokeClue;
         }
         this.shapes.coke.draw(context, program_state, transformCoke, myMaterial);
-
         //TODO: Clue #4: Mustard and Ketchup
         //KETCHUP + MUSTARD
         var distance_cup = 10; // define the initial distance between cups
