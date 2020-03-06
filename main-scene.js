@@ -570,14 +570,6 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             this.clue3 = 1;
         }
         //TODO: Clue #3: Coke Poster
-
-        //COKE
-        // const transformCoke =
-        //     // Mat4.translation(-20, 50, -99)
-        //     Mat4.translation(-20, 50, -199)
-        //         .times(Mat4.scale(35, 35, 35));
-        // this.shapes.coke.draw(context, program_state, transformCoke, this.materials.coke);
-
         var myMaterial;
         const transformCoke =
             // Mat4.translation(-20, 50, -99)
@@ -585,14 +577,6 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                 .times(Mat4.scale(35, 35, 35));
 
         if(this.clue3 == 1) {
-
-
-            // //COKE
-            // const transformCoke =
-            //     // Mat4.translation(-20, 50, -99)
-            //     Mat4.translation(-20, 50, -199)
-            //         .times(Mat4.scale(35, 35, 35));
-
             if (window.change_coke == 0) {
                 myMaterial = this.materials.coke;
             } else if (window.change_coke == 1) {
@@ -600,17 +584,20 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                 myMaterial = this.materials.cokeClue;
 
                 //set the next clue once the clue is revealed
-                this.clue4 = 1;
+                this.clue4 = 0;
             }
             this.shapes.coke.draw(context, program_state, transformCoke, myMaterial);
-
-
-
-        } else {
+        }
+        else {
             myMaterial = this.materials.coke;
         }
         this.shapes.coke.draw(context, program_state, transformCoke, myMaterial);
+
+
         //TODO: Clue #4: Mustard and Ketchup
+        this.clue4 = 1; //TODO: get rid of this (just for testing)
+
+        if(this.clue4 == 1) {
         //KETCHUP + MUSTARD
         var distance_cup = 10; // define the initial distance between cups
         if (window.ketchup_move == 1) {
@@ -628,6 +615,10 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             } else {
                 kup_mov += 0.1;
             }
+
+            //Once collide, will reveal the next clue
+            this.clue5 = 1;
+            
         } else {    // reset it to original position
             kup_mov = 0
             mustard_angle = 0
@@ -655,33 +646,51 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         transformMustard = transformMustard.times(Mat4.rotation(-Math.PI / 2, 0, 1, 0));
         transformMustard = transformMustard.times(Mat4.rotation(-Math.PI / 2, 1, 0, 0));
         transformMustard = transformMustard.times(Mat4.scale(35, 35, 35));
-        if (mustard_angle == max_angle) {
-            this.shapes.mustardSpill.draw(context, program_state, transformMustard, this.materials.mustardSpill);
-            if (window.mustard_spill == 0) window.mustard_spill = 1;
-        }
-        if (window.mustard_spill == 1) {
-            window.mustard_spill = 2;
-            mustard_spill_timer = 1;
-            audio.src = "assets/sound/mustardsplat.wav";
-            audio.loop = false;
-            if (audio.paused) audio.play();
-        }
 
-        if (mustard_spill_timer > 0) mustard_spill_timer += 1;
-        if (mustard_spill_timer > 100) {
-            mustard_spill_timer = 0;
-            audio.pause();
-        }
 
-        if (window.music_play == 1) {
-            window.music_play = 2
-            audio.src = sounds[window.music_index];
-            audio.loop = false;
-            audio.play();
-        } else if (window.music_play == 0 && window.mustard_spill == 0) {
-            audio.pause();
-        }
+            if (mustard_angle == max_angle) {
+                this.shapes.mustardSpill.draw(context, program_state, transformMustard, this.materials.mustardSpill);
+                if (window.mustard_spill == 0) window.mustard_spill = 1;
+            }
+            if (window.mustard_spill == 1) {
+                window.mustard_spill = 2;
+                mustard_spill_timer = 1;
+                audio.src = "assets/sound/mustardsplat.wav";
+                audio.loop = false;
+                if (audio.paused) audio.play();
+            }
 
+            if (mustard_spill_timer > 0) mustard_spill_timer += 1;
+            if (mustard_spill_timer > 100) {
+                mustard_spill_timer = 0;
+                audio.pause();
+            }
+
+            if (window.music_play == 1) {
+                window.music_play = 2
+                audio.src = sounds[window.music_index];
+                audio.loop = false;
+                audio.play();
+            } else if (window.music_play == 0 && window.mustard_spill == 0) {
+                audio.pause();
+            }
+        }
+        else {
+            var distance_cup = 10;
+            mustard_mov = 0;
+            kup_mov = 0;
+            mustard_angle = 0;
+            const model_transform1 = Mat4.translation(140, 38, kup_mov - 20)
+                .times(Mat4.scale(1.0, 1.0, 1.0))
+            //model_transform2 is mustard
+            const model_transform2 = Mat4.translation(140, 38, distance_cup - 20 + mustard_mov)
+                .times(Mat4.translation(0, -5.8, 0))
+                .times(Mat4.rotation(mustard_angle, 1, 0, 0))
+                .times(Mat4.translation(0, 5.8, 0))
+
+            this.shapes.ketchup.draw(context, program_state, model_transform1, this.materials.ketchup);
+            this.shapes.mustard.draw(context, program_state, model_transform2, this.materials.mustard);
+        }
         //TODO: Clue #5: Napkin Box
         //NAPKIN BOX
         let napkinTransform = Mat4.identity();
