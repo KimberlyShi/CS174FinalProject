@@ -116,38 +116,37 @@ class Main_Scene extends Scene
         this.fading = 0;
         // Load the model file:
         this.shapes = {
-            jukebox: new Shape_From_File( "assets/jukebox2.obj" ),
-            ketchup: new Shape_From_File( "assets/kb.obj" ),
-            mustard: new Shape_From_File( "assets/kb.obj"),
-            booth: new Shape_From_File("assets/booth2.obj"),
-            stool: new Shape_From_File("assets/stool.obj"),
             bar: new Shape_From_File("assets/bar_withoutdrinks.obj")  ,  
-            planeFloor: new defs.Square(), //used floor
-            plane: new defs.Square(),
-            menu: new Shape_From_File("assets/menu.obj"),
-            coke: new defs.Square(),
-            // openSign: new defs.Square(),
-            openSign: new Shape_From_File("assets/door.obj"),
-            // smiley: new defs.Square(),
-            cokeClue: new defs.Square(),
-            diamond: new Shape_From_File("assets/diamond.obj"),
+            beginScreen: new defs.Square(),
+            booth: new Shape_From_File("assets/booth2.obj"),
             boothTable: new Shape_From_File("assets/squareTable.obj"),
-            tallCup: new Shape_From_File("assets/kcup.obj"),
-            mustardSpill: new defs.Square(),
-            note: new defs.Square(),
-            light: new Shape_From_File("assets/light.obj"),
+            bottle: new Shape_From_File("assets/bottle.obj"),
             bulb: new Shape_From_File("assets/bulb.obj"),
             carDeco: new defs.Square(),
-            smoothie: new Shape_From_File("assets/drink.obj"),
-            napkin: new Shape_From_File("assets/napkin.obj"),
+            coke: new defs.Square(),
+            cokeClue: new defs.Square(),
+            diamond: new Shape_From_File("assets/diamond.obj"),
             endScene: new defs.Square(),
             fadeToBlack: new defs.Square(),
-            beginScreen: new defs.Square(),
-            shards: new Shape_From_File("assets/shards.obj"),
             instructions: new defs.Square(),
-            bottle: new Shape_From_File("assets/bottle.obj"),
+            jukebox: new Shape_From_File( "assets/jukebox2.obj" ),
+            ketchup: new Shape_From_File( "assets/kb.obj" ),
+            light: new Shape_From_File("assets/light.obj"),
+            menu: new Shape_From_File("assets/menu.obj"),
+            mustard: new Shape_From_File( "assets/kb.obj"),
+            mustardSpill: new defs.Square(),
+            napkin: new Shape_From_File("assets/napkin.obj"),
+            note: new defs.Square(),
+            openSign: new Shape_From_File("assets/door.obj"),
+            plane: new defs.Square(),
+            planeFloor: new defs.Square(), //used floor
+            shards: new Shape_From_File("assets/shards.obj"),
+            smoothie: new Shape_From_File("assets/drink.obj"),
+            stool: new Shape_From_File("assets/stool.obj"),
             stoolclue: new Shape_From_File("assets/stoolclue.obj"),
-
+            tallCup: new Shape_From_File("assets/kcup.obj"),
+            talltable: new Shape_From_File("assets/talltable.obj"),
+            window: new Shape_From_File("assets/window.obj")
         };
         
         this.camera_x = -50
@@ -206,8 +205,8 @@ class Main_Scene extends Scene
                     texture: new Texture("assets/drink2_map.png")}),
                 cokeClue: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
                     texture: new Texture("assets/cokeClue_1.png")}),
-                tallTable: new Material( new defs.Textured_Phong( 1 ), {ambient: 1, diffusivity: 1, specularity: 1,
-                    texture: new Texture("assets/pink.png")}),
+                talltable: new Material( new defs.Textured_Phong( 1 ), {ambient: 1, diffusivity: 1, specularity: 1,
+                    texture: new Texture("assets/talltable_map.png")}),
                 tallCup: new Material( new defs.Textured_Phong( 1 ),  { ambient: 0.5, diffusivity: 1, specularity: 0.5, color: cup_color,
                     texture: new Texture("assets/pink.png")}),
                 boothTable: new Material( new defs.Textured_Phong( 1 ),  { ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
@@ -229,15 +228,15 @@ class Main_Scene extends Scene
                 // endScene: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: door_color,
                 //     texture: new Texture("assets/carDeco_1.png")}),
                 endScene: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: door_color,
-                    texture: new Texture("assets/finish_rect_1.png")}),
+                    texture: new Texture("assets/finish_rect_notext.png")}),
                 napkin: new Material( new defs.Textured_Phong(1), {ambient: 1, diffusivity: 1, specularity: 1, color: napkin_color,
                     texture: new Texture("assets/napkin_map.png")}),
                 fadeToBlack: new Material( new defs.Textured_Phong( 1 ), { ambient: 0.92, diffusivity: 1, specularity: .5, color: color( 0, 0, 0, 1 ),
                     texture: new Texture("assets/black_1.png")}),
                 beginScreen: new Material( new defs.Textured_Phong( 1 ), { ambient: 0.92, diffusivity: 1, specularity: .5, color: start_color,
-                    texture: new Texture("assets/beginsceen_rect.png")}),
+                    texture: new Texture("assets/beginsceen_rect_nobutton.png")}),
                 instructions: new Material( new defs.Textured_Phong( 1 ), { ambient: 0.92, diffusivity: 1, specularity: .5, color: rules_color,
-                    texture: new Texture("assets/rules_rect_1.png")}),
+                    texture: new Texture("assets/rules_rect_nobutton.png")}),
 
                 shards: new Material( new defs.Textured_Phong( 1 ),  { ambient: 1, diffusivity: 1, specularity: 1, color: rules_color,
                     texture: new Texture("assets/shards_map.png")}),
@@ -246,6 +245,18 @@ class Main_Scene extends Scene
                 stoolclue: new Material( new defs.Textured_Phong( 1 ), { color: stool_color, ambient: 1, diffusivity: 1, specularity: 1, 
                     texture: new Texture( "assets/stool_map.png" )}),
 
+                window: new Material( new defs.Textured_Phong( 1 ), {ambient: 1, diffusivity: 1, specularity: 1, 
+                    texture: new Texture( "assets/window_map.png" )}),
+                window1: new Material( new defs.Textured_Phong( 1 ), {ambient: 1, diffusivity: 1, specularity: 1, 
+                    texture: new Texture( "assets/window_map_1.png" )}),
+                window2: new Material( new defs.Textured_Phong( 1 ), {ambient: 1, diffusivity: 1, specularity: 1, 
+                    texture: new Texture( "assets/window_map_2.png" )}),
+                window3: new Material( new defs.Textured_Phong( 1 ), {ambient: 1, diffusivity: 1, specularity: 1, 
+                    texture: new Texture( "assets/window_map_3.png" )}),
+                window4: new Material( new defs.Textured_Phong( 1 ), {ambient: 1, diffusivity: 1, specularity: 1, 
+                    texture: new Texture( "assets/window_map_4.png" )}),
+                window5: new Material( new defs.Textured_Phong( 1 ), {ambient: 1, diffusivity: 1, specularity: 1, 
+                    texture: new Texture( "assets/window_map_5.png" )}),
 
             };
     }
@@ -416,7 +427,7 @@ class Main_Scene extends Scene
 
         //BOTTLE
         var transformBottle = Mat4.identity();
-        transformBottle = transformBottle.times(Mat4.translation(45, 60, 160));
+        transformBottle = transformBottle.times(Mat4.translation(45, 55, 160));
         transformBottle = transformBottle.times(Mat4.scale(5,5,5));
         if(window.bottle_click == 0)
         {
@@ -555,21 +566,46 @@ class Main_Scene extends Scene
             var transformSmoothie2 = Mat4.identity();
             transformSmoothie2 = transformSmoothie2.times(Mat4.translation(-10, 0, 0));
             var transformSmoothie = Mat4.identity();
-            transformSmoothie = transformSmoothie.times(Mat4.translation(-125, 50, 40 - i * boothShiftFactor));
+            transformSmoothie = transformSmoothie.times(Mat4.translation(-125, 47.5, 40 - i * boothShiftFactor));
             transformSmoothie = transformSmoothie.times(Mat4.scale(0.075,0.075, 0.075));
             transformSmoothie = transformSmoothie.times(boothScaleFactor);
             this.shapes.smoothie.draw(context, program_state, transformSmoothie, this.materials.smoothie);
             this.shapes.smoothie.draw(context, program_state, Mat4.translation(-4, 0, 8).times(transformSmoothie), this.materials.smoothie2);
+
+            var transformWindow = Mat4.identity();
+            transformWindow = transformWindow.times(Mat4.translation(-200 ,70, 45 - i * boothShiftFactor));
+            transformWindow = transformWindow.times(Mat4.rotation(Math.PI, 0, 1, 0));
+            transformWindow = transformWindow.times(Mat4.scale(0.85, 0.85, 0.85));
+            transformWindow = transformWindow.times(Mat4.rotation(-Math.PI/2, 1, 0, 0));
+            transformWindow = transformWindow.times(boothScaleFactor);
+            switch(i) {
+                case -2:
+                    this.shapes.window.draw(context, program_state, transformWindow, this.materials.window1);
+                    break;
+                case -1:
+                    this.shapes.window.draw(context, program_state, transformWindow, this.materials.window2);
+                    break;
+                case 0:
+                    this.shapes.window.draw(context, program_state, transformWindow, this.materials.window3);
+                    break;
+                case 1:
+                    this.shapes.window.draw(context, program_state, transformWindow, this.materials.window4);
+                    break;
+                case 2:
+                    this.shapes.window.draw(context, program_state, transformWindow, this.materials.window5);
+                    break;
+                default:
+                    this.shapes.window.draw(context, program_state, transformWindow, this.materials.window);
+            }
         }
 
         // TALL TABLE
         let tallTableTransform = Mat4.identity();
-        tallTableTransform = tallTableTransform.times(Mat4.translation(141, 30, 12));
-        tallTableTransform = tallTableTransform.times(Mat4.scale(1, 2, 15));
-        // tallTableTransform = tallTableTransform.times(Mat4.rotation(Math.PI/2, 0, 0, 1));
+        tallTableTransform = tallTableTransform.times(Mat4.translation(141, 16, 24));
+        tallTableTransform = tallTableTransform.times(Mat4.rotation(-Math.PI/2, 0, 0, 1));
         tallTableTransform = tallTableTransform.times(Mat4.rotation(Math.PI/2, 0, 0, 1));
-        tallTableTransform = tallTableTransform.times(Mat4.scale(10, 10, 10));
-        this.shapes.menu.draw(context, program_state, tallTableTransform, this.materials.tallTable);
+        tallTableTransform = tallTableTransform.times(Mat4.scale(50, 40, 60));
+        this.shapes.talltable.draw(context, program_state, tallTableTransform, this.materials.talltable);
 
         //STOOLS
         let stoolShiftFactor = 30;
