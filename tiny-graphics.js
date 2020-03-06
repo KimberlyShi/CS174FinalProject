@@ -1108,6 +1108,16 @@ class Webgl_Manager
             }
           
         }
+        if(this.color_match(window.chairpaper_color,data)){
+          if(window.chairpaper_click == 1){
+            window.chairpaper_click = 0;
+          }
+          else{
+            window.chairpaper_click = 1;
+          }
+        }
+
+      
 
         // for diamond color check, lose the checking
         //if(this.color_match(window.diamond_color,data)){

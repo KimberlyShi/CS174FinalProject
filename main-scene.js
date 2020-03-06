@@ -54,6 +54,8 @@ var menu_click = 0;
 window.menu_click = menu_click;
 var stool_click = 0;
 window.stool_click = stool_click;
+var chairpaper_click = 0;
+window.chairpaper_click = chairpaper_click;
 
 //NUMS: 200, 212, 221, 241, 245,246, 249, 250, 251, 252, 254, 255,
 const jukebox_color = color(127/255, 124/255, 127/255, 250/255); // change alpha from 255 to 250 for pick color
@@ -71,6 +73,7 @@ const rules_color = color(3/255, 4/255, 3/255, 246/255);
 const bottle_color = color(3/255, 4/255, 5/255, 240/255);
 const menu_color = color(4/255, 3/255, 2/255, 241/255);
 const stool_color = color(126/255, 125/255, 126/255, 247/255);
+const chairpaper_color = color(200/255, 200/255, 200/255, 244/255)
 
 window.jukebox_color = jukebox_color;
 window.ketchup_color = ketchup_color;
@@ -86,6 +89,7 @@ window.rules_color = rules_color;
 window.bottle_color = bottle_color;
 window.menu_color = menu_color;
 window.stool_color = stool_color;
+window.chairpaper_color = chairpaper_color;
 
 var collision_occured = false;
 var mustard_angle = 0;
@@ -146,7 +150,8 @@ class Main_Scene extends Scene
             stoolclue: new Shape_From_File("assets/stoolclue.obj"),
             tallCup: new Shape_From_File("assets/kcup.obj"),
             talltable: new Shape_From_File("assets/talltable.obj"),
-            window: new Shape_From_File("assets/window.obj")
+            window: new Shape_From_File("assets/window.obj"),
+            chairpaper: new defs.Square()
         };
         
         this.camera_x = -50
@@ -257,6 +262,8 @@ class Main_Scene extends Scene
                     texture: new Texture( "assets/window_map_4.png" )}),
                 window5: new Material( new defs.Textured_Phong( 1 ), {ambient: 1, diffusivity: 1, specularity: 1, 
                     texture: new Texture( "assets/window_map_5.png" )}),
+                chairpaper: new Material( new defs.Textured_Phong( 1 ), {color: chairpaper_color, ambient: 1, diffusivity: 1, specularity: 1, 
+                    texture: new Texture( "assets/stoolclue.png" )}),
 
             };
     }
@@ -606,6 +613,24 @@ class Main_Scene extends Scene
         tallTableTransform = tallTableTransform.times(Mat4.rotation(Math.PI/2, 0, 0, 1));
         tallTableTransform = tallTableTransform.times(Mat4.scale(50, 40, 60));
         this.shapes.talltable.draw(context, program_state, tallTableTransform, this.materials.talltable);
+
+        //PAPER UNDER STOOL
+        let paperTransform = Mat4.identity();
+        paperTransform = paperTransform.times(Mat4.translation(120,5,-40));
+        paperTransform = paperTransform.times(Mat4.scale(15, 15, 15));
+        paperTransform = paperTransform.times(Mat4.rotation(-Math.PI/2, 1, 0, 0));
+        if(window.chairpaper_click == 0)
+        {
+            paperTransform = paperTransform.times(Mat4.translation(120,5,-40));
+            paperTransform = paperTransform.times(Mat4.scale(15, 15, 15));
+            paperTransform = paperTransform.times(Mat4.rotation(-Math.PI/2, 1, 0, 0));
+        }
+        else
+        {
+            paperTransform = paperTransform.times(Mat4.scale(30,30,30));
+
+        }
+        this.shapes.chairpaper.draw(context, program_state, paperTransform, this.materials.chairpaper);
 
         //STOOLS
         let stoolShiftFactor = 30;
