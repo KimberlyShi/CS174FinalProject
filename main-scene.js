@@ -143,6 +143,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             carDeco: new defs.Square(),
             coke: new defs.Square(),
             cokeClue: new defs.Square(),
+            afterDark: new defs.Square(),
             diamond: new Shape_From_File("assets/diamond.obj"),
             endScene: new defs.Square(),
             fadeToBlack: new defs.Square(),
@@ -249,6 +250,10 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                 coke: new Material(new defs.Textured_Phong(1), {
                     ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
                     texture: new Texture("assets/coke_1.png")
+                }),
+                afterDark: new Material(new defs.Textured_Phong(1), {
+                    ambient: 1, diffusivity: 1, specularity: 1, color: color(0,0,0,1),
+                    texture: new Texture("assets/afterDark_1.png")
                 }),
                 openSign: new Material(new defs.Textured_Phong(1), {
                     ambient: 1, diffusivity: 1, specularity: 1, color: door_color,
@@ -766,6 +771,14 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         catTransform = catTransform.times(Mat4.translation(0, 60, 0));
         catTransform = catTransform.times(Mat4.scale(10, 10, 10));
         this.shapes.cat.draw(context, program_state, catTransform, this.materials.cat);
+
+        //POSTERS
+        //Martini
+        var transformMartini = Mat4.identity();
+        transformMartini = transformMartini.times(Mat4.translation(25, 80, -198));
+        transformMartini = transformMartini.times(Mat4.scale(35, 35, 35));
+        this.shapes.afterDark.draw(context, program_state, transformMartini, this.materials.afterDark);
+
 
         //BOOTH
         //shift factor changes how far apart the same facing chair will be
