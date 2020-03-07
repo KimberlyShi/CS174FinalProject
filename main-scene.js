@@ -516,6 +516,9 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             //set next clue
             this.clue2 = 1;
         }
+        else {
+            //still want to draw the chair
+        }
 
         //TODO: Clue #2: Menu
         if(this.clue2 == 1) {
@@ -546,12 +549,6 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
 
             var model_transform_menu_front = Mat4.identity();
             const menuAngle = Math.PI;
-            // model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(-9, 12, -18));
-            // model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(Math.PI/2, 0, 1, 0));
-            // model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(-Math.PI/2, 0, 0, 1));
-            // var model_transform_menu_back = model_transform_menu_front;
-            // model_transform_menu_back = model_transform_menu_back.times(Mat4.translation(0.05, 0, 0));
-            // model_transform_menu_back = model_transform_menu_back.times(Mat4.scale(4, 4, 4));
             if (window.menu_click == 0) {
                 model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(-9, 12, -18));
                 model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(Math.PI / 2, 0, 1, 0));
@@ -561,11 +558,6 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                 model_transform_menu_back = model_transform_menu_back.times(Mat4.scale(4, 4, 4));
                 this.shapes.menu.draw(context, program_state, model_transform_menu_back, this.materials.menuBack);
             }
-            // this.shapes.menu.draw(context, program_state, model_transform_menu_back, this.materials.menuBack);
-            // model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(0, 0, -2.2));
-            // model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(-(menuAngle/2) + (menuAngle/2*Math.sin(Math.PI*t)) , 0, 1, 0));
-            // model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(0, 0, 2.2));
-            // model_transform_menu_front = model_transform_menu_front.times(Mat4.scale(4, 4, 4));
             if (window.menu_click == 1) {
                 model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(0, 0, -2.2));
                 model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(-(menuAngle / 2) + (menuAngle / 2 * Math.sin(Math.PI * t)), 0, 1, 0));
@@ -579,6 +571,11 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             //Set next clue
             this.clue3 = 1;
         }
+        else
+        {
+            //draw the unopened menu
+        }
+
         //TODO: Clue #3: Coke Poster
         var myMaterial;
         const transformCoke =
@@ -705,27 +702,39 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
 
         //TODO: Clue #5: Napkin Box
         //NAPKIN BOX
-        let napkinTransform = Mat4.identity();
-        napkinTransform = napkinTransform.times(Mat4.translation(140, 40, 70)).times(Mat4.scale(4, 4, 4))
 
-        if (window.napkin_click == 1) {
-            console.log("napkin = " + window.napkin_click);
-            napkinTransform = napkinTransform.times(Mat4.rotation(Math.PI, 0, 1, 0));
-        } else if (window.napkin_click == 0) {
-            napkinTransform = Mat4.identity().times(Mat4.translation(140, 40, 70).times(Mat4.scale(4, 4, 4)));
-            napkinTransform = napkinTransform.times(Mat4.rotation(Math.PI / 2, 0, 1, 0));
+        // this.clue5 = 0;
+        if(this.clue5 == 1) {
+            let napkinTransform = Mat4.identity();
+            napkinTransform = napkinTransform.times(Mat4.translation(140, 40, 70)).times(Mat4.scale(4, 4, 4));
+
+            if (window.napkin_click == 1) {
+                console.log("napkin = " + window.napkin_click);
+                napkinTransform = napkinTransform.times(Mat4.rotation(Math.PI, 0, 1, 0));
+            } else if (window.napkin_click == 0) {
+                napkinTransform = Mat4.identity().times(Mat4.translation(140, 40, 70).times(Mat4.scale(4, 4, 4)));
+                napkinTransform = napkinTransform.times(Mat4.rotation(Math.PI / 2, 0, 1, 0));
+            }
+            this.shapes.napkin.draw(context, program_state, napkinTransform, this.materials.napkin);
+
+            //set the next clue
+            this.clue6 = 1;
+
         }
-        this.shapes.napkin.draw(context, program_state, napkinTransform, this.materials.napkin);
+        else {
+            let napkinTransform = Mat4.identity();
+            napkinTransform = napkinTransform.times(Mat4.translation(140, 40, 70)).times(Mat4.scale(4, 4, 4));
+            this.shapes.napkin.draw(context, program_state, napkinTransform, this.materials.napkin);
+        }
+
 
         //TODO: Clue #6: Glass Bottle + Shards and Show diamond
         //BOTTLE
+
+        // this.clue6 = 0;
         var transformBottle = Mat4.identity();
         transformBottle = transformBottle.times(Mat4.translation(45, 55, 160));
         transformBottle = transformBottle.times(Mat4.scale(5, 5, 5));
-        if (window.bottle_click == 0) {
-            this.shapes.bottle.draw(context, program_state, transformBottle, this.materials.bottle);
-
-        }
         //DIAMOND
         let diamondTransform = Mat4.identity();
         diamondTransform = diamondTransform.times(Mat4.translation(45, 50, 150)).times(Mat4.scale(2, 2, 2));
@@ -733,24 +742,55 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         var transformShards = Mat4.identity();
         transformShards = transformShards.times(Mat4.translation(45, 52, 160));
         transformShards = transformShards.times(Mat4.scale(10, 10, 10));
-        if (window.bottle_click == 1) {
-            this.shapes.shards.draw(context, program_state, transformShards, this.materials.shards);
-            this.shapes.diamond.draw(context, program_state, diamondTransform, this.materials.diamond);
+
+        if(this.clue6 == 1) {
+            // var transformBottle = Mat4.identity();
+            // transformBottle = transformBottle.times(Mat4.translation(45, 55, 160));
+            // transformBottle = transformBottle.times(Mat4.scale(5, 5, 5));
+            if (window.bottle_click == 0) {
+                this.shapes.bottle.draw(context, program_state, transformBottle, this.materials.bottle);
+
+            }
+
+            if (window.bottle_click == 1) {
+                this.shapes.shards.draw(context, program_state, transformShards, this.materials.shards);
+                this.shapes.diamond.draw(context, program_state, diamondTransform, this.materials.diamond);
+            }
+
+            //set the next clue
+            this.clue7 = 1;
         }
+        else {
+            //just draw the bottle unshattered
+            //none of the bottles should shatter
+            this.shapes.bottle.draw(context, program_state, transformBottle, this.materials.bottle);
+        }
+
 
         //TODO: Clue #7: Diamond + Note
         //NOTE
         let noteTransform = Mat4.identity();
         noteTransform = noteTransform.times(Mat4.translation(0, 50, -70));
         noteTransform = noteTransform.times(Mat4.scale(90, 90, 90));
-        if (window.diamond_click == 1) {
-            console.log("diamond = " + window.diamond_click);
-            this.shapes.note.draw(context, program_state, noteTransform, this.materials.note);
-            this.setCamera5();
+
+
+        //testing
+        // this.clue7 = 0;
+
+        if(this.clue7 == 1) {
+            if (window.diamond_click == 1) {
+                console.log("diamond = " + window.diamond_click);
+                this.shapes.note.draw(context, program_state, noteTransform, this.materials.note);
+                this.setCamera5();
+            }
+            if (window.note_click == 1) {
+                window.diamond_click = 0;
+            }
         }
-        if (window.note_click == 1) {
-            window.diamond_click = 0;
-        }
+        // else {
+            //no note should be drawn
+            //just the diamond still from clue6 so shouldn't need to draw anything
+        // }
 
         //TODO: Clue #8: Jukebox
         //JUKEBOX
