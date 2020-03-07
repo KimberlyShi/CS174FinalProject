@@ -164,7 +164,8 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             stoolclue: new Shape_From_File("assets/stoolclue.obj"),
             tallCup: new Shape_From_File("assets/kcup.obj"),
             talltable: new Shape_From_File("assets/talltable.obj"),
-            window: new Shape_From_File("assets/window.obj")
+            window: new Shape_From_File("assets/window.obj"),
+            cat: new Shape_From_File("assets/cat.obj"),
         };
 
         this.camera_x = -50
@@ -355,6 +356,10 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                 window5: new Material(new defs.Textured_Phong(1), {
                     ambient: 1, diffusivity: 1, specularity: 1,
                     texture: new Texture("assets/window_map_5.png")
+                }),
+                cat: new Material(new defs.Textured_Phong(1), {
+                    ambient: 1, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
+                    texture: new Texture("assets/door_map.png")
                 }),
 
             };
@@ -618,7 +623,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
 
             //Once collide, will reveal the next clue
             this.clue5 = 1;
-            
+
         } else {    // reset it to original position
             kup_mov = 0
             mustard_angle = 0
@@ -691,6 +696,8 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             this.shapes.ketchup.draw(context, program_state, model_transform1, this.materials.ketchup);
             this.shapes.mustard.draw(context, program_state, model_transform2, this.materials.mustard);
         }
+
+
         //TODO: Clue #5: Napkin Box
         //NAPKIN BOX
         let napkinTransform = Mat4.identity();
@@ -748,6 +755,18 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
 
 
         //TODO: Furniture Placement
+        //CAT
+        //this.camera_x = 0
+        //         this.camera_y = -60
+        //         this.camera_z = 10
+        //         this.camera_angle = Math.PI
+        //         this.cameraReset = 1
+
+        var catTransform = Mat4.identity();
+        catTransform = catTransform.times(Mat4.translation(0, 60, 0));
+        catTransform = catTransform.times(Mat4.scale(10, 10, 10));
+        this.shapes.cat.draw(context, program_state, catTransform, this.materials.cat);
+
         //BOOTH
         //shift factor changes how far apart the same facing chair will be
         const boothShiftFactor = 90;
