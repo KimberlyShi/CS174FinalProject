@@ -915,7 +915,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
 
         //PAPER UNDER STOOL
         let paperTransform = Mat4.identity();
-        paperTransform = paperTransform.times(Mat4.translation(155,2,-94));
+        paperTransform = paperTransform.times(Mat4.translation(125,2,-87));
         paperTransform = paperTransform.times(Mat4.scale(5, 5, 5));
         paperTransform = paperTransform.times(Mat4.rotation(-Math.PI/2, 1, 0, 0));
         if(window.chairpaper_click == 1)
@@ -924,8 +924,9 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             // paperTransform = paperTransform.times(Mat4.scale(15, 15, 15));
             // paperTransform = paperTransform.times(Mat4.rotation(-Math.PI/2, 1, 0, 0));
             paperTransform = Mat4.identity();
-            paperTransform = paperTransform.times(Mat4.translation(0, 60, 0));
-            paperTransform = paperTransform.times(Mat4.scale(40,40,40));
+            paperTransform = paperTransform.times(Mat4.translation(0, 70, 0));
+            paperTransform = paperTransform.times(Mat4.scale(60,60,60));
+            this.setCamera5();
         }
   
         this.shapes.chairpaper.draw(context, program_state, paperTransform, this.materials.chairpaper);
@@ -934,8 +935,8 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         let stoolShiftFactor = 30;
         var max_stool_dist = 2.8;
         let stoolTransform = Mat4.translation(123, 14, 80 + stoolShiftFactor);
-        let stoolClueTransform = Mat4.translation(160, 17, 20 - stoolShiftFactor * 4);
-        stoolClueTransform = stoolClueTransform.times(Mat4.scale(12, 12, 12));
+        let stoolClueTransform = Mat4.translation(125, 18, 36 - stoolShiftFactor * 4);
+        stoolClueTransform = stoolClueTransform.times(Mat4.scale(12, 13, 12));
         if (window.stool_click == 1) {
             //console.log("stool_click")
             if (stool_move < max_stool_dist)
@@ -948,9 +949,9 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
 
         this.shapes.stoolclue.draw(context, program_state, stoolClueTransform, this.materials.stoolclue);
 
-        for (let i = 0; i < 7; i++) {
+        for (let i = 0; i < 6; i++) {
             var transformStool = Mat4.identity();
-            transformStool = transformStool.times(Mat4.translation(120, 20, -120 + (stoolShiftFactor * (i+1) )));
+            transformStool = transformStool.times(Mat4.translation(120, 20, -80 + (stoolShiftFactor * (i+1) )));
             transformStool = transformStool.times(Mat4.scale(12,12,12));
             // stoolTransform = stoolTransform.times(Mat4.translation(0, 0, -stoolShiftFactor));
             // stoolTransform = stoolTransform.times(Mat4.scale(10, 10, 10));
