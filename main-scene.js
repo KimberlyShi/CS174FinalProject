@@ -802,8 +802,8 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         //         this.cameraReset = 1
 
         var catTransform = Mat4.identity();
-        catTransform = catTransform.times(Mat4.translation(0, 60, 0));
-        catTransform = catTransform.times(Mat4.scale(10, 10, 10));
+        catTransform = catTransform.times(Mat4.translation(0, 90, 0));
+        catTransform = catTransform.times(Mat4.scale(5, 5, 5));
         this.shapes.cat.draw(context, program_state, catTransform, this.materials.cat);
 
         //POSTERS
@@ -907,10 +907,10 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
 
         // TALL TABLE
         let tallTableTransform = Mat4.identity();
-        tallTableTransform = tallTableTransform.times(Mat4.translation(183, 20, -20));
+        tallTableTransform = tallTableTransform.times(Mat4.translation(183, 20, 0));
         tallTableTransform = tallTableTransform.times(Mat4.rotation(-Math.PI / 2, 0, 0, 1));
         tallTableTransform = tallTableTransform.times(Mat4.rotation(Math.PI / 2, 0, 0, 1));
-        tallTableTransform = tallTableTransform.times(Mat4.scale(50, 50, 90));
+        tallTableTransform = tallTableTransform.times(Mat4.scale(50, 50, 110));
         this.shapes.talltable.draw(context, program_state, tallTableTransform, this.materials.talltable);
 
         //PAPER UNDER STOOL
@@ -948,9 +948,9 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
 
         this.shapes.stoolclue.draw(context, program_state, stoolClueTransform, this.materials.stoolclue);
 
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < 7; i++) {
             var transformStool = Mat4.identity();
-            transformStool = transformStool.times(Mat4.translation(160, 20, -50 + (stoolShiftFactor * (i+1) )));
+            transformStool = transformStool.times(Mat4.translation(120, 20, -120 + (stoolShiftFactor * (i+1) )));
             transformStool = transformStool.times(Mat4.scale(12,12,12));
             // stoolTransform = stoolTransform.times(Mat4.translation(0, 0, -stoolShiftFactor));
             // stoolTransform = stoolTransform.times(Mat4.scale(10, 10, 10));
