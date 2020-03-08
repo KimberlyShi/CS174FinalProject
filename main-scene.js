@@ -324,7 +324,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                     texture: new Texture("assets/finish_rect_notext.png")
                 }),
                 napkin: new Material(new defs.Textured_Phong(1), {
-                    ambient: 1, diffusivity: 1, specularity: 1, color: napkin_color,
+                    ambient: 1, diffusivity: 1, specularity: 0, color: napkin_color,
                     texture: new Texture("assets/napkin_map.png")
                 }),
                 fadeToBlack: new Material(new defs.Textured_Phong(1), {
@@ -697,16 +697,18 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         //TODO: Clue #5: Napkin Box
         //NAPKIN BOX
 
-        // this.clue5 = 0;
+        this.clue5 = 0;
         if(this.clue5 == 1) {
             let napkinTransform = Mat4.identity();
-            napkinTransform = napkinTransform.times(Mat4.translation(140, 40, 70)).times(Mat4.scale(4, 4, 4));
+            // napkinTransform = napkinTransform.times(Mat4.translation(140, 40, 70)).times(Mat4.scale(4, 4, 4));
+            napkinTransform = napkinTransform.times(Mat4.translation(185, 46, 60)).times(Mat4.scale(6, 6, 6));
 
             if (window.napkin_click == 1) {
                 console.log("napkin = " + window.napkin_click);
                 napkinTransform = napkinTransform.times(Mat4.rotation(Math.PI, 0, 1, 0));
             } else if (window.napkin_click == 0) {
-                napkinTransform = Mat4.identity().times(Mat4.translation(140, 40, 70).times(Mat4.scale(4, 4, 4)));
+                // napkinTransform = Mat4.identity().times(Mat4.translation(140, 40, 70).times(Mat4.scale(4, 4, 4)));
+                // napkinTransform = napkinTransform.times(Mat4.translation(185, 44, 60)).times(Mat4.scale(6, 6, 6));
                 napkinTransform = napkinTransform.times(Mat4.rotation(Math.PI / 2, 0, 1, 0));
             }
             this.shapes.napkin.draw(context, program_state, napkinTransform, this.materials.napkin);
@@ -715,11 +717,19 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             this.clue6 = 1;
 
         }
-        else {
+        else { //clue napkin box when not used
             let napkinTransform = Mat4.identity();
-            napkinTransform = napkinTransform.times(Mat4.translation(140, 40, 70)).times(Mat4.scale(4, 4, 4));
+            napkinTransform = napkinTransform.times(Mat4.translation(185, 44, 60)).times(Mat4.scale(6, 6, 6));
             this.shapes.napkin.draw(context, program_state, napkinTransform, this.materials.napkin);
         }
+
+        //all the other napkin boxes that dont do anything
+        let napkinTransform = Mat4.identity();
+        napkinTransform = napkinTransform.times(Mat4.translation(185, 44, -5)).times(Mat4.scale(6, 6, 6));
+        this.shapes.napkin.draw(context, program_state, napkinTransform, this.materials.napkin);
+        let napkinTransform2 = Mat4.identity();
+        napkinTransform2 = napkinTransform2.times(Mat4.translation(185, 44, -75)).times(Mat4.scale(6, 6, 6));
+        this.shapes.napkin.draw(context, program_state, napkinTransform2, this.materials.napkin);
 
 
         //TODO: Clue #6: Glass Bottle + Shards and Show diamond
