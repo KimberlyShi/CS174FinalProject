@@ -907,10 +907,10 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
 
         // TALL TABLE
         let tallTableTransform = Mat4.identity();
-        tallTableTransform = tallTableTransform.times(Mat4.translation(141, 16, 24));
+        tallTableTransform = tallTableTransform.times(Mat4.translation(183, 20, -20));
         tallTableTransform = tallTableTransform.times(Mat4.rotation(-Math.PI / 2, 0, 0, 1));
         tallTableTransform = tallTableTransform.times(Mat4.rotation(Math.PI / 2, 0, 0, 1));
-        tallTableTransform = tallTableTransform.times(Mat4.scale(50, 40, 60));
+        tallTableTransform = tallTableTransform.times(Mat4.scale(50, 50, 90));
         this.shapes.talltable.draw(context, program_state, tallTableTransform, this.materials.talltable);
 
         //PAPER UNDER STOOL
@@ -950,10 +950,14 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         this.shapes.stoolclue.draw(context, program_state, stoolClueTransform, this.materials.stoolclue);
 
         for (let i = 0; i < 4; i++) {
-            stoolTransform = stoolTransform.times(Mat4.translation(0, 0, -stoolShiftFactor));
-            stoolTransform = stoolTransform.times(Mat4.scale(10, 10, 10));
-            this.shapes.stool.draw(context, program_state, stoolTransform, this.materials.stool);
-            stoolTransform = stoolTransform.times(Mat4.scale(0.1, 0.1, 0.1));
+            var transformStool = Mat4.identity();
+            transformStool = transformStool.times(Mat4.translation(160, 20, -50 + (stoolShiftFactor * (i+1) )));
+            transformStool = transformStool.times(Mat4.scale(12,12,12));
+            // stoolTransform = stoolTransform.times(Mat4.translation(0, 0, -stoolShiftFactor));
+            // stoolTransform = stoolTransform.times(Mat4.scale(10, 10, 10));
+            // this.shapes.stool.draw(context, program_state, stoolTransform, this.materials.stool);
+            this.shapes.stool.draw(context, program_state, transformStool, this.materials.stool);
+            // stoolTransform = stoolTransform.times(Mat4.scale(0.1, 0.1, 0.1));
         }
 
         //BAR
