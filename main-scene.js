@@ -75,7 +75,7 @@ const rules_color = color(3/255, 4/255, 3/255, 246/255);
 const bottle_color = color(3/255, 4/255, 5/255, 240/255);
 const menu_color = color(4/255, 3/255, 2/255, 241/255);
 const stool_color = color(126/255, 125/255, 126/255, 247/255);
-const chairpaper_color = color(200/255, 200/255, 200/255, 244/255);
+const chairpaper_color = color(0/255, 0/255, 0/255, 244/255);
 const menu_color_special = color(3/255, 3/255, 2/255, 237/255);
 
 window.jukebox_color = jukebox_color;
@@ -916,19 +916,18 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         //PAPER UNDER STOOL
         let paperTransform = Mat4.identity();
         paperTransform = paperTransform.times(Mat4.translation(120,5,-40));
-        paperTransform = paperTransform.times(Mat4.scale(15, 15, 15));
+        paperTransform = paperTransform.times(Mat4.scale(5, 5, 5));
         paperTransform = paperTransform.times(Mat4.rotation(-Math.PI/2, 1, 0, 0));
-        if(window.chairpaper_click == 0)
+        if(window.chairpaper_click == 1)
         {
-            paperTransform = paperTransform.times(Mat4.translation(120,5,-40));
-            paperTransform = paperTransform.times(Mat4.scale(15, 15, 15));
-            paperTransform = paperTransform.times(Mat4.rotation(-Math.PI/2, 1, 0, 0));
+            // paperTransform = paperTransform.times(Mat4.translation(120,5,-40));
+            // paperTransform = paperTransform.times(Mat4.scale(15, 15, 15));
+            // paperTransform = paperTransform.times(Mat4.rotation(-Math.PI/2, 1, 0, 0));
+            paperTransform = Mat4.identity();
+            paperTransform = paperTransform.times(Mat4.translation(0, 60, 0));
+            paperTransform = paperTransform.times(Mat4.scale(40,40,40));
         }
-        else
-        {
-            paperTransform = paperTransform.times(Mat4.scale(30,30,30));
-
-        }
+  
         this.shapes.chairpaper.draw(context, program_state, paperTransform, this.materials.chairpaper);
 
         //STOOLS
