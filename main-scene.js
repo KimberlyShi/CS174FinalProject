@@ -598,6 +598,28 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         //TODO: Clue #4: Mustard and Ketchup
         this.clue4 = 1; //TODO: get rid of this (just for testing)
 
+        // var distance_cup = 10;
+        // mustard_mov = 0;
+        // kup_mov = 0;
+        // mustard_angle = 0;
+        //
+
+        var otherKetchup = Mat4.identity();
+        otherKetchup = otherKetchup.times(Mat4.translation(180, 51, -20 + 50));
+        otherKetchup = otherKetchup.times(Mat4.scale(2, 2, 2));
+        //model_transform2 is mustard
+        var otherMustard = Mat4.identity();
+        otherMustard = otherMustard.times(Mat4.translation(180, 51 , 10 - 20 +50));
+        otherMustard = otherMustard.times(Mat4.translation(0, -5.8, 0));
+        otherMustard = otherMustard.times(Mat4.rotation(mustard_angle, 1, 0, 0));
+        otherMustard = otherMustard.times(Mat4.translation(0, 5.8, 0));
+        otherMustard = otherMustard.times(Mat4.scale(2,2,2));
+
+
+        this.shapes.ketchup.draw(context, program_state, otherKetchup, this.materials.ketchup);
+        this.shapes.mustard.draw(context, program_state, otherMustard, this.materials.mustard);
+
+
         if(this.clue4 == 1) {
         //KETCHUP + MUSTARD
         var distance_cup = 10; // define the initial distance between cups
@@ -607,6 +629,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                 var max_angle = 1.6;
                 mustard_angle += 0.04;
                 if (mustard_angle < max_angle) {
+                    // if (mustard_mov == 0) mustard_mov = 0.8 // add initial jump right after collision.
                     if (mustard_mov == 0) mustard_mov = 0.8 // add initial jump right after collision.
                     mustard_mov += 0.004;
                 } else {
@@ -626,13 +649,22 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             mustard_mov = 0
             collision_occured = false
         }
-        const model_transform1 = Mat4.translation(140, 38, kup_mov - 20)
-            .times(Mat4.scale(1.0, 1.0, 1.0))
-        //model_transform2 is mustard
-        const model_transform2 = Mat4.translation(140, 38, distance_cup - 20 + mustard_mov)
-            .times(Mat4.translation(0, -5.8, 0))
-            .times(Mat4.rotation(mustard_angle, 1, 0, 0))
-            .times(Mat4.translation(0, 5.8, 0))
+        // const model_transform1 = Mat4.translation(140, 38, kup_mov - 20)
+        //     .times(Mat4.scale(1.0, 1.0, 1.0))
+        // //model_transform2 is mustard
+        // const model_transform2 = Mat4.translation(140, 38, distance_cup - 20 + mustard_mov)
+        //     .times(Mat4.translation(0, -5.8, 0))
+        //     .times(Mat4.rotation(mustard_angle, 1, 0, 0))
+        //     .times(Mat4.translation(0, 5.8, 0))
+            const model_transform1 = Mat4.translation(180, 51, kup_mov - 20 - 90)
+                .times(Mat4.scale(2, 2, 2))
+            //model_transform2 is mustard
+            // const model_transform2 = Mat4.translation(180, 31 , distance_cup - 20 + mustard_mov - 90 -30)
+            const model_transform2 = Mat4.translation(180, 51 , distance_cup - 20 + mustard_mov - 90)
+                .times(Mat4.translation(0, -5.8, 0))
+                .times(Mat4.rotation(mustard_angle, 1, 0, 0))
+                .times(Mat4.translation(0, 5.8, 0))
+                .times(Mat4.scale(2,2,2))
 
         var pos1 = model_transform1.times(vec4(0, 0, 0, 1)); // get the coordinate of ketchup
         var pos2 = model_transform2.times(vec4(0, 0, 0, 1)); // get the coordinate of mustard
@@ -643,7 +675,9 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         this.shapes.ketchup.draw(context, program_state, model_transform1, this.materials.ketchup);
         this.shapes.mustard.draw(context, program_state, model_transform2, this.materials.mustard);
         var transformMustard = Mat4.identity();
-        transformMustard = transformMustard.times(Mat4.translation(116, 31, 31));
+        // transformMustard = transformMustard.times(Mat4.translation(116, 31, 31));
+            //this is for the spill???
+            transformMustard = transformMustard.times(Mat4.translation(116, 31, 31));
         transformMustard = transformMustard.times(Mat4.rotation(-Math.PI / 2, 0, 1, 0));
         transformMustard = transformMustard.times(Mat4.rotation(-Math.PI / 2, 1, 0, 0));
         transformMustard = transformMustard.times(Mat4.scale(35, 35, 35));
@@ -681,17 +715,26 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             mustard_mov = 0;
             kup_mov = 0;
             mustard_angle = 0;
-            const model_transform1 = Mat4.translation(140, 38, kup_mov - 20)
-                .times(Mat4.scale(1.0, 1.0, 1.0))
+            const model_transform1 = Mat4.translation(180, 51, kup_mov - 20 - 90)
+                .times(Mat4.scale(2, 2, 2))
             //model_transform2 is mustard
-            const model_transform2 = Mat4.translation(140, 38, distance_cup - 20 + mustard_mov)
+            const model_transform2 = Mat4.translation(180, 51 , distance_cup - 20 + mustard_mov - 90)
                 .times(Mat4.translation(0, -5.8, 0))
                 .times(Mat4.rotation(mustard_angle, 1, 0, 0))
                 .times(Mat4.translation(0, 5.8, 0))
+                .times(Mat4.scale(2,2,2))
+
 
             this.shapes.ketchup.draw(context, program_state, model_transform1, this.materials.ketchup);
             this.shapes.mustard.draw(context, program_state, model_transform2, this.materials.mustard);
         }
+
+        //draw the other ketchup and mustards that don't actually do anything
+        // var distance_cup = 10;
+        // mustard_mov = 0;
+        // kup_mov = 0;
+        // mustard_angle = 0;
+        //
 
 
         //TODO: Clue #5: Napkin Box
@@ -701,7 +744,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         if(this.clue5 == 1) {
             let napkinTransform = Mat4.identity();
             // napkinTransform = napkinTransform.times(Mat4.translation(140, 40, 70)).times(Mat4.scale(4, 4, 4));
-            napkinTransform = napkinTransform.times(Mat4.translation(185, 44, 90)).times(Mat4.scale(6, 6, 6));
+            napkinTransform = napkinTransform.times(Mat4.translation(185, 44, 20)).times(Mat4.scale(6, 6, 6));
 
             if (window.napkin_click == 1) {
                 console.log("napkin = " + window.napkin_click);
@@ -720,20 +763,20 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         }
         else { //clue napkin box when not used
             let napkinTransform = Mat4.identity();
-            napkinTransform = napkinTransform.times(Mat4.translation(185, 44, 90)).times(Mat4.scale(6, 6, 6));
+            napkinTransform = napkinTransform.times(Mat4.translation(185, 44, 20)).times(Mat4.scale(6, 6, 6));
             this.shapes.napkin.draw(context, program_state, napkinTransform, this.materials.napkin);
         }
 
         //all the other napkin boxes that dont do anything
         let napkinTransform = Mat4.identity();
-        napkinTransform = napkinTransform.times(Mat4.translation(185, 44, -50)).times(Mat4.scale(6, 6, 6));
+        napkinTransform = napkinTransform.times(Mat4.translation(185, 44, -120)).times(Mat4.scale(6, 6, 6));
         this.shapes.napkin.draw(context, program_state, napkinTransform, this.materials.napkin);
-        let napkinTransform2 = Mat4.identity();
-        napkinTransform2 = napkinTransform2.times(Mat4.translation(185, 44, -120)).times(Mat4.scale(6, 6, 6));
-        this.shapes.napkin.draw(context, program_state, napkinTransform2, this.materials.napkin);
-        let napkinTransform3 = Mat4.identity();
-        napkinTransform3 = napkinTransform3.times(Mat4.translation(185, 44, 20)).times(Mat4.scale(6, 6, 6));
-        this.shapes.napkin.draw(context, program_state, napkinTransform3, this.materials.napkin);
+        // let napkinTransform2 = Mat4.identity();
+        // napkinTransform2 = napkinTransform2.times(Mat4.translation(185, 44, -120)).times(Mat4.scale(6, 6, 6));
+        // this.shapes.napkin.draw(context, program_state, napkinTransform2, this.materials.napkin);
+        // let napkinTransform3 = Mat4.identity();
+        // napkinTransform3 = napkinTransform3.times(Mat4.translation(185, 44, 20)).times(Mat4.scale(6, 6, 6));
+        // this.shapes.napkin.draw(context, program_state, napkinTransform3, this.materials.napkin);
 
 
         //TODO: Clue #6: Glass Bottle + Shards and Show diamond
@@ -992,11 +1035,11 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
 
         //TODO: Figure out what this Tall Cup is for?? -Kim
         //TALL CUP
-        var transformTallCup = Mat4.identity();
-        transformTallCup = transformTallCup.times(Mat4.translation(0, 3, 0));
-        transformTallCup = transformTallCup.times(Mat4.rotation(Math.PI, 0, 1, 0));
-        transformTallCup = transformTallCup.times(Mat4.scale(10, 10, 10));
-        this.shapes.tallCup.draw(context, program_state, transformTallCup, this.materials.tallCup);
+        // var transformTallCup = Mat4.identity();
+        // transformTallCup = transformTallCup.times(Mat4.translation(0, 3, 0));
+        // transformTallCup = transformTallCup.times(Mat4.rotation(Math.PI, 0, 1, 0));
+        // transformTallCup = transformTallCup.times(Mat4.scale(10, 10, 10));
+        // this.shapes.tallCup.draw(context, program_state, transformTallCup, this.materials.tallCup);
 
 
         //TODO: Floor Placement
