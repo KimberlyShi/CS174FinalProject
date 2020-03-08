@@ -174,6 +174,8 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             window: new Shape_From_File("assets/window.obj"),
             chairpaper: new defs.Square(),
             cat: new Shape_From_File("assets/cat.obj"),
+            shelf: new Shape_From_File("assets/shelf.obj"),
+            circleposter: new Shape_From_File("assets/circleposter.obj"),
         };
 
         this.camera_x = -50
@@ -383,8 +385,20 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                 }),
                 chairpaper: new Material( new defs.Textured_Phong( 1 ), {
                     color: chairpaper_color, ambient: 1, diffusivity: 1, specularity: 1, 
-                    texture: new Texture( "assets/stoolClue.png" )}),
-
+                    texture: new Texture( "assets/stoolClue.png" )
+                }),
+                shelf: new Material( new defs.Textured_Phong( 1 ), {
+                    ambient: 1, diffusivity: 1, specularity: 1, 
+                    texture: new Texture( "assets/shelf_map.png" )
+                }),
+                coffeePoster: new Material( new defs.Textured_Phong( 1 ), {
+                    ambient: 1, diffusivity: 1, specularity: 1, 
+                    texture: new Texture( "assets/coffee_poster.png" )
+                }),
+                mimosaPoster: new Material( new defs.Textured_Phong( 1 ), {
+                    ambient: 1, diffusivity: 1, specularity: 1, 
+                    texture: new Texture( "assets/mimosa_poster.png" )
+                }),  
             };
     }
 
@@ -644,10 +658,10 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             this.clue5 = 1;
 
         } else {    // reset it to original position
-            kup_mov = 0
-            mustard_angle = 0
-            mustard_mov = 0
-            collision_occured = false
+            kup_mov = 0;
+            mustard_angle = 0;
+            mustard_mov = 0;
+            collision_occured = false;
         }
         // const model_transform1 = Mat4.translation(140, 38, kup_mov - 20)
         //     .times(Mat4.scale(1.0, 1.0, 1.0))
@@ -858,10 +872,6 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         //         this.camera_angle = Math.PI
         //         this.cameraReset = 1
 
-        var catTransform = Mat4.identity();
-        catTransform = catTransform.times(Mat4.translation(0, 90, 0));
-        catTransform = catTransform.times(Mat4.scale(5, 5, 5));
-        this.shapes.cat.draw(context, program_state, catTransform, this.materials.cat);
 
         //POSTERS
         //Martini
@@ -1041,6 +1051,57 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         // transformTallCup = transformTallCup.times(Mat4.scale(10, 10, 10));
         // this.shapes.tallCup.draw(context, program_state, transformTallCup, this.materials.tallCup);
 
+
+        // BACK WALL SHELVES
+        var transformShelf = Mat4.identity();
+        transformShelf = transformShelf.times(Mat4.translation(35,120, 290));
+        transformShelf = transformShelf.times(Mat4.scale(40, 20, 40));
+        transformShelf = transformShelf.times(Mat4.rotation(Math.PI, 0, 1, 0));
+        this.shapes.shelf.draw(context, program_state, transformShelf, this.materials.shelf);
+
+        transformShelf = Mat4.identity();
+        transformShelf = transformShelf.times(Mat4.translation(5, 85, 290));
+        transformShelf = transformShelf.times(Mat4.scale(40, 20, 40));
+        transformShelf = transformShelf.times(Mat4.rotation(Math.PI, 0, 1, 0));
+        this.shapes.shelf.draw(context, program_state, transformShelf, this.materials.shelf);
+
+        var transformShelfBottle = transformShelf.times(Mat4.translation(0.75, 0.90, 0));
+        this.shapes.bottle.draw(context, program_state, transformShelfBottle.times(Mat4.scale(0.2, 0.4, 0.2)), this.materials.bottle);
+
+        transformShelfBottle = transformShelf.times(Mat4.translation(0, 0.90, 0));
+        this.shapes.bottle.draw(context, program_state, transformShelfBottle.times(Mat4.scale(0.2, 0.4, 0.2)), this.materials.bottle);
+
+        transformShelfBottle = transformShelf.times(Mat4.translation(-0.75, 0.90, 0));
+        this.shapes.bottle.draw(context, program_state, transformShelfBottle.times(Mat4.scale(0.2, 0.4, 0.2)), this.materials.bottle);
+
+        transformShelf = Mat4.identity();
+        transformShelf = transformShelf.times(Mat4.translation(70, 50, 290));
+        transformShelf = transformShelf.times(Mat4.scale(40, 20, 40));
+        transformShelf = transformShelf.times(Mat4.rotation(Math.PI, 0, 1, 0));
+        this.shapes.shelf.draw(context, program_state, transformShelf, this.materials.shelf);
+
+        transformShelfBottle = transformShelf.times(Mat4.translation(0, 0.90, 0));
+        this.shapes.bottle.draw(context, program_state, transformShelfBottle.times(Mat4.scale(0.2, 0.4, 0.2)), this.materials.bottle);
+
+        transformShelfBottle = transformShelf.times(Mat4.translation(0.75, 0.90, 0));
+        this.shapes.bottle.draw(context, program_state, transformShelfBottle.times(Mat4.scale(0.2, 0.4, 0.2)), this.materials.bottle);
+
+        var transformCoffee = Mat4.identity();
+        transformCoffee = transformCoffee.times(Mat4.translation(100, 90, 280));
+        transformCoffee = transformCoffee.times(Mat4.scale(23, 23, 23));
+        transformCoffee = transformCoffee.times(Mat4.rotation(Math.PI, 0, 1, 0));
+        this.shapes.circleposter.draw(context, program_state, transformCoffee, this.materials.coffeePoster);
+
+        var transformMimosa = Mat4.identity();
+        transformMimosa = transformMimosa.times(Mat4.translation(-150, 35, 0));
+        transformMimosa = transformMimosa.times(transformCoffee);
+        this.shapes.circleposter.draw(context, program_state, transformMimosa, this.materials.mimosaPoster);
+
+        var catTransform = Mat4.identity();
+        catTransform = catTransform.times(Mat4.translation(0, 131, 283));
+        catTransform = catTransform.times(Mat4.scale(6, 6, 6));
+        catTransform = catTransform.times(Mat4.rotation(7 * Math.PI/6, 0, 1, 0));
+        this.shapes.cat.draw(context, program_state, catTransform, this.materials.cat);
 
         //TODO: Floor Placement
         //NOTE: order matters for the floor and back wall transformations bc of image wrapping
