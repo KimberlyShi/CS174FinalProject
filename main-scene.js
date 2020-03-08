@@ -54,25 +54,26 @@ var bottle_click = 0;
 window.bottle_click = bottle_click;
 var menu_click = 0;
 window.menu_click = menu_click;
-var stool_click = 0;
+var stool_click = 0;35
 window.stool_click = stool_click;
 
 //NUMS: 200, 212, 221, 241, 245,246, 249, 250, 251, 252, 254, 255,
-const jukebox_color = color(127 / 255, 124 / 255, 127 / 255, 250 / 255); // change alpha from 255 to 250 for pick color
-const ketchup_color = color(255 / 255, 0 / 255, 0 / 255, 251 / 255);
-const mustard_color = color(255 / 255, 255 / 255, 0 / 255, 255 / 255);
-const coke_color = color(2 / 255, 2 / 255, 2 / 255, 252 / 255);
-const cup_color = color(190 / 255, 223 / 255, 221 / 255);
+const jukebox_color =       color(127 / 255, 124 / 255, 127 / 255, 250 / 255); // change alpha from 255 to 250 for pick color
+const ketchup_color =       color(255 / 255, 0 / 255, 0 / 255, 251 / 255);
+const mustard_color =       color(255 / 255, 255 / 255, 0 / 255, 255 / 255);
+const coke_color =          color(2 / 255, 2 / 255, 2 / 255, 252 / 255);
+const cup_color =           color(190 / 255, 223 / 255, 221 / 255);
 // const diamond_color = color(10/255,80/255, 70/255, 200/255);
-const napkin_color = color(20 / 255, 40 / 255, 60 / 255, 248 / 255);
-const diamond_color = color(227 / 255, 255 / 255, 254 / 255, 201 / 255);
-const door_color = color(1 / 255, 1 / 255, 1 / 255, 253 / 255);
-const note_color = color(2 / 255, 2 / 255, 2 / 255, 249 / 255);
-const start_color = color(2 / 255, 3 / 255, 2 / 255, 245 / 255);
-const rules_color = color(3 / 255, 4 / 255, 3 / 255, 246 / 255);
-const bottle_color = color(3 / 255, 4 / 255, 5 / 255, 240 / 255);
-const menu_color = color(4 / 255, 3 / 255, 2 / 255, 241 / 255);
-const stool_color = color(126 / 255, 125 / 255, 126 / 255, 247 / 255);
+const napkin_color =        color(20 / 255, 40 / 255, 60 / 255, 248 / 255);
+const diamond_color =       color(227 / 255, 255 / 255, 254 / 255, 201 / 255);
+const door_color =          color(1 / 255, 1 / 255, 1 / 255, 253 / 255);
+const note_color =          color(2 / 255, 2 / 255, 2 / 255, 249 / 255);
+const start_color =         color(2 / 255, 3 / 255, 2 / 255, 245 / 255);
+const rules_color =         color(3 / 255, 4 / 255, 3 / 255, 246 / 255);
+const bottle_color =        color(3 / 255, 4 / 255, 5 / 255, 240 / 255);
+const menu_color =          color(4 / 255, 3 / 255, 2 / 255, 241 / 255);
+const menu_color_special =  color(3 / 255, 3 / 255, 2 / 255, 237 / 255);
+const stool_color =         color(126 / 255, 125 / 255, 126 / 255, 247 / 255);
 
 window.jukebox_color = jukebox_color;
 window.ketchup_color = ketchup_color;
@@ -87,6 +88,7 @@ window.start_color = start_color;
 window.rules_color = rules_color;
 window.bottle_color = bottle_color;
 window.menu_color = menu_color;
+window.menu_color_special = menu_color_special;
 window.stool_color = stool_color;
 
 var collision_occured = false;
@@ -232,12 +234,20 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                     color: color(0, 0, 0.1, 1)
                 }),
                 menuFront: new Material(new defs.Textured_Phong(1), {
-                    ambient: 0.5, diffusivity: 1, specularity: 0.5, color: menu_color,
+                    ambient: 1, diffusivity: 0.1, specularity: 0.5, color: menu_color,
+                    texture: new Texture("assets/menufront2.png")
+                }),
+                menuFrontSpecial: new Material(new defs.Textured_Phong(1), {
+                    ambient: 1, diffusivity: 0.1, specularity: 0.5, color: menu_color_special,
                     texture: new Texture("assets/menufront2.png")
                 }),
                 menuBack: new Material(new defs.Textured_Phong(1), {
-                    ambient: 0.5, diffusivity: 1, specularity: 0.5, color: menu_color,
+                    ambient: 1, diffusivity: 0.1, specularity: 0.5, color: menu_color,
                     texture: new Texture("assets/menuback2.png")
+                }),
+                menuBackEmpty: new Material(new defs.Textured_Phong(1), {
+                    ambient: 1, diffusivity: 0.1, specularity: 0.5, color: menu_color,
+                    texture: new Texture("assets/menuback_empty.png")
                 }),
                 stool: new Material(new defs.Textured_Phong(1), {
                     color: jukebox_color, ambient: 1, diffusivity: 1, specularity: 1,
@@ -522,50 +532,26 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
 
         //TODO: Clue #2: Menu
         if(this.clue2 == 1) {
-            //MENUr4
+            //MENU
 
-            /*
-            var model_transform_menu_front = Mat4.identity();
-            const menuAngle = Math.PI;
-            // const upwardShift = Mat4.translation(-9, 12, -18);
-            // model_transform = model_transform.times(upwardShift).times(changeRotationCorner);
-            // model_transform = model_transform.times(Mat4.rotation(-(mustard_angle/2) + (mustard_angle/2*Math.sin(6*Math.PI*t)) , Vec.of(0, 0, 1)));
-            //     this.currentAngle = 6 * Math.PI * t;
-
-            // model_transform = model_transform.times(extendLength).times(resetRotationCorner);
-
-            model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(-9, 12, -18));
-            model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(Math.PI/2, 0, 1, 0));
-            model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(-Math.PI/2, 0, 0, 1));
-            var model_transform_menu_back = model_transform_menu_front;
-            model_transform_menu_back = model_transform_menu_back.times(Mat4.translation(0.05, 0, 0));
-            model_transform_menu_back = model_transform_menu_back.times(Mat4.scale(4, 4, 4));
-            this.shapes.menu.draw(context, program_state, model_transform_menu_back, this.materials.menuBack);
-            model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(0, 0, -2.2));
-            model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(-(menuAngle/2) + (menuAngle/2*Math.sin(Math.PI*t)) , 0, 1, 0));
-            model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(0, 0, 2.2));
-            model_transform_menu_front = model_transform_menu_front.times(Mat4.scale(4, 4, 4));
-            this.shapes.menu.draw( context, program_state, model_transform_menu_front, this.materials.menuFront); */
-
-            var model_transform_menu_front = Mat4.identity();
-            const menuAngle = Math.PI;
+            var transformClueMenuTop = Mat4.identity();
+            // const menuAngle = Math.PI;
             if (window.menu_click == 0) {
-                model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(-9, 12, -18));
-                model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(Math.PI / 2, 0, 1, 0));
-                model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(-Math.PI / 2, 0, 0, 1));
-                var model_transform_menu_back = model_transform_menu_front;
-                model_transform_menu_back = model_transform_menu_back.times(Mat4.translation(0.05, 0, 0));
-                model_transform_menu_back = model_transform_menu_back.times(Mat4.scale(4, 4, 4));
-                this.shapes.menu.draw(context, program_state, model_transform_menu_back, this.materials.menuBack);
+                transformClueMenuTop = transformClueMenuTop.times(Mat4.translation(-129 + 0.75, 45, -55));
+                transformClueMenuTop = transformClueMenuTop.times(Mat4.rotation(-Math.PI/6, 0, 1, 0));
+                transformClueMenuTop = transformClueMenuTop.times(Mat4.scale(1/12., 1/12., 1/12.))
+                transformClueMenuTop = transformClueMenuTop.times(Mat4.translation(135, -45, 130));
+                transformClueMenuTop = transformClueMenuTop.times(Mat4.translation(-135, 45, -50));
+                transformClueMenuTop = transformClueMenuTop.times(Mat4.scale(12, 12 ,12));
+                transformClueMenuTop = transformClueMenuTop.times(Mat4.scale(12, 12 ,12));
             }
             if (window.menu_click == 1) {
-                model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(0, 0, -2.2));
-                model_transform_menu_front = model_transform_menu_front.times(Mat4.rotation(-(menuAngle / 2) + (menuAngle / 2 * Math.sin(Math.PI * t)), 0, 1, 0));
-                model_transform_menu_front = model_transform_menu_front.times(Mat4.translation(0, 0, 2.2));
-                model_transform_menu_front = model_transform_menu_front.times(Mat4.scale(4, 4, 4));
-                this.shapes.menu.draw(context, program_state, model_transform_menu_front, this.materials.menuFront);
+                transformClueMenuTop = transformClueMenuTop.times(Mat4.translation(-135, 45, 53 - 90));
+                transformClueMenuTop = transformClueMenuTop.times(Mat4.scale(12, 12 ,12));
+                transformClueMenuTop = transformClueMenuTop.times(Mat4.rotation(Math.PI, 0, 1, 0));
             }
-            // this.shapes.menu.draw( context, program_state, model_transform_menu_front, this.materials.menuFront);
+            // this.shapes.menu.draw( context, program_state, transformClueMenuTop, this.materials.menuFront.override(color(menu_color_special)));
+            this.shapes.menu.draw( context, program_state, transformClueMenuTop, this.materials.menuFrontSpecial);
 
 
             //Set next clue
@@ -857,11 +843,32 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             var transformSmoothie2 = Mat4.identity();
             transformSmoothie2 = transformSmoothie2.times(Mat4.translation(-10, 0, 0));
             var transformSmoothie = Mat4.identity();
-            transformSmoothie = transformSmoothie.times(Mat4.translation(-125, 47.5, 40 - i * boothShiftFactor));
+            transformSmoothie = transformSmoothie.times(Mat4.translation(-175, 47.5, 40 - i * boothShiftFactor));
             transformSmoothie = transformSmoothie.times(Mat4.scale(0.075, 0.075, 0.075));
             transformSmoothie = transformSmoothie.times(boothScaleFactor);
             this.shapes.smoothie.draw(context, program_state, transformSmoothie, this.materials.smoothie);
             this.shapes.smoothie.draw(context, program_state, Mat4.translation(-4, 0, 8).times(transformSmoothie), this.materials.smoothie2);
+
+            var transformMenuBottom = Mat4.identity();
+            transformMenuBottom = transformMenuBottom.times(Mat4.translation(0, 1, 0));
+            transformMenuBottom = transformMenuBottom.times(Mat4.translation(-135, 44, 40 - i * boothShiftFactor));
+            transformMenuBottom = transformMenuBottom.times(Mat4.scale(12, 12 ,12));
+            if (i == 1) {
+                this.shapes.menu.draw(context, program_state, transformMenuBottom, this.materials.menuBack);
+            } else {
+                this.shapes.menu.draw(context, program_state, transformMenuBottom, this.materials.menuBackEmpty);
+            }
+            transformMenuBottom = transformMenuBottom.times(Mat4.scale(12, 12 ,12));
+
+            var transformMenuTop = Mat4.identity();
+            transformMenuTop = transformMenuTop.times(Mat4.translation(0, 1, 0));
+            transformMenuTop = transformMenuTop.times(Mat4.translation(-129 + 0.75, 44, 35 - i * boothShiftFactor));
+            transformMenuTop = transformMenuTop.times(Mat4.rotation(-Math.PI/6, 0, 1, 0));
+            transformMenuTop = transformMenuTop.times(Mat4.scale(1/12., 1/12., 1/12.))
+            transformMenuTop = transformMenuTop.times(Mat4.translation(135, -44, 40 + i * boothShiftFactor));
+            transformMenuTop = transformMenuTop.times(transformMenuBottom);
+            if (i != 1)
+                this.shapes.menu.draw(context, program_state, transformMenuTop, this.materials.menuFront);
 
             var transformWindow = Mat4.identity();
             transformWindow = transformWindow.times(Mat4.translation(-200, 70, 45 - i * boothShiftFactor));

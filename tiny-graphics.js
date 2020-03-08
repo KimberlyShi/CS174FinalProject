@@ -1138,7 +1138,8 @@ class Webgl_Manager
           }
         }
 
-		if(this.color_match(window.menu_color, data)) {
+		// if(this.color_match(window.menu_color_special, data)) {
+      if(this.color_match(window.menu_color_special, data)) {
 		  if(window.menu_click == 1) {
 		    window.menu_click = 0;
           }
