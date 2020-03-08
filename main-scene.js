@@ -383,7 +383,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                 }),
                 chairpaper: new Material( new defs.Textured_Phong( 1 ), {
                     color: chairpaper_color, ambient: 1, diffusivity: 1, specularity: 1, 
-                    texture: new Texture( "assets/stoolclue.png" )}),
+                    texture: new Texture( "assets/stoolClue.png" )}),
 
             };
     }
