@@ -176,6 +176,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             cat: new Shape_From_File("assets/cat.obj"),
             shelf: new Shape_From_File("assets/shelf.obj"),
             circleposter: new Shape_From_File("assets/circleposter.obj"),
+            poster: new Shape_From_File("assets/poster.obj"),
         };
 
         this.camera_x = -50
@@ -398,6 +399,18 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                 mimosaPoster: new Material( new defs.Textured_Phong( 1 ), {
                     ambient: 1, diffusivity: 1, specularity: 1, 
                     texture: new Texture( "assets/mimosa_poster.png" )
+                }),  
+                burgerPoster: new Material( new defs.Textured_Phong( 1 ), {
+                    ambient: 1, diffusivity: 1, specularity: 1, 
+                    texture: new Texture( "assets/burger_poster.png" )
+                }),  
+                milkshakePoster: new Material( new defs.Textured_Phong( 1 ), {
+                    ambient: 1, diffusivity: 1, specularity: 1, 
+                    texture: new Texture( "assets/milkshape_poster.png" )
+                }),  
+                beachPoster: new Material( new defs.Textured_Phong( 1 ), {
+                    ambient: 1, diffusivity: 1, specularity: 1, 
+                    texture: new Texture( "assets/beach_poster.png" )
                 }),  
             };
     }
@@ -951,24 +964,49 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             transformWindow = transformWindow.times(Mat4.scale(0.85, 0.85, 0.85));
             transformWindow = transformWindow.times(Mat4.rotation(-Math.PI / 2, 1, 0, 0));
             transformWindow = transformWindow.times(boothScaleFactor);
+
+            var transformWindow2 = Mat4.identity();
+            transformWindow2 = transformWindow2.times(Mat4.translation(200, 70, 45 - i * boothShiftFactor));
+            transformWindow2 = transformWindow2.times(Mat4.scale(0.85, 0.85, 0.85));
+            transformWindow2 = transformWindow2.times(Mat4.rotation(-Math.PI / 2, 1, 0, 0));
+            transformWindow2 = transformWindow2.times(boothScaleFactor);
+
+            var transformPoster = Mat4.identity();
+            transformPoster = transformPoster.times(Mat4.translation(201, 70, 45 - i * boothShiftFactor));
+            transformPoster = transformPoster.times(Mat4.rotation(-Math.PI/2, 0, 1, 0));
+            transformPoster = transformPoster.times(Mat4.rotation(Math.PI, 0, 0, 1));
+            transformPoster = transformPoster.times(boothScaleFactor);
+
+            var transformPoster2 = Mat4.identity();
+            transformPoster2 = transformPoster2.times(Mat4.translation(-198, 70, 45 - i * boothShiftFactor));
+            transformPoster2 = transformPoster2.times(Mat4.rotation(Math.PI/2, 0, 1, 0));
+            transformPoster2 = transformPoster2.times(Mat4.rotation(Math.PI, 0, 0, 1));
+            transformPoster2 = transformPoster2.times(boothScaleFactor);
+
             switch (i) {
                 case -2:
                     this.shapes.window.draw(context, program_state, transformWindow, this.materials.window1);
+                    this.shapes.window.draw(context, program_state, transformWindow2, this.materials.window2);                    
                     break;
                 case -1:
-                    this.shapes.window.draw(context, program_state, transformWindow, this.materials.window2);
+                    this.shapes.poster.draw(context, program_state, transformPoster2, this.materials.milkshakePoster);
+                    this.shapes.poster.draw(context, program_state, transformPoster, this.materials.burgerPoster);
                     break;
                 case 0:
                     this.shapes.window.draw(context, program_state, transformWindow, this.materials.window3);
+                    this.shapes.window.draw(context, program_state, transformWindow2, this.materials.window4);
                     break;
                 case 1:
-                    this.shapes.window.draw(context, program_state, transformWindow, this.materials.window4);
+                    this.shapes.poster.draw(context, program_state, transformPoster2, this.materials.beachPoster);
+                    this.shapes.poster.draw(context, program_state, transformPoster, this.materials.milkshakePoster);
                     break;
                 case 2:
                     this.shapes.window.draw(context, program_state, transformWindow, this.materials.window5);
+                    this.shapes.window.draw(context, program_state, transformWindow2, this.materials.window2);
                     break;
                 default:
                     this.shapes.window.draw(context, program_state, transformWindow, this.materials.window);
+                    this.shapes.window.draw(context, program_state, transformWindow2, this.materials.window);
             }
         }
 
