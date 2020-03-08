@@ -143,7 +143,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             bar: new Shape_From_File("assets/bar_withoutdrinks.obj"),
             beginScreen: new defs.Square(),
             booth: new Shape_From_File("assets/booth2.obj"),
-            boothTable: new Shape_From_File("assets/squareTable.obj"),
+            boothTable: new Shape_From_File("assets/squareTable2.obj"),
             bottle: new Shape_From_File("assets/bottle.obj"),
             bulb: new Shape_From_File("assets/bulb.obj"),
             carDeco: new defs.Square(),
@@ -297,8 +297,8 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                     texture: new Texture("assets/pink.png")
                 }),
                 boothTable: new Material(new defs.Textured_Phong(1), {
-                    ambient: 0.5, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
-                    texture: new Texture("assets/pink.png")
+                    ambient: 1, diffusivity: 0.6, specularity: 0.5, color: color(0, 0, 0, 1),
+                    texture: new Texture("assets/rectTableColored.png")
                 }),
                 mustardSpill: new Material(new defs.Textured_Phong(1), {
                     ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
