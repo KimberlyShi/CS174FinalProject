@@ -177,6 +177,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             shelf: new Shape_From_File("assets/shelf.obj"),
             circleposter: new Shape_From_File("assets/circleposter.obj"),
             poster: new Shape_From_File("assets/poster.obj"),
+            otherKetchup: new Shape_From_File("assets/kb.obj"),
         };
 
         this.camera_x = -50
@@ -412,6 +413,10 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                     ambient: 1, diffusivity: 1, specularity: 1, 
                     texture: new Texture( "assets/beach_poster.png" )
                 }),  
+                otherKetchup: new Material(new defs.Textured_Phong(1), {
+                    color: (255/255,0,0,254/255), ambient: 1, diffusivity: 1, specularity: 1,
+                    texture: new Texture("assets/pink.png")
+                }),
             };
     }
 
@@ -631,19 +636,19 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         // mustard_angle = 0;
         //
 
-        var otherKetchup = Mat4.identity();
-        otherKetchup = otherKetchup.times(Mat4.translation(180, 51, -20 + 50));
-        otherKetchup = otherKetchup.times(Mat4.scale(2, 2, 2));
+        var otherKetchupTransform = Mat4.identity();
+        otherKetchupTransform = otherKetchupTransform.times(Mat4.translation(180, 51, -20 + 50));
+        otherKetchupTransform = otherKetchupTransform.times(Mat4.scale(2, 2, 2));
         //model_transform2 is mustard
         var otherMustard = Mat4.identity();
         otherMustard = otherMustard.times(Mat4.translation(180, 51 , 10 - 20 +50));
         otherMustard = otherMustard.times(Mat4.translation(0, -5.8, 0));
-        otherMustard = otherMustard.times(Mat4.rotation(mustard_angle, 1, 0, 0));
+        // otherMustard = otherMustard.times(Mat4.rotation(mustard_angle, 1, 0, 0));
         otherMustard = otherMustard.times(Mat4.translation(0, 5.8, 0));
         otherMustard = otherMustard.times(Mat4.scale(2,2,2));
 
 
-        this.shapes.ketchup.draw(context, program_state, otherKetchup, this.materials.ketchup);
+        this.shapes.otherKetchup.draw(context, program_state, otherKetchupTransform, this.materials.otherKetchup);
         this.shapes.mustard.draw(context, program_state, otherMustard, this.materials.mustard);
 
 
