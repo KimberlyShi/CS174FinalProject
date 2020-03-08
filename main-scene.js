@@ -413,6 +413,52 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                     texture: new Texture( "assets/beach_poster.png" )
                 }),  
             };
+        this.transformJukebox =  Mat4.translation(-50, 42, -170).times(Mat4.rotation(-Math.PI / 2, 0, 1, 0));
+        this.transformJukebox = this.transformJukebox.times(Mat4.scale(25, 25, 25));
+        this.transformCoffee = Mat4.identity();
+        this.transformCoffee = this.transformCoffee.times(Mat4.translation(100, 90, 280));
+        this.transformCoffee = this.transformCoffee.times(Mat4.scale(23, 23, 23));
+        this.transformCoffee = this.transformCoffee.times(Mat4.rotation(Math.PI, 0, 1, 0));
+        this.transformMimosa = Mat4.identity();
+        this.transformMimosa = this.transformMimosa.times(Mat4.translation(-150, 35, 0));
+        this.transformMimosa = this.transformMimosa.times(this.transformCoffee);
+        this.transformCat = Mat4.identity();
+        this.transformCat = this.transformCat.times(Mat4.translation(0, 131, 283));
+        this.transformCat = this.transformCat.times(Mat4.scale(6, 6, 6));
+        this.transformCat = this.transformCat.times(Mat4.rotation(7 * Math.PI/6, 0, 1, 0));
+        this.barTransform = Mat4.identity();
+        this.barTransform = this.barTransform.times(Mat4.translation(40, 27, 200))
+        this.barTransform = this.barTransform.times(Mat4.rotation(-Math.PI / 2, 0, 1, 0))
+        this.barTransform = this.barTransform.times(Mat4.scale(40, 40, 45));
+        this.transformFloor = Mat4.identity();
+        this.transformFloor = this.transformFloor.times(Mat4.rotation(Math.PI / 2, 1, 0, 0));
+        this.transformFloor = this.transformFloor.times(Mat4.scale(200, 300, 0));
+        this.transformBackWall = Mat4.identity();
+        this.transformBackWall = this.transformBackWall.times(Mat4.translation(0, 80, -200));
+        this.transformBackWall = this.transformBackWall.times(Mat4.scale(200, 80, 0));
+        this.transformLeftWall = Mat4.identity();
+        this.transformLeftWall = this.transformLeftWall.times(Mat4.translation(-200, 80, 0));
+        this.transformLeftWall = this.transformLeftWall.times(Mat4.rotation(Math.PI / 2, 0, 1, 0));
+        this.transformLeftWall = this.transformLeftWall.times(Mat4.scale(300, 80, 0));
+        this.transformRightWall = Mat4.identity();
+        this.transformRightWall = this.transformRightWall.times(Mat4.translation(200, 80, 0));
+        this.transformRightWall = this.transformRightWall.times(Mat4.rotation(Math.PI / 2, 0, 1, 0));
+        this.transformRightWall = this.transformRightWall.times(Mat4.scale(300, 80, 0));
+        this.transformCeiling = Mat4.identity();
+        this.transformCeiling = this.transformCeiling.times(Mat4.translation(0, 160, 0));
+        this.transformCeiling = this.transformCeiling.times(Mat4.rotation(Math.PI / 2, 1, 0, 0));
+        this.transformCeiling = this.transformCeiling.times(Mat4.scale(200, 300, 0));
+        this.transformFrontWall = Mat4.identity();
+        this.transformFrontWall = this.transformFrontWall.times(Mat4.translation(0, 80, 300));
+        this.transformFrontWall = this.transformFrontWall.times(Mat4.scale(200, 80, 0));
+        this.transformChecks = Mat4.identity();
+        this.transformChecks = this.transformChecks.times(Mat4.translation(0, 1, 0));
+        this.transformChecks = this.transformChecks.times(Mat4.rotation(Math.PI / 2, 1, 0, 0));
+        this.transformChecks = this.transformChecks.times(Mat4.scale(200, 300, 0));
+        this.transformDoor = Mat4.identity();
+        this.transformDoor = this.transformDoor.times(Mat4.translation(140, 60, -199));
+        this.transformDoor = this.transformDoor.times(Mat4.rotation(Math.PI / 2, 0, 1, 0));
+        this.transformDoor = this.transformDoor.times(Mat4.scale(30, 30, 30));
     }
 
     setCamera1() { //Camera 1: Bar
@@ -601,7 +647,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         var myMaterial;
         const transformCoke =
             // Mat4.translation(-20, 50, -99)
-            Mat4.translation(-20, 50, -199)
+            Mat4.translation(10, 50, -199)
                 .times(Mat4.scale(35, 35, 35));
 
         if(this.clue3 == 1) {
@@ -872,9 +918,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
 
         //TODO: Clue #8: Jukebox
         //JUKEBOX
-        let model_transform = Mat4.translation(-40, 42, -170).times(Mat4.rotation(-Math.PI / 2, 0, 1, 0));
-        model_transform = model_transform.times(Mat4.scale(25, 25, 25));
-        this.shapes.jukebox.draw(context, program_state, model_transform, this.materials.jukebox);
+        this.shapes.jukebox.draw(context, program_state, this.transformJukebox, this.materials.jukebox);
 
 
         //TODO: Furniture Placement
@@ -889,7 +933,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         //POSTERS
         //Martini
         var transformMartini = Mat4.identity();
-        transformMartini = transformMartini.times(Mat4.translation(25, 80, -198));
+        transformMartini = transformMartini.times(Mat4.translation(65, 90, -198));
         transformMartini = transformMartini.times(Mat4.scale(35, 35, 35));
         this.shapes.afterDark.draw(context, program_state, transformMartini, this.materials.afterDark);
 
@@ -961,13 +1005,11 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             var transformWindow = Mat4.identity();
             transformWindow = transformWindow.times(Mat4.translation(-200, 70, 45 - i * boothShiftFactor));
             transformWindow = transformWindow.times(Mat4.rotation(Math.PI, 0, 1, 0));
-            transformWindow = transformWindow.times(Mat4.scale(0.85, 0.85, 0.85));
             transformWindow = transformWindow.times(Mat4.rotation(-Math.PI / 2, 1, 0, 0));
             transformWindow = transformWindow.times(boothScaleFactor);
 
             var transformWindow2 = Mat4.identity();
             transformWindow2 = transformWindow2.times(Mat4.translation(200, 70, 45 - i * boothShiftFactor));
-            transformWindow2 = transformWindow2.times(Mat4.scale(0.85, 0.85, 0.85));
             transformWindow2 = transformWindow2.times(Mat4.rotation(-Math.PI / 2, 1, 0, 0));
             transformWindow2 = transformWindow2.times(boothScaleFactor);
 
@@ -1066,19 +1108,11 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         }
 
         //BAR
-        var barTransform = Mat4.identity();
-        barTransform = barTransform.times(Mat4.translation(40, 27, 200))
-            .times(Mat4.rotation(-Math.PI / 2, 0, 1, 0))
-            .times(Mat4.scale(40, 40, 45));
-        this.shapes.bar.draw(context, program_state, barTransform, this.materials.bar);
+        this.shapes.bar.draw(context, program_state, this.barTransform, this.materials.bar);
 
 
         //DOOR
-        var transformOpenSign = Mat4.identity();
-        transformOpenSign = transformOpenSign.times(Mat4.translation(140, 60, -199));
-        transformOpenSign = transformOpenSign.times(Mat4.rotation(Math.PI / 2, 0, 1, 0));
-        transformOpenSign = transformOpenSign.times(Mat4.scale(30, 30, 30));
-        this.shapes.openSign.draw(context, program_state, transformOpenSign, this.materials.openSign);
+        this.shapes.openSign.draw(context, program_state, this.transformDoor, this.materials.openSign);
 
 
         //TODO: Figure out what this Tall Cup is for?? -Kim
@@ -1124,66 +1158,23 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         transformShelfBottle = transformShelf.times(Mat4.translation(0.75, 0.90, 0));
         this.shapes.bottle.draw(context, program_state, transformShelfBottle.times(Mat4.scale(0.2, 0.4, 0.2)), this.materials.bottle);
 
-        var transformCoffee = Mat4.identity();
-        transformCoffee = transformCoffee.times(Mat4.translation(100, 90, 280));
-        transformCoffee = transformCoffee.times(Mat4.scale(23, 23, 23));
-        transformCoffee = transformCoffee.times(Mat4.rotation(Math.PI, 0, 1, 0));
-        this.shapes.circleposter.draw(context, program_state, transformCoffee, this.materials.coffeePoster);
-
-        var transformMimosa = Mat4.identity();
-        transformMimosa = transformMimosa.times(Mat4.translation(-150, 35, 0));
-        transformMimosa = transformMimosa.times(transformCoffee);
-        this.shapes.circleposter.draw(context, program_state, transformMimosa, this.materials.mimosaPoster);
-
-        var catTransform = Mat4.identity();
-        catTransform = catTransform.times(Mat4.translation(0, 131, 283));
-        catTransform = catTransform.times(Mat4.scale(6, 6, 6));
-        catTransform = catTransform.times(Mat4.rotation(7 * Math.PI/6, 0, 1, 0));
-        this.shapes.cat.draw(context, program_state, catTransform, this.materials.cat);
+        this.shapes.circleposter.draw(context, program_state, this.transformCoffee, this.materials.coffeePoster);
+        this.shapes.circleposter.draw(context, program_state, this.transformMimosa, this.materials.mimosaPoster);
+        this.shapes.cat.draw(context, program_state, this.transformCat, this.materials.cat);
 
         //TODO: Floor Placement
         //NOTE: order matters for the floor and back wall transformations bc of image wrapping
-
-        let transformFloor = Mat4.identity();
-        transformFloor = transformFloor.times(Mat4.rotation(Math.PI / 2, 1, 0, 0));
-        transformFloor = transformFloor.times(Mat4.scale(200, 300, 0));
-        this.shapes.plane.draw(context, program_state, transformFloor, this.materials.floorBumpMap);
+        this.shapes.plane.draw(context, program_state, this.transformFloor, this.materials.floorBumpMap);
 
 
         //Place flooring and walls
-        let transformBackWall = Mat4.identity();
-        transformBackWall = transformBackWall.times(Mat4.translation(0, 80, -200));
-        transformBackWall = transformBackWall.times(Mat4.scale(200, 80, 0));
-        this.shapes.plane.draw(context, program_state, transformBackWall, this.materials.backWall);
 
-        let transformLeftWall = Mat4.identity();
-        transformLeftWall = transformLeftWall.times(Mat4.translation(-200, 80, 0));
-        transformLeftWall = transformLeftWall.times(Mat4.rotation(Math.PI / 2, 0, 1, 0));
-        transformLeftWall = transformLeftWall.times(Mat4.scale(300, 80, 0));
-        this.shapes.plane.draw(context, program_state, transformLeftWall, this.materials.leftWall);
-
-        let transformRightWall = Mat4.identity();
-        transformRightWall = transformRightWall.times(Mat4.translation(200, 80, 0));
-        transformRightWall = transformRightWall.times(Mat4.rotation(Math.PI / 2, 0, 1, 0));
-        transformRightWall = transformRightWall.times(Mat4.scale(300, 80, 0));
-        this.shapes.plane.draw(context, program_state, transformRightWall, this.materials.rightWall);
-
-        let transformCeiling = Mat4.identity();
-        transformCeiling = transformCeiling.times(Mat4.translation(0, 160, 0));
-        transformCeiling = transformCeiling.times(Mat4.rotation(Math.PI / 2, 1, 0, 0));
-        transformCeiling = transformCeiling.times(Mat4.scale(200, 300, 0));
-        this.shapes.plane.draw(context, program_state, transformCeiling, this.materials.ceiling);
-
-        let transformFrontWall = Mat4.identity();
-        transformFrontWall = transformFrontWall.times(Mat4.translation(0, 80, 300));
-        transformFrontWall = transformFrontWall.times(Mat4.scale(200, 80, 0));
-        this.shapes.plane.draw(context, program_state, transformFrontWall, this.materials.frontWall);
-
-        let transformChecks = Mat4.identity();
-        transformChecks = transformChecks.times(Mat4.translation(0, 1, 0));
-        transformChecks = transformChecks.times(Mat4.rotation(Math.PI / 2, 1, 0, 0));
-        transformChecks = transformChecks.times(Mat4.scale(200, 300, 0));
-        this.shapes.planeFloor.draw(context, program_state, transformChecks, this.materials.floorTile);
+        this.shapes.plane.draw(context, program_state, this.transformBackWall, this.materials.backWall);
+        this.shapes.plane.draw(context, program_state, this.transformLeftWall, this.materials.leftWall);
+        this.shapes.plane.draw(context, program_state, this.transformRightWall, this.materials.rightWall);
+        this.shapes.plane.draw(context, program_state, this.transformCeiling, this.materials.ceiling);
+        this.shapes.plane.draw(context, program_state, this.transformFrontWall, this.materials.frontWall);
+        this.shapes.planeFloor.draw(context, program_state, this.transformChecks, this.materials.floorTile);
 
 
         //TODO: END SCREEN
