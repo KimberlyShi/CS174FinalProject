@@ -75,7 +75,8 @@ const rules_color = color(3/255, 4/255, 3/255, 246/255);
 const bottle_color = color(3/255, 4/255, 5/255, 240/255);
 const menu_color = color(4/255, 3/255, 2/255, 241/255);
 const stool_color = color(126/255, 125/255, 126/255, 247/255);
-const chairpaper_color = color(200/255, 200/255, 200/255, 244/255)
+const chairpaper_color = color(200/255, 200/255, 200/255, 244/255);
+const menu_color_special = color(3/255, 3/255, 2/255, 237/255);
 
 window.jukebox_color = jukebox_color;
 window.ketchup_color = ketchup_color;
