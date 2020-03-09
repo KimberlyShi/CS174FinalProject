@@ -360,7 +360,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                 }),
                 takeASeat: new Material(new defs.Textured_Phong(1), {
                     ambient: 0.92, diffusivity: 1, specularity: .5, color: takeASeat_color,
-                    texture: new Texture("assets/takeASeat_1.png")
+                    texture: new Texture("assets/hint1_rect.png")
                 }),
 
                 shards: new Material(new defs.Textured_Phong(1), {
@@ -642,10 +642,11 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
 
         if(window.takeASeat_click == 1) {
             window.rules_click = 2;
-            let transformWords = Mat4.identity();
-            transformWords = transformWords.times(Mat4.translation(-15, 85, 60));
-            transformWords = transformWords.times(Mat4.scale(30, 30, 30));
-            this.shapes.takeASeat.draw(context, program_state, transformWords, this.materials.takeASeat);
+            // let transformWords = Mat4.identity();
+            // transformWords = transformWords.times(Mat4.translation(-15, 85, 60));
+            // transformWords = transformWords.times(Mat4.scale(30, 30, 30));
+            // this.shapes.takeASeat.draw(context, program_state, transformWords, this.materials.takeASeat);
+            this.shapes.takeASeat.draw(context, program_state, transformBeginScreen, this.materials.takeASeat);
             this.setCamera5();
         }
 
