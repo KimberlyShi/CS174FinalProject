@@ -606,15 +606,6 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             this.takeASeat_click = 1;
         }
 
-        //add "take a seat png
-        // if(window.takeASeat_click == 1) {
-        //
-        //     // window.rules_click = 2; //just mark it as invalid
-        //     window.rules_click = 0;
-        //     this.shapes.takeASeat.draw(context, program_state, transformBeginScreen, this.materials.takeASeat);
-        //     this.setCamera5();
-        // }
-
         if(window.takeASeat_click == 1) {
             window.rules_click = 2;
             let transformWords = Mat4.identity();
