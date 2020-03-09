@@ -180,6 +180,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             circleposter: new Shape_From_File("assets/circleposter.obj"),
             poster: new Shape_From_File("assets/poster.obj"),
             otherKetchup: new Shape_From_File("assets/kb.obj"),
+            smallBottle: new Shape_From_File("assets/smallBottle.obj")
         };
 
         this.camera_x = -50
@@ -418,6 +419,11 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                 otherKetchup: new Material(new defs.Textured_Phong(1), {
                     color: other_ketchup_color, ambient: 1, diffusivity: 1, specularity: 1,
                     texture: new Texture("assets/pink.png")
+                }),
+
+                bottleStrawberry: new Material( new defs.Textured_Phong( 1 ), {
+                    ambient: 1, diffusivity: 1, specularity: 1,
+                    texture: new Texture( "assets/BottleColor.png" ),
                 }),
             };
         this.transformJukebox =  Mat4.translation(-50, 42, -170).times(Mat4.rotation(-Math.PI / 2, 0, 1, 0));
