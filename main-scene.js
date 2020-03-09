@@ -106,11 +106,11 @@ const ball_color = color(255 / 255, 50 / 255, 0/ 255, 232/255);
 // const bottle3_color = color(35/255, 115/255, 22/255, 226/255);
 // const bottle4_color = color(32/255, 125/255, 24/255, 228/255);
 // const bottle5_color = color(34/255, 118/255, 26/255, 243/255);
-const bottle1_color = color(37/255, 130/255, 27/255, 242/255); //
-const bottle2_color = color(37/255, 130/255, 27/255, 239/255); //
-const bottle3_color = color(37/255, 130/255, 27/255, 243/255); //
-const bottle4_color = color(37/255, 130/255, 27/255, 221/255);
-const bottle5_color = color(37/255, 130/255, 27/255, 224/255);
+const bottle1_color = color(0/255, 255/255, 0/255, 242/255); //
+const bottle2_color = color(0/255, 255/255, 0/255, 239/255); //
+const bottle3_color = color(0/255, 255/255, 0/255, 243/255); //
+const bottle4_color = color(0/255, 255/255, 0/255, 221/255);
+const bottle5_color = color(0/255, 255/255, 0/255, 224/255);
 
 window.jukebox_color = jukebox_color;
 window.ketchup_color = ketchup_color;
@@ -448,23 +448,23 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                 // }),
 
                 bottle1: new Material(new defs.Textured_Phong(1), {
-                    ambient: 1, diffusivity: 1, specularity: 0.8, color: bottle1_color,
+                    ambient: 1, diffusivity: 1, specularity: 1.0, color: bottle1_color,
                     texture: new Texture("assets/shards_map.png")
                 }),
                 bottle2: new Material(new defs.Textured_Phong(1), {
-                    ambient: 1, diffusivity: 1, specularity: 0.8, color: bottle2_color,
+                    ambient: 1, diffusivity: 1, specularity: 1.0, color: bottle2_color,
                     texture: new Texture("assets/shards_map.png")
                 }),
                 bottle3: new Material(new defs.Textured_Phong(1), {
-                    ambient: 1, diffusivity: 1, specularity: 0.8, color: bottle3_color,
+                    ambient: 1, diffusivity: 1, specularity: 1.0, color: bottle3_color,
                     texture: new Texture("assets/shards_map.png")
                 }),
                 bottle4: new Material(new defs.Textured_Phong(1), {
-                    ambient: 1, diffusivity: 1, specularity: 0.8, color: bottle4_color,
+                    ambient: 1, diffusivity: 1, specularity: 1.0, color: bottle4_color,
                     texture: new Texture("assets/shards_map.png")
                 }),
                 bottle5: new Material(new defs.Textured_Phong(1), {
-                    ambient: 1, diffusivity: 1, specularity: 0.8, color: bottle5_color,
+                    ambient: 1, diffusivity: 1, specularity: 1.0, color: bottle5_color,
                     texture: new Texture("assets/shards_map.png")
                 }),
 
