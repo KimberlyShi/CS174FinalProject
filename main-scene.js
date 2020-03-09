@@ -96,12 +96,17 @@ const takeASeat_color = color(4/255, 7/255, 2/255, 254/255);
 const ball_color = color(255 / 255, 50 / 255, 0/ 255, 232/255);
 
 //201, 221, 232, 237, 241, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 154, 255, 255, 255 (three)
-//the other ball 232
-const bottle1_color = color(37/255, 130/255, 27/255, 222/255);
-const bottle2_color = color(30/255, 105/255, 19/255, 224/255);
-const bottle3_color = color(35/255, 115/255, 22/255, 226/255);
-const bottle4_color = color(32/255, 125/255, 24/255, 228/255);
-const bottle5_color = color(34/255, 118/255, 26/255, 243/255);
+//the other ball 232 is plus 5 range so can't do 226, 227, 229, 230, 231, 232, 233, 234, 235, 236, 237
+// const bottle1_color = color(37/255, 130/255, 27/255, 222/255);
+// const bottle2_color = color(30/255, 105/255, 19/255, 224/255);
+// const bottle3_color = color(35/255, 115/255, 22/255, 226/255);
+// const bottle4_color = color(32/255, 125/255, 24/255, 228/255);
+// const bottle5_color = color(34/255, 118/255, 26/255, 243/255);
+const bottle1_color = color(37/255, 130/255, 27/255, 242/255);
+const bottle2_color = color(30/255, 105/255, 19/255, 239/255);
+const bottle3_color = color(37/255, 115/255, 22/255, 243/255);
+const bottle4_color = color(32/255, 125/255, 24/255, 225/255);
+const bottle5_color = color(34/255, 118/255, 29/255, 223/255);
 
 window.jukebox_color = jukebox_color;
 window.ketchup_color = ketchup_color;
