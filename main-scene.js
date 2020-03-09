@@ -769,17 +769,10 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             mustard_mov = 0;
             collision_occured = false;
         }
-        // const model_transform1 = Mat4.translation(140, 38, kup_mov - 20)
-        //     .times(Mat4.scale(1.0, 1.0, 1.0))
-        // //model_transform2 is mustard
-        // const model_transform2 = Mat4.translation(140, 38, distance_cup - 20 + mustard_mov)
-        //     .times(Mat4.translation(0, -5.8, 0))
-        //     .times(Mat4.rotation(mustard_angle, 1, 0, 0))
-        //     .times(Mat4.translation(0, 5.8, 0))
+
             const model_transform1 = Mat4.translation(180, 51, kup_mov - 20 - 90)
                 .times(Mat4.scale(2, 2, 2))
             //model_transform2 is mustard
-            // const model_transform2 = Mat4.translation(180, 31 , distance_cup - 20 + mustard_mov - 90 -30)
             const model_transform2 = Mat4.translation(180, 51 , distance_cup - 20 + mustard_mov - 90)
                 .times(Mat4.translation(0, -10.8, 0))
                 .times(Mat4.rotation(mustard_angle, 1, 0, 0))
@@ -795,9 +788,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         this.shapes.ketchup.draw(context, program_state, model_transform1, this.materials.ketchup);
         this.shapes.mustard.draw(context, program_state, model_transform2, this.materials.mustard);
         var transformMustard = Mat4.identity();
-        // transformMustard = transformMustard.times(Mat4.translation(116, 31, 31));
-            //this is for the spill???
-            transformMustard = transformMustard.times(Mat4.translation(153, 38, -34));
+        transformMustard = transformMustard.times(Mat4.translation(153, 38, -34));
         transformMustard = transformMustard.times(Mat4.rotation(-Math.PI / 2, 0, 1, 0));
         transformMustard = transformMustard.times(Mat4.rotation(-Math.PI / 2, 1, 0, 0));
         transformMustard = transformMustard.times(Mat4.scale(35, 35, 35));
@@ -849,32 +840,18 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             this.shapes.mustard.draw(context, program_state, model_transform2, this.materials.mustard);
         }
 
-        //draw the other ketchup and mustards that don't actually do anything
-        // var distance_cup = 10;
-        // mustard_mov = 0;
-        // kup_mov = 0;
-        // mustard_angle = 0;
-        //
-
-
         //TODO: Clue #5: Napkin Box
         //NAPKIN BOX
 
         this.clue5 = 1;
         if(this.clue5 == 1) {
             let napkinTransform = Mat4.identity();
-            // napkinTransform = napkinTransform.times(Mat4.translation(140, 40, 70)).times(Mat4.scale(4, 4, 4));
             napkinTransform = napkinTransform.times(Mat4.translation(185, 44, 20)).times(Mat4.scale(6, 6, 6));
 
             if (window.napkin_click == 1) {
                 console.log("napkin = " + window.napkin_click);
                 napkinTransform = napkinTransform.times(Mat4.rotation(Math.PI, 0, 1, 0));
             }
-            // } else if (window.napkin_click == 0) {
-            //     // napkinTransform = Mat4.identity().times(Mat4.translation(140, 40, 70).times(Mat4.scale(4, 4, 4)));
-            //     // napkinTransform = napkinTransform.times(Mat4.translation(185, 44, 60)).times(Mat4.scale(6, 6, 6));
-            //     napkinTransform = napkinTransform.times(Mat4.rotation(Math.PI / 2, 0, 1, 0));
-            // }
             this.shapes.napkin.draw(context, program_state, napkinTransform, this.materials.napkin);
 
             //set the next clue
@@ -891,13 +868,6 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         let napkinTransform = Mat4.identity();
         napkinTransform = napkinTransform.times(Mat4.translation(185, 44, -120)).times(Mat4.scale(6, 6, 6));
         this.shapes.napkin.draw(context, program_state, napkinTransform, this.materials.napkin);
-        // let napkinTransform2 = Mat4.identity();
-        // napkinTransform2 = napkinTransform2.times(Mat4.translation(185, 44, -120)).times(Mat4.scale(6, 6, 6));
-        // this.shapes.napkin.draw(context, program_state, napkinTransform2, this.materials.napkin);
-        // let napkinTransform3 = Mat4.identity();
-        // napkinTransform3 = napkinTransform3.times(Mat4.translation(185, 44, 20)).times(Mat4.scale(6, 6, 6));
-        // this.shapes.napkin.draw(context, program_state, napkinTransform3, this.materials.napkin);
-
 
         //TODO: Clue #6: Glass Bottle + Shards and Show diamond
         //BOTTLE
@@ -915,14 +885,9 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         transformShards = transformShards.times(Mat4.scale(10, 10, 10));
 
         if(this.clue6 == 1) {
-            // var transformBottle = Mat4.identity();
-            // transformBottle = transformBottle.times(Mat4.translation(45, 55, 160));
-            // transformBottle = transformBottle.times(Mat4.scale(5, 5, 5));
             if (window.bottle_click == 0) {
                 this.shapes.bottle.draw(context, program_state, transformBottle, this.materials.bottle);
-
             }
-
             if (window.bottle_click == 1) {
                 this.shapes.shards.draw(context, program_state, transformShards, this.materials.shards);
                 this.shapes.diamond.draw(context, program_state, diamondTransform, this.materials.diamond);
@@ -944,10 +909,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         noteTransform = noteTransform.times(Mat4.translation(0, 50, -70));
         noteTransform = noteTransform.times(Mat4.scale(90, 90, 90));
 
-
-        //testing
-        // this.clue7 = 0;
-
+        // this.clue7 = 0; //testing
         if(this.clue7 == 1) {
             if (window.diamond_click == 1) {
                 console.log("diamond = " + window.diamond_click);
@@ -969,13 +931,6 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
 
 
         //TODO: Furniture Placement
-        //CAT
-        //this.camera_x = 0
-        //         this.camera_y = -60
-        //         this.camera_z = 10
-        //         this.camera_angle = Math.PI
-        //         this.cameraReset = 1
-
 
         //POSTERS
         //Martini
@@ -1147,29 +1102,14 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             var transformStool = Mat4.identity();
             transformStool = transformStool.times(Mat4.translation(120, 20, -80 + (stoolShiftFactor * (i+1) )));
             transformStool = transformStool.times(Mat4.scale(12,12,12));
-            // stoolTransform = stoolTransform.times(Mat4.translation(0, 0, -stoolShiftFactor));
-            // stoolTransform = stoolTransform.times(Mat4.scale(10, 10, 10));
-            // this.shapes.stool.draw(context, program_state, stoolTransform, this.materials.stool);
             this.shapes.stool.draw(context, program_state, transformStool, this.materials.stool);
-            // stoolTransform = stoolTransform.times(Mat4.scale(0.1, 0.1, 0.1));
         }
 
         //BAR
         this.shapes.bar.draw(context, program_state, this.barTransform, this.materials.bar);
 
-
         //DOOR
         this.shapes.openSign.draw(context, program_state, this.transformDoor, this.materials.openSign);
-
-
-        //TODO: Figure out what this Tall Cup is for?? -Kim
-        //TALL CUP
-        // var transformTallCup = Mat4.identity();
-        // transformTallCup = transformTallCup.times(Mat4.translation(0, 3, 0));
-        // transformTallCup = transformTallCup.times(Mat4.rotation(Math.PI, 0, 1, 0));
-        // transformTallCup = transformTallCup.times(Mat4.scale(10, 10, 10));
-        // this.shapes.tallCup.draw(context, program_state, transformTallCup, this.materials.tallCup);
-
 
         // BACK WALL SHELVES
         var transformShelf = Mat4.identity();
@@ -1215,7 +1155,6 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
 
 
         //Place flooring and walls
-
         this.shapes.plane.draw(context, program_state, this.transformBackWall, this.materials.backWall);
         this.shapes.plane.draw(context, program_state, this.transformLeftWall, this.materials.leftWall);
         this.shapes.plane.draw(context, program_state, this.transformRightWall, this.materials.rightWall);
