@@ -1108,16 +1108,6 @@ class Webgl_Manager
             }
           
         }
-        if(this.color_match(window.chairpaper_color,data)){
-          if(window.chairpaper_click == 1){
-            window.chairpaper_click = 0;
-          }
-          else{
-            window.chairpaper_click = 1;
-          }
-        }
-
-      
 
         // for diamond color check, lose the checking
         //if(this.color_match(window.diamond_color,data)){
@@ -1145,11 +1135,20 @@ class Webgl_Manager
 		if(this.color_match(window.rules_color, data)) {
 		  if(window.rules_click == 1) {
 		    window.rules_click = 0;
+		    window.takeASeat_click = 1;
           }
         }
 
-		// if(this.color_match(window.menu_color_special, data)) {
-      if(this.color_match(window.menu_color_special, data)) {
+		if(this.color_match(window.takeASeat_color, data)) {
+		  if(window.takeASeat_click == 1) {
+		    window.takeASeat_click = 0;
+          }
+		  // else {
+		  //   window.takeASeat_click = 0;
+          // }
+        }
+
+		if(this.color_match(window.menu_color, data)) {
 		  if(window.menu_click == 1) {
 		    window.menu_click = 0;
           }
@@ -1157,6 +1156,8 @@ class Webgl_Manager
 		    window.menu_click = 1;
           }
         }
+
+
 
 
         //console.log(rect)

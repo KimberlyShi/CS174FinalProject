@@ -58,6 +58,8 @@ var stool_click = 0;35
 window.stool_click = stool_click;
 var chairpaper_click = 0;
 window.chairpaper_click = chairpaper_click;
+var takeASeat_click = 0;
+window.takeASeat_click = takeASeat_click;
 
 //NUMS: 200, 212, 221, 241, 245,246, 249, 250, 251, 252, 254, 255,
 const jukebox_color =       color(127 / 255, 124 / 255, 127 / 255, 250 / 255); // change alpha from 255 to 250 for pick color
@@ -79,6 +81,7 @@ const chairpaper_color = color(0/255, 0/255, 0/255, 244/255);
 const menu_color_special = color(3/255, 3/255, 2/255, 237/255);
 
 const other_ketchup_color = color(255 / 255, 0 / 255, 0 / 255, 255 / 255);
+const takeASeat_color = color(4/255, 7/255, 2/255, 254/255);
 
 window.jukebox_color = jukebox_color;
 window.ketchup_color = ketchup_color;
@@ -96,6 +99,7 @@ window.menu_color = menu_color;
 window.menu_color_special = menu_color_special;
 window.stool_color = stool_color;
 window.chairpaper_color = chairpaper_color;
+window.takeASeat_color = takeASeat_color;
 
 var collision_occured = false;
 var mustard_angle = 0;
@@ -156,6 +160,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             endScene: new defs.Square(),
             fadeToBlack: new defs.Square(),
             instructions: new defs.Square(),
+            takeASeat: new defs.Square(),
             jukebox: new Shape_From_File("assets/jukebox2.obj"),
             ketchup: new Shape_From_File("assets/kb.obj"),
             light: new Shape_From_File("assets/light.obj"),
@@ -345,6 +350,10 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                 instructions: new Material(new defs.Textured_Phong(1), {
                     ambient: 0.92, diffusivity: 1, specularity: .5, color: rules_color,
                     texture: new Texture("assets/rules_rect_nobutton.png")
+                }),
+                takeASeat: new Material(new defs.Textured_Phong(1), {
+                    ambient: 0.92, diffusivity: 1, specularity: .5, color: takeASeat_color,
+                    texture: new Texture("assets/takeASeat_1.png")
                 }),
 
                 shards: new Material(new defs.Textured_Phong(1), {
@@ -594,7 +603,27 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
 
             //set first clue
             this.clue1 = 1;
+            this.takeASeat_click = 1;
         }
+
+        //add "take a seat png
+        // if(window.takeASeat_click == 1) {
+        //
+        //     // window.rules_click = 2; //just mark it as invalid
+        //     window.rules_click = 0;
+        //     this.shapes.takeASeat.draw(context, program_state, transformBeginScreen, this.materials.takeASeat);
+        //     this.setCamera5();
+        // }
+
+        if(window.takeASeat_click == 1) {
+            window.rules_click = 2;
+            let transformWords = Mat4.identity();
+            transformWords = transformWords.times(Mat4.translation(-15, 85, 60));
+            transformWords = transformWords.times(Mat4.scale(30, 30, 30));
+            this.shapes.takeASeat.draw(context, program_state, transformWords, this.materials.takeASeat);
+            this.setCamera5();
+        }
+
 
         //TODO: TEMPORARY => set everything to true so all clues will be displayed
 
