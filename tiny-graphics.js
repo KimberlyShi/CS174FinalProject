@@ -1022,9 +1022,16 @@ class Webgl_Manager
     objc[1] = obj_color[1]*255;
     objc[2] = obj_color[2]*255;
     objc[3] = obj_color[3]*255;
-    //console.log(objc)
-    //if ( picked_color[0] == objc[0] &&  picked_color[1] == objc[1] && picked_color[2] == objc[2] ) 
     if ( picked_color[3] == objc[3]) 
+         return true
+    else
+         return false
+    }
+	
+	color_match_range(obj_color, picked_color, range) {
+    var objc = new Uint8Array(4);
+     objc[3] = obj_color[3]*255;
+    if ( picked_color[3] >= objc[3]-range && picked_color[3] <= objc[3]+range) 
          return true
     else
          return false
@@ -1045,7 +1052,7 @@ class Webgl_Manager
         var rect = this.gl.canvas.getBoundingClientRect();
         var mx = mouse_x - rect.x
         var my = rect.height - mouse_y + rect.y
-        console.log(mx,my)
+        //console.log(mx,my)
         this.gl.readPixels(mx, my, 1, 1, this.gl.RGBA, this.gl.UNSIGNED_BYTE, data);
 
         //console.log("alpha="+data)
@@ -1092,11 +1099,11 @@ class Webgl_Manager
             window.note_click = 1;
           }
         }
-        if(this.color_match(window.bottle_color,data)){
+        if(this.color_match(window.collison_bottle_color,data)){
           if(window.bottle_click == 1) {
-            window.bottle_click = 0;
+            window.ball_click = 0; // same as ball click
           } else {
-            window.bottle_click = 1;
+            window.ball_click = 0; // same as ball click
           }
         }
         if(this.color_match(window.stool_color,data)){
@@ -1116,19 +1123,15 @@ class Webgl_Manager
             window.chairpaper_click = 1;
           }
         }
-
-      
-
+		
         // for diamond color check, lose the checking
-        //if(this.color_match(window.diamond_color,data)){
-		if (data[3] > window.diamond_color[3]*255 -15 &&  data[3] < window.diamond_color[3]*255 +15) {
+        if(this.color_match_range(window.diamond_color, data, 15)){
           if(window.diamond_click ==1) {
             window.diamond_click = 0;
           } else {
             window.diamond_click = 1;
           }
         }
-
 
 		if(this.color_match(window.door_color, data)) {
 		  if(window.door_click == 0) {
@@ -1148,7 +1151,14 @@ class Webgl_Manager
           }
         }
 
-		// if(this.color_match(window.menu_color_special, data)) {
+		if(this.color_match_range(window.ball_color, data, 2)) {
+		  if(window.ball_click > 0) {
+		    window.ball_click = 0;
+          } else {
+		    window.ball_click = 1;
+          }
+        }
+
       if(this.color_match(window.menu_color_special, data)) {
 		  if(window.menu_click == 1) {
 		    window.menu_click = 0;
