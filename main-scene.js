@@ -59,10 +59,10 @@ window.chairpaper_click = chairpaper_click;
 var takeASeat_click = 0;
 window.takeASeat_click = takeASeat_click;
 window.ball_click = 0;
-var menuTimer = 0;
-var stoolTimer = 0;
-var cokeTimer = 0;
-var ketchupTimer = 0;
+var menuTimer = 0; //clue 2
+var stoolTimer = 0; //clue 1
+var cokeTimer = 0; //clue 3
+var ketchupTimer = 0; //clue 4
 
 var bottle1_click = 0;
 window.bottle1_click = bottle1_click;
@@ -420,32 +420,11 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                     texture: new Texture("assets/shards_map.png")
                 }),
 
-                // shards2: new Material(new defs.Textured_Phong(1), {
-                //     ambient: 1, diffusivity: 1, specularity: 1, color: rules_color,
-                //     texture: new Texture("assets/shards_map.png")
-                // }),
-                // shards3: new Material(new defs.Textured_Phong(1), {
-                //     ambient: 1, diffusivity: 1, specularity: 1, color: rules_color,
-                //     texture: new Texture("assets/shards_map.png")
-                // }),
-                // shards4: new Material(new defs.Textured_Phong(1), {
-                //     ambient: 1, diffusivity: 1, specularity: 1, color: rules_color,
-                //     texture: new Texture("assets/shards_map.png")
-                // }),
-                // shards5: new Material(new defs.Textured_Phong(1), {
-                //     ambient: 1, diffusivity: 1, specularity: 1, color: rules_color,
-                //     texture: new Texture("assets/shards_map.png")
-                // }),
-
 
                 collison_bottle: new Material(new defs.Textured_Phong(1), {
                     ambient: 1, diffusivity: 1, specularity: 1, color: collison_bottle_color,
                     texture: new Texture("assets/shards_map.png")
                 }),
-                // other_bottle: new Material(new defs.Textured_Phong(1), {
-                //     ambient: 1, diffusivity: 1, specularity: 1, color: other_bottle_color,
-                //     texture: new Texture("assets/shards_map.png")
-                // }),
 
                 bottle1: new Material(new defs.Textured_Phong(1), {
                     ambient: 1, diffusivity: 1, specularity: 1.0, color: bottle1_color,
@@ -706,8 +685,17 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
     this.camera_y = -50
     this.camera_z = 140
     this.camera_angle = Math.PI/2.5
-    this.cameraReset = 10
+    this.cameraReset = 11
     this.vc = [0,1,0]
+    }
+
+    setCamera12() { //"Clue 5"w
+        this.camera_x = -26
+        this.camera_y = -68
+        this.camera_z = 73
+        this.camera_angle = Math.PI / 2
+        this.cameraReset = 12
+        this.vc = [0,1,0]
     }
 
     make_control_panel() {
@@ -726,6 +714,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         this.key_triggered_button("Clue 3", ["e"], this.setCamera10);
         this.new_line();
         this.key_triggered_button("Clue 4", ["f"], this.setCamera11);
+        this.key_triggered_button("Clue 5", ["g"], this.setCamera12);
 
 
     }
@@ -943,11 +932,11 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         this.clue4 = 1; //TODO: get rid of this (just for testing)
 
         var otherKetchupTransform = Mat4.identity();
-        otherKetchupTransform = otherKetchupTransform.times(Mat4.translation(180, 51, -20 + 50));
+        otherKetchupTransform = otherKetchupTransform.times(Mat4.translation(180, 51, -20 + 60));
         otherKetchupTransform = otherKetchupTransform.times(Mat4.scale(2, 2, 2));
         //model_transform2 is mustard
         var otherMustard = Mat4.identity();
-        otherMustard = otherMustard.times(Mat4.translation(180, 51 , 10 - 20 +50));
+        otherMustard = otherMustard.times(Mat4.translation(180, 51 , 10 - 20 +60));
         otherMustard = otherMustard.times(Mat4.translation(0, -5.8, 0));
         //otherMustard = otherMustard.times(Mat4.rotation(mustard_angle, 1, 0, 0));
         otherMustard = otherMustard.times(Mat4.translation(0, 5.8, 0));
@@ -987,10 +976,10 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             collision_occured = false;
         }
 
-            const model_transform1 = Mat4.translation(180, 51, kup_mov - 20 - 90)
+            const model_transform1 = Mat4.translation(180, 51, kup_mov - 20 - 90 + 10)
                 .times(Mat4.scale(2, 2, 2))
             //model_transform2 is mustard
-            const model_transform2 = Mat4.translation(180, 51 , distance_cup - 20 + mustard_mov - 90)
+            const model_transform2 = Mat4.translation(180, 51 , distance_cup - 20 + mustard_mov - 90 + 10)
                 .times(Mat4.translation(0, -10.8, 0))
                 .times(Mat4.rotation(mustard_angle, 1, 0, 0))
                 .times(Mat4.translation(0, 10.8, 0))
@@ -1379,15 +1368,6 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         transformShelf = transformShelf.times(Mat4.scale(40, 20, 40));
         transformShelf = transformShelf.times(Mat4.rotation(Math.PI, 0, 1, 0));
         this.shapes.shelf.draw(context, program_state, transformShelf, this.materials.shelf);
-
-        // var transformShelfBottle = transformShelf.times(Mat4.translation(0.75, 0.90, 0));
-        // this.shapes.other_bottle.draw(context, program_state, transformShelfBottle.times(Mat4.scale(0.2, 0.4, 0.2)), this.materials.other_bottle);
-        //
-        // transformShelfBottle = transformShelf.times(Mat4.translation(0, 0.90, 0));
-        // this.shapes.other_bottle.draw(context, program_state, transformShelfBottle.times(Mat4.scale(0.2, 0.4, 0.2)), this.materials.other_bottle);
-        //
-        // transformShelfBottle = transformShelf.times(Mat4.translation(-0.75, 0.90, 0));
-        // this.shapes.other_bottle.draw(context, program_state, transformShelfBottle.times(Mat4.scale(0.2, 0.4, 0.2)), this.materials.other_bottle);
 
         var transformShelfBottle = transformShelf.times(Mat4.translation(0.75, 0.90, 0));
         if(window.bottle1_click == 1) {
