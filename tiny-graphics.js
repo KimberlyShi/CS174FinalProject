@@ -1127,6 +1127,7 @@ class Webgl_Manager
 
         // for diamond color check, lose the checking
         if(this.color_match_range(window.diamond_color, data, 15)){
+      // if(this.color_match_range(window.diamond_color, data)){
           if(window.diamond_click ==1) {
             window.diamond_click = 0;
           } else {
@@ -1177,6 +1178,39 @@ class Webgl_Manager
 		    window.menu_click = 1;
           }
         }
+
+
+		//glass shards
+		if(this.color_match(window.bottle1_color, data)) {
+          // console.log("color match???");
+		  if(window.bottle1_click == 0) {
+		    window.bottle1_click = 1;
+          }
+		  // else {
+          //
+		  //   window.bottle1_click = 0;
+          // }
+        }
+      if(this.color_match(window.bottle2_color, data)) {
+        if(window.bottle2_click == 0) {
+          window.bottle2_click = 1;
+        }
+      }
+      if(this.color_match(window.bottle3_color, data)) {
+        if(window.bottle3_click == 0) {
+          window.bottle3_click = 1;
+        }
+      }
+      if(this.color_match(window.bottle4_color, data)) {
+        if(window.bottle4_click == 0) {
+          window.bottle4_click = 1;
+        }
+      }
+      if(this.color_match(window.bottle5_color, data)) {
+        if(window.bottle5_click == 0) {
+          window.bottle5_click = 1;
+        }
+      }
 
 
 
