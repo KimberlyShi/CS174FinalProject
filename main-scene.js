@@ -436,6 +436,10 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                     ambient: 1, diffusivity: 1, specularity: 1, 
                     texture: new Texture( "assets/beach_poster.png" )
                 }),  
+                ingredientsPoster: new Material( new defs.Textured_Phong( 1 ), {
+                    ambient: 1, diffusivity: 1, specularity: 1, 
+                    texture: new Texture( "assets/ingredients_poster.png" )
+                }),  
                 otherKetchup: new Material(new defs.Textured_Phong(1), {
                     color: other_ketchup_color, ambient: 1, diffusivity: 1, specularity: 1,
                     texture: new Texture("assets/pink.png")
@@ -1156,8 +1160,8 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                     this.shapes.window.draw(context, program_state, transformWindow2, this.materials.window4);
                     break;
                 case 1:
-                    this.shapes.poster.draw(context, program_state, transformPoster2, this.materials.beachPoster);
-                    this.shapes.poster.draw(context, program_state, transformPoster, this.materials.milkshakePoster);
+                    this.shapes.poster.draw(context, program_state, transformPoster2, this.materials.ingredientsPoster);
+                    this.shapes.poster.draw(context, program_state, transformPoster, this.materials.beachPoster);
                     break;
                 case 2:
                     this.shapes.window.draw(context, program_state, transformWindow, this.materials.window5);
