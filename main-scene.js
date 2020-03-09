@@ -282,11 +282,11 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                 }),
                 coke: new Material(new defs.Textured_Phong(1), {
                     ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
-                    texture: new Texture("assets/coke_1.png")
+                    texture: new Texture("assets/coke_3.png")
                 }),
                 afterDark: new Material(new defs.Textured_Phong(1), {
                     ambient: 1, diffusivity: 1, specularity: 1, color: color(0,0,0,1),
-                    texture: new Texture("assets/afterDark_1.png")
+                    texture: new Texture("assets/afterDark_3.png")
                 }),
                 openSign: new Material(new defs.Textured_Phong(1), {
                     ambient: 1, diffusivity: 1, specularity: 1, color: door_color,
@@ -302,7 +302,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                 }),
                 cokeClue: new Material(new defs.Textured_Phong(1), {
                     ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
-                    texture: new Texture("assets/cokeClue_1.png")
+                    texture: new Texture("assets/cokeClue_3.png")
                 }),
                 talltable: new Material(new defs.Textured_Phong(1), {
                     ambient: 1, diffusivity: 1, specularity: 1,
@@ -420,7 +420,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                     texture: new Texture( "assets/coffee_poster.png" )
                 }),
                 mimosaPoster: new Material( new defs.Textured_Phong( 1 ), {
-                    ambient: 1, diffusivity: 1, specularity: 1, 
+                    ambient: 1, diffusivity: 1, specularity: 0.2,
                     texture: new Texture( "assets/mimosa_poster.png" )
                 }),  
                 burgerPoster: new Material( new defs.Textured_Phong( 1 ), {
@@ -498,6 +498,14 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         this.transformationSmallBottle = this.transformationSmallBottle.times(Mat4.translation(20, 139, 285));
         this.transformationSmallBottle = this.transformationSmallBottle.times(Mat4.scale(4.3, 4.3, 4.3));
         this.transformationSmallBottle = this.transformationSmallBottle.times(Mat4.rotation(Math.PI/2, 0, 1, 0));
+        this.transformMartini = Mat4.identity();
+        this.transformMartini = this.transformMartini.times(Mat4.translation(65, 90, -198));
+        this.transformMartini = this.transformMartini.times(Mat4.scale(35, 35, 35));
+        this.transformPoster2Helper = Mat4.rotation(Math.PI/2, 0, 1, 0).times(Mat4.rotation(Math.PI, 0, 0, 1));
+        this.transformCoke = Mat4.translation(10, 105, -199).times(Mat4.scale(22, 22, 22));
+        this.transformMimosa = Mat4.translation(10, 50, -199).times(Mat4.scale(22, 22, 22));
+        this.transformCoffee = Mat4.translation(68, 85, -199).times(Mat4.scale(22, 22, 22));
+        this.transformAfterDark = Mat4.translation(68, 30, -199).times(Mat4.scale(22, 22, 22));
     }
 
     setCamera1() { //Camera 1: Bar
@@ -740,16 +748,12 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             transformMenuTop = transformMenuTop.times(Mat4.translation(135, -44, 40 + i * boothShiftFactor));
             transformMenuTop = transformMenuTop.times(transformMenuBottom);
             // if (i != 1)
-                this.shapes.menu.draw(context, program_state, transformMenuTop, this.materials.menuFront);
+            this.shapes.menu.draw(context, program_state, transformMenuTop, this.materials.menuFront);
         }
 
         //TODO: Clue #3: Coke Poster
         var myMaterial;
-        const transformCoke =
-            // Mat4.translation(-20, 50, -99)
-            Mat4.translation(10, 50, -199)
-                .times(Mat4.scale(35, 35, 35));
-
+        
         if(this.clue3 == 1) {
             if (window.change_coke == 0) {
                 myMaterial = this.materials.coke;
@@ -760,12 +764,12 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                 //set the next clue once the clue is revealed
                 this.clue4 = 0;
             }
-            this.shapes.coke.draw(context, program_state, transformCoke, myMaterial);
+            this.shapes.circleposter.draw(context, program_state, this.transformCoke, myMaterial);
         }
         else {
             myMaterial = this.materials.coke;
         }
-        this.shapes.coke.draw(context, program_state, transformCoke, myMaterial);
+        this.shapes.circleposter.draw(context, program_state, this.transformCoke, myMaterial);
 
 
         //TODO: Clue #4: Mustard and Ketchup
@@ -1040,11 +1044,10 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
 
         //POSTERS
         //Martini
-        var transformMartini = Mat4.identity();
-        transformMartini = transformMartini.times(Mat4.translation(65, 90, -198));
-        transformMartini = transformMartini.times(Mat4.scale(35, 35, 35));
-        this.shapes.afterDark.draw(context, program_state, transformMartini, this.materials.afterDark);
 
+        this.shapes.circleposter.draw(context, program_state, this.transformAfterDark, this.materials.afterDark);
+        this.shapes.circleposter.draw(context, program_state, this.transformCoffee, this.materials.coffeePoster);
+        this.shapes.circleposter.draw(context, program_state, this.transformMimosa, this.materials.mimosaPoster);
 
         //BOOTH
         //shift factor changes how far apart the same facing chair will be
@@ -1129,9 +1132,10 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
 
             var transformPoster2 = Mat4.identity();
             transformPoster2 = transformPoster2.times(Mat4.translation(-198, 70, 45 - i * boothShiftFactor));
-            transformPoster2 = transformPoster2.times(Mat4.rotation(Math.PI/2, 0, 1, 0));
-            transformPoster2 = transformPoster2.times(Mat4.rotation(Math.PI, 0, 0, 1));
-            transformPoster2 = transformPoster2.times(boothScaleFactor);
+            // transformPoster2 = transformPoster2.times(Mat4.rotation(Math.PI/2, 0, 1, 0));
+            // transformPoster2 = transformPoster2.times(Mat4.rotation(Math.PI, 0, 0, 1));
+            // transformPoster2 = transformPoster2.times(boothScaleFactor);
+            transformPoster2 = transformPoster2.times(this.transformPoster2Helper).times(boothScaleFactor);
 
             switch (i) {
                 case -2:
@@ -1226,10 +1230,8 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         transformShelfBottle = transformShelf.times(Mat4.translation(0.75, 0.90, 0));
         this.shapes.other_bottle.draw(context, program_state, transformShelfBottle.times(Mat4.scale(0.2, 0.4, 0.2)), this.materials.other_bottle);
 
-        this.shapes.circleposter.draw(context, program_state, this.transformCoffee, this.materials.coffeePoster);
-        this.shapes.circleposter.draw(context, program_state, this.transformMimosa, this.materials.mimosaPoster);
-        this.shapes.cat.draw(context, program_state, this.transformCat, this.materials.cat);
 
+        this.shapes.cat.draw(context, program_state, this.transformCat, this.materials.cat);
         this.shapes.smallBottle.draw(context, program_state, this.transformationSmallBottle, this.materials.bottleStrawberry);
 
 
