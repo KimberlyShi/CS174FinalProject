@@ -52,7 +52,7 @@ var rules_click = 0;
 window.rules_click = rules_click;
 var menu_click = 0;
 window.menu_click = menu_click;
-var stool_click = 0;35
+var stool_click = 0;
 window.stool_click = stool_click;
 var chairpaper_click = 0;
 window.chairpaper_click = chairpaper_click;
@@ -63,6 +63,18 @@ var menuTimer = 0;
 var stoolTimer = 0;
 var cokeTimer = 0;
 var ketchupTimer = 0;
+
+var bottle1_click = 0;
+window.bottle1_click = bottle1_click;
+var bottle2_click = 0;
+window.bottle2_click = bottle2_click;
+var bottle3_click = 0;
+window.bottle3_click = bottle3_click;
+var bottle4_click = 0;
+window.bottle4_click = bottle4_click;
+var bottle5_click = 0;
+window.bottle5_click = bottle5_click;
+
 
 //NUMS: 200, 212, 221, 241, 245,246, 249, 250, 251, 252, 254, 255,
 const jukebox_color =       color(127 / 255, 124 / 255, 127 / 255, 250 / 255); // change alpha from 255 to 250 for pick color
@@ -87,6 +99,19 @@ const other_ketchup_color = color(255 / 255, 0 / 255, 0 / 255, 255 / 255);
 const takeASeat_color = color(4/255, 7/255, 2/255, 254/255);
 const ball_color = color(255 / 255, 50 / 255, 0/ 255, 232/255);
 
+//201, 221, 232, 237, 241, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 154, 255, 255, 255 (three)
+//the other ball 232 is plus 5 range so can't do 226, 227, 229, 230, 231, 232, 233, 234, 235, 236, 237
+// const bottle1_color = color(37/255, 130/255, 27/255, 222/255);
+// const bottle2_color = color(30/255, 105/255, 19/255, 224/255);
+// const bottle3_color = color(35/255, 115/255, 22/255, 226/255);
+// const bottle4_color = color(32/255, 125/255, 24/255, 228/255);
+// const bottle5_color = color(34/255, 118/255, 26/255, 243/255);
+const bottle1_color = color(37/255, 130/255, 27/255, 242/255);
+const bottle2_color = color(30/255, 105/255, 19/255, 239/255);
+const bottle3_color = color(37/255, 115/255, 22/255, 243/255);
+const bottle4_color = color(32/255, 125/255, 24/255, 225/255);
+const bottle5_color = color(34/255, 118/255, 29/255, 223/255);
+
 window.jukebox_color = jukebox_color;
 window.ketchup_color = ketchup_color;
 window.mustard_color = mustard_color;
@@ -107,6 +132,13 @@ window.chairpaper_color = chairpaper_color;
 window.takeASeat_color = takeASeat_color;
 window.ball_color = ball_color;
 window.bottle_break = 0;
+
+window.bottle1_color = bottle1_color;
+window.bottle2_color = bottle2_color;
+window.bottle3_color = bottle3_color;
+window.bottle4_color = bottle4_color;
+window.bottle5_color = bottle5_color;
+
 
 var collision_occured = false;
 var mustard_angle = 0;
@@ -158,7 +190,15 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             beginScreen: new defs.Square(),
             booth: new Shape_From_File("assets/booth2.obj"),
             boothTable: new Shape_From_File("assets/squareTable2.obj"),
-            other_bottle: new Shape_From_File("assets/bottle.obj"),
+            // other_bottle: new Shape_From_File("assets/bottle.obj"),
+            //random bottle shards
+            bottle1: new Shape_From_File("assets/bottle.obj"),
+            bottle2: new Shape_From_File("assets/bottle.obj"),
+            bottle3: new Shape_From_File("assets/bottle.obj"),
+            bottle4: new Shape_From_File("assets/bottle.obj"),
+            bottle5: new Shape_From_File("assets/bottle.obj"),
+
+
             collision_bottle: new Shape_From_File("assets/bottle.obj"),
             bulb: new Shape_From_File("assets/bulb.obj"),
             carDeco: new defs.Square(),
@@ -182,6 +222,14 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             plane: new defs.Square(),
             planeFloor: new defs.Square(), //used floor
             shards: new Shape_From_File("assets/shards.obj"),
+
+            //random shards
+            shards2: new Shape_From_File("assets/shards2.obj"),
+            shards3: new Shape_From_File("assets/shards3.obj"),
+            shards4: new Shape_From_File("assets/shards4.obj"),
+            shards5: new Shape_From_File("assets/shards5.obj"),
+
+
             smoothie: new Shape_From_File("assets/drink.obj"),
             stool: new Shape_From_File("assets/stool.obj"),
             stoolclue: new Shape_From_File("assets/stoolclue.obj"),
@@ -196,6 +244,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             otherKetchup: new Shape_From_File("assets/kb.obj"),
             smallBottle: new Shape_From_File("assets/smallBottle.obj"),
             ball: new Shape_From_File("assets/ball.obj"),
+            plate: new Shape_From_File("assets/plate.obj"),
         };
 
         this.camera_x = -50
@@ -286,11 +335,11 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                 }),
                 coke: new Material(new defs.Textured_Phong(1), {
                     ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
-                    texture: new Texture("assets/coke_1.png")
+                    texture: new Texture("assets/coke_3.png")
                 }),
                 afterDark: new Material(new defs.Textured_Phong(1), {
                     ambient: 1, diffusivity: 1, specularity: 1, color: color(0,0,0,1),
-                    texture: new Texture("assets/afterDark_1.png")
+                    texture: new Texture("assets/afterDark_3.png")
                 }),
                 openSign: new Material(new defs.Textured_Phong(1), {
                     ambient: 1, diffusivity: 1, specularity: 1, color: door_color,
@@ -306,7 +355,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                 }),
                 cokeClue: new Material(new defs.Textured_Phong(1), {
                     ambient: 1, diffusivity: 1, specularity: 1, color: coke_color,
-                    texture: new Texture("assets/cokeClue_1.png")
+                    texture: new Texture("assets/cokeClue_3.png")
                 }),
                 talltable: new Material(new defs.Textured_Phong(1), {
                     ambient: 1, diffusivity: 1, specularity: 1,
@@ -363,21 +412,63 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                 }),
                 takeASeat: new Material(new defs.Textured_Phong(1), {
                     ambient: 0.92, diffusivity: 1, specularity: .5, color: takeASeat_color,
-                    texture: new Texture("assets/takeASeat_1.png")
+                    texture: new Texture("assets/hint1_rect.png")
                 }),
 
                 shards: new Material(new defs.Textured_Phong(1), {
                     ambient: 1, diffusivity: 1, specularity: 1, color: rules_color,
                     texture: new Texture("assets/shards_map.png")
                 }),
+
+                // shards2: new Material(new defs.Textured_Phong(1), {
+                //     ambient: 1, diffusivity: 1, specularity: 1, color: rules_color,
+                //     texture: new Texture("assets/shards_map.png")
+                // }),
+                // shards3: new Material(new defs.Textured_Phong(1), {
+                //     ambient: 1, diffusivity: 1, specularity: 1, color: rules_color,
+                //     texture: new Texture("assets/shards_map.png")
+                // }),
+                // shards4: new Material(new defs.Textured_Phong(1), {
+                //     ambient: 1, diffusivity: 1, specularity: 1, color: rules_color,
+                //     texture: new Texture("assets/shards_map.png")
+                // }),
+                // shards5: new Material(new defs.Textured_Phong(1), {
+                //     ambient: 1, diffusivity: 1, specularity: 1, color: rules_color,
+                //     texture: new Texture("assets/shards_map.png")
+                // }),
+
+
                 collison_bottle: new Material(new defs.Textured_Phong(1), {
                     ambient: 1, diffusivity: 1, specularity: 1, color: collison_bottle_color,
                     texture: new Texture("assets/shards_map.png")
                 }),
-                other_bottle: new Material(new defs.Textured_Phong(1), {
-                    ambient: 1, diffusivity: 1, specularity: 1, color: other_bottle_color,
+                // other_bottle: new Material(new defs.Textured_Phong(1), {
+                //     ambient: 1, diffusivity: 1, specularity: 1, color: other_bottle_color,
+                //     texture: new Texture("assets/shards_map.png")
+                // }),
+
+                bottle1: new Material(new defs.Textured_Phong(1), {
+                    ambient: 1, diffusivity: 1, specularity: 1, color: bottle1_color,
                     texture: new Texture("assets/shards_map.png")
                 }),
+                bottle2: new Material(new defs.Textured_Phong(1), {
+                    ambient: 1, diffusivity: 1, specularity: 1, color: bottle2_color,
+                    texture: new Texture("assets/shards_map.png")
+                }),
+                bottle3: new Material(new defs.Textured_Phong(1), {
+                    ambient: 1, diffusivity: 1, specularity: 1, color: bottle3_color,
+                    texture: new Texture("assets/shards_map.png")
+                }),
+                bottle4: new Material(new defs.Textured_Phong(1), {
+                    ambient: 1, diffusivity: 1, specularity: 1, color: bottle4_color,
+                    texture: new Texture("assets/shards_map.png")
+                }),
+                bottle5: new Material(new defs.Textured_Phong(1), {
+                    ambient: 1, diffusivity: 1, specularity: 1, color: bottle5_color,
+                    texture: new Texture("assets/shards_map.png")
+                }),
+
+
                 stoolclue: new Material(new defs.Textured_Phong(1), {
                     color: stool_color, ambient: 1, diffusivity: 1, specularity: 1,
                     texture: new Texture("assets/stool_map.png")
@@ -424,7 +515,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                     texture: new Texture( "assets/coffee_poster.png" )
                 }),
                 mimosaPoster: new Material( new defs.Textured_Phong( 1 ), {
-                    ambient: 1, diffusivity: 1, specularity: 1, 
+                    ambient: 1, diffusivity: 1, specularity: 0.2,
                     texture: new Texture( "assets/mimosa_poster.png" )
                 }),  
                 burgerPoster: new Material( new defs.Textured_Phong( 1 ), {
@@ -439,6 +530,10 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                     ambient: 1, diffusivity: 1, specularity: 1, 
                     texture: new Texture( "assets/beach_poster.png" )
                 }),  
+                ingredientsPoster: new Material( new defs.Textured_Phong( 1 ), {
+                    ambient: 1, diffusivity: 1, specularity: 1, 
+                    texture: new Texture( "assets/ingredients_poster.png" )
+                }),  
                 otherKetchup: new Material(new defs.Textured_Phong(1), {
                     color: other_ketchup_color, ambient: 1, diffusivity: 1, specularity: 1,
                     texture: new Texture("assets/pink.png")
@@ -450,6 +545,10 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                 ball: new Material(new defs.Textured_Phong(1), {
 				    ambient: 1, diffusivity: 1.0, specularity: 1.0, color: ball_color,
                     //texture: new Texture("assets/ball_map.png")
+                }),
+                plate: new Material(new defs.Textured_Phong(1), {
+                    ambient: 1, diffusivity: 1.0, specularity: 1.0,
+                    texture: new Texture("assets/plateColored.png"),
                 }),
             };
         this.transformJukebox =  Mat4.translation(-50, 42, -170).times(Mat4.rotation(-Math.PI / 2, 0, 1, 0));
@@ -502,6 +601,14 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         this.transformationSmallBottle = this.transformationSmallBottle.times(Mat4.translation(20, 139, 285));
         this.transformationSmallBottle = this.transformationSmallBottle.times(Mat4.scale(4.3, 4.3, 4.3));
         this.transformationSmallBottle = this.transformationSmallBottle.times(Mat4.rotation(Math.PI/2, 0, 1, 0));
+        this.transformMartini = Mat4.identity();
+        this.transformMartini = this.transformMartini.times(Mat4.translation(65, 90, -198));
+        this.transformMartini = this.transformMartini.times(Mat4.scale(35, 35, 35));
+        this.transformPoster2Helper = Mat4.rotation(Math.PI/2, 0, 1, 0).times(Mat4.rotation(Math.PI, 0, 0, 1));
+        this.transformCoke = Mat4.translation(10, 105, -199).times(Mat4.scale(22, 22, 22));
+        this.transformMimosa = Mat4.translation(10, 50, -199).times(Mat4.scale(22, 22, 22));
+        this.transformCoffee = Mat4.translation(68, 85, -199).times(Mat4.scale(22, 22, 22));
+        this.transformAfterDark = Mat4.translation(68, 30, -199).times(Mat4.scale(22, 22, 22));
     }
 
     setCamera1() { //Camera 1: Bar
@@ -677,10 +784,11 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
 
         if(window.takeASeat_click == 1) {
             window.rules_click = 2;
-            let transformWords = Mat4.identity();
-            transformWords = transformWords.times(Mat4.translation(-15, 85, 60));
-            transformWords = transformWords.times(Mat4.scale(30, 30, 30));
-            this.shapes.takeASeat.draw(context, program_state, transformWords, this.materials.takeASeat);
+            // let transformWords = Mat4.identity();
+            // transformWords = transformWords.times(Mat4.translation(-15, 85, 60));
+            // transformWords = transformWords.times(Mat4.scale(30, 30, 30));
+            // this.shapes.takeASeat.draw(context, program_state, transformWords, this.materials.takeASeat);
+            this.shapes.takeASeat.draw(context, program_state, transformBeginScreen, this.materials.takeASeat);
             this.setCamera5();
         }
 
@@ -801,16 +909,12 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             transformMenuTop = transformMenuTop.times(Mat4.translation(135, -44, 40 + i * boothShiftFactor));
             transformMenuTop = transformMenuTop.times(transformMenuBottom);
             // if (i != 1)
-                this.shapes.menu.draw(context, program_state, transformMenuTop, this.materials.menuFront);
+            this.shapes.menu.draw(context, program_state, transformMenuTop, this.materials.menuFront);
         }
 
         //TODO: Clue #3: Coke Poster
         var myMaterial;
-        const transformCoke =
-            // Mat4.translation(-20, 50, -99)
-            Mat4.translation(10, 50, -199)
-                .times(Mat4.scale(35, 35, 35));
-
+        
         if(this.clue3 == 1) {
             if (window.change_coke == 0) {
                 myMaterial = this.materials.coke;
@@ -826,12 +930,13 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             }
             this.shapes.coke.draw(context, program_state, transformCoke, myMaterial);
     
+            this.shapes.circleposter.draw(context, program_state, this.transformCoke, myMaterial);
         }
         else {
             myMaterial = this.materials.coke;
             cokeTimer = 0;
         }
-        this.shapes.coke.draw(context, program_state, transformCoke, myMaterial);
+        this.shapes.circleposter.draw(context, program_state, this.transformCoke, myMaterial);
 
 
         //TODO: Clue #4: Mustard and Ketchup
@@ -1110,11 +1215,10 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
 
         //POSTERS
         //Martini
-        var transformMartini = Mat4.identity();
-        transformMartini = transformMartini.times(Mat4.translation(65, 90, -198));
-        transformMartini = transformMartini.times(Mat4.scale(35, 35, 35));
-        this.shapes.afterDark.draw(context, program_state, transformMartini, this.materials.afterDark);
 
+        this.shapes.circleposter.draw(context, program_state, this.transformAfterDark, this.materials.afterDark);
+        this.shapes.circleposter.draw(context, program_state, this.transformCoffee, this.materials.coffeePoster);
+        this.shapes.circleposter.draw(context, program_state, this.transformMimosa, this.materials.mimosaPoster);
 
         //BOOTH
         //shift factor changes how far apart the same facing chair will be
@@ -1199,9 +1303,10 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
 
             var transformPoster2 = Mat4.identity();
             transformPoster2 = transformPoster2.times(Mat4.translation(-198, 70, 45 - i * boothShiftFactor));
-            transformPoster2 = transformPoster2.times(Mat4.rotation(Math.PI/2, 0, 1, 0));
-            transformPoster2 = transformPoster2.times(Mat4.rotation(Math.PI, 0, 0, 1));
-            transformPoster2 = transformPoster2.times(boothScaleFactor);
+            // transformPoster2 = transformPoster2.times(Mat4.rotation(Math.PI/2, 0, 1, 0));
+            // transformPoster2 = transformPoster2.times(Mat4.rotation(Math.PI, 0, 0, 1));
+            // transformPoster2 = transformPoster2.times(boothScaleFactor);
+            transformPoster2 = transformPoster2.times(this.transformPoster2Helper).times(boothScaleFactor);
 
             switch (i) {
                 case -2:
@@ -1217,8 +1322,8 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                     this.shapes.window.draw(context, program_state, transformWindow2, this.materials.window4);
                     break;
                 case 1:
-                    this.shapes.poster.draw(context, program_state, transformPoster2, this.materials.beachPoster);
-                    this.shapes.poster.draw(context, program_state, transformPoster, this.materials.milkshakePoster);
+                    this.shapes.poster.draw(context, program_state, transformPoster2, this.materials.ingredientsPoster);
+                    this.shapes.poster.draw(context, program_state, transformPoster, this.materials.beachPoster);
                     break;
                 case 2:
                     this.shapes.window.draw(context, program_state, transformWindow, this.materials.window5);
@@ -1275,15 +1380,42 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         transformShelf = transformShelf.times(Mat4.rotation(Math.PI, 0, 1, 0));
         this.shapes.shelf.draw(context, program_state, transformShelf, this.materials.shelf);
 
+        // var transformShelfBottle = transformShelf.times(Mat4.translation(0.75, 0.90, 0));
+        // this.shapes.other_bottle.draw(context, program_state, transformShelfBottle.times(Mat4.scale(0.2, 0.4, 0.2)), this.materials.other_bottle);
+        //
+        // transformShelfBottle = transformShelf.times(Mat4.translation(0, 0.90, 0));
+        // this.shapes.other_bottle.draw(context, program_state, transformShelfBottle.times(Mat4.scale(0.2, 0.4, 0.2)), this.materials.other_bottle);
+        //
+        // transformShelfBottle = transformShelf.times(Mat4.translation(-0.75, 0.90, 0));
+        // this.shapes.other_bottle.draw(context, program_state, transformShelfBottle.times(Mat4.scale(0.2, 0.4, 0.2)), this.materials.other_bottle);
+
         var transformShelfBottle = transformShelf.times(Mat4.translation(0.75, 0.90, 0));
-        this.shapes.other_bottle.draw(context, program_state, transformShelfBottle.times(Mat4.scale(0.2, 0.4, 0.2)), this.materials.other_bottle);
+        if(window.bottle1_click == 1) {
+
+            console.log("inside bottleclick");
+            // this.shapes.shards.draw(context, program_state, transformShelfBottle.times(Mat4.scale(0.2, 0.4, 0.2)), this.materials.shards);
+            this.shapes.shards2.draw(context, program_state, transformShelfBottle.times(Mat4.scale(0.2, 0.4, 0.2)).times(Mat4.translation(0, -1.5,0)), this.materials.shards);
+        }
+        else {
+
+            this.shapes.bottle1.draw(context, program_state, transformShelfBottle.times(Mat4.scale(0.2, 0.4, 0.2)), this.materials.bottle1);
+        }
 
         transformShelfBottle = transformShelf.times(Mat4.translation(0, 0.90, 0));
-        this.shapes.other_bottle.draw(context, program_state, transformShelfBottle.times(Mat4.scale(0.2, 0.4, 0.2)), this.materials.other_bottle);
+        if(window.bottle2_click == 1) {
+            this.shapes.shards3.draw(context, program_state, transformShelfBottle.times(Mat4.scale(0.2, 0.4, 0.2)).times(Mat4.translation(0, -1.5,0)), this.materials.shards);
+        }
+        else {
+            this.shapes.bottle2.draw(context, program_state, transformShelfBottle.times(Mat4.scale(0.2, 0.4, 0.2)), this.materials.bottle2);
+        }
 
         transformShelfBottle = transformShelf.times(Mat4.translation(-0.75, 0.90, 0));
-        this.shapes.other_bottle.draw(context, program_state, transformShelfBottle.times(Mat4.scale(0.2, 0.4, 0.2)), this.materials.other_bottle);
-
+        if(window.bottle3_click == 1) {
+            this.shapes.shards4.draw(context, program_state, transformShelfBottle.times(Mat4.scale(0.2, 0.4, 0.2)).times(Mat4.translation(0, -1.5,0)), this.materials.shards);
+        }
+        else {
+            this.shapes.bottle3.draw(context, program_state, transformShelfBottle.times(Mat4.scale(0.2, 0.4, 0.2)), this.materials.bottle3);
+        }
         transformShelf = Mat4.identity();
         transformShelf = transformShelf.times(Mat4.translation(70, 50, 290));
         transformShelf = transformShelf.times(Mat4.scale(40, 20, 40));
@@ -1291,15 +1423,22 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         this.shapes.shelf.draw(context, program_state, transformShelf, this.materials.shelf);
 
         transformShelfBottle = transformShelf.times(Mat4.translation(0, 0.90, 0));
-        this.shapes.other_bottle.draw(context, program_state, transformShelfBottle.times(Mat4.scale(0.2, 0.4, 0.2)), this.materials.other_bottle);
-
+        if(window.bottle4_click == 1) {
+            this.shapes.shards5.draw(context, program_state, transformShelfBottle.times(Mat4.scale(0.2, 0.4, 0.2)).times(Mat4.translation(0, -1.5,0)), this.materials.shards);
+        }
+        else {
+            this.shapes.bottle4.draw(context, program_state, transformShelfBottle.times(Mat4.scale(0.2, 0.4, 0.2)), this.materials.bottle4);
+        }
         transformShelfBottle = transformShelf.times(Mat4.translation(0.75, 0.90, 0));
-        this.shapes.other_bottle.draw(context, program_state, transformShelfBottle.times(Mat4.scale(0.2, 0.4, 0.2)), this.materials.other_bottle);
+        if(window.bottle5_click == 1) {
+            this.shapes.shards.draw(context, program_state, transformShelfBottle.times(Mat4.scale(0.2, 0.4, 0.2)).times(Mat4.translation(0, -1.5,0)), this.materials.shards);
+        }
+        else {
+            this.shapes.bottle5.draw(context, program_state, transformShelfBottle.times(Mat4.scale(0.2, 0.4, 0.2)), this.materials.bottle5);
+        }
 
-        this.shapes.circleposter.draw(context, program_state, this.transformCoffee, this.materials.coffeePoster);
-        this.shapes.circleposter.draw(context, program_state, this.transformMimosa, this.materials.mimosaPoster);
+
         this.shapes.cat.draw(context, program_state, this.transformCat, this.materials.cat);
-
         this.shapes.smallBottle.draw(context, program_state, this.transformationSmallBottle, this.materials.bottleStrawberry);
 
 
