@@ -480,6 +480,10 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         this.transformDoor = this.transformDoor.times(Mat4.translation(140, 60, -199));
         this.transformDoor = this.transformDoor.times(Mat4.rotation(Math.PI / 2, 0, 1, 0));
         this.transformDoor = this.transformDoor.times(Mat4.scale(30, 30, 30));
+        this.transformationSmallBottle = Mat4.identity();
+        this.transformationSmallBottle = this.transformationSmallBottle.times(Mat4.translation(20, 139, 285));
+        this.transformationSmallBottle = this.transformationSmallBottle.times(Mat4.scale(4.3, 4.3, 4.3));
+        this.transformationSmallBottle = this.transformationSmallBottle.times(Mat4.rotation(Math.PI/2, 0, 1, 0));
     }
 
     setCamera1() { //Camera 1: Bar
@@ -1148,10 +1152,6 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         this.shapes.circleposter.draw(context, program_state, this.transformMimosa, this.materials.mimosaPoster);
         this.shapes.cat.draw(context, program_state, this.transformCat, this.materials.cat);
 
-        this.transformationSmallBottle = Mat4.identity();
-        this.transformationSmallBottle = this.transformationSmallBottle.times(Mat4.translation(20, 139, 285));
-        this.transformationSmallBottle = this.transformationSmallBottle.times(Mat4.scale(4.3, 4.3, 4.3));
-        this.transformationSmallBottle = this.transformationSmallBottle.times(Mat4.rotation(Math.PI/2, 0, 1, 0));
         this.shapes.smallBottle.draw(context, program_state, this.transformationSmallBottle, this.materials.bottleStrawberry);
 
 
