@@ -633,8 +633,6 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
 
 
         //CLUES!!
-        //Still need to complete chair (Clue 1) and menu (Clue 2)
-
         //TODO: Clue #1: Chair
 
         // this.clue1 = 0; //testing
@@ -681,12 +679,6 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
 
 
         }
-        // for (let i = 0; i < 6; i++) {
-        //     var transformStool = Mat4.identity();
-        //     transformStool = transformStool.times(Mat4.translation(120, 20, -80 + (stoolShiftFactor * (i+1) )));
-        //     transformStool = transformStool.times(Mat4.scale(12,12,12));
-        //     this.shapes.stool.draw(context, program_state, transformStool, this.materials.stool);
-        // }
 
         //TODO: Clue #2: Menu
         // this.clue2 = 0; //testing
@@ -963,6 +955,9 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             if (window.note_click == 1) {
                 window.diamond_click = 0;
             }
+
+            //set the next clue
+            this.clue8 = 1;
         }
         // else {
             //no note should be drawn
@@ -971,7 +966,11 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
 
         //TODO: Clue #8: Jukebox
         //JUKEBOX
+        // this.clue8 = 0; //testing
         this.shapes.jukebox.draw(context, program_state, this.transformJukebox, this.materials.jukebox);
+        if(this.clue8 == 0) {
+            window.music_play = 0; //prevent music from ever playing
+        }
 
 
         //TODO: Furniture Placement
@@ -1124,31 +1123,6 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
   
         this.shapes.chairpaper.draw(context, program_state, paperTransform, this.materials.chairpaper);
 
-        // //STOOLS
-        // let stoolShiftFactor = 30;
-        // var max_stool_dist = 2.8;
-        // let stoolTransform = Mat4.translation(123, 14, 80 + stoolShiftFactor);
-        // let stoolClueTransform = Mat4.translation(125, 18, 36 - stoolShiftFactor * 4);
-        // stoolClueTransform = stoolClueTransform.times(Mat4.scale(12, 13, 12));
-        // if (window.stool_click == 1) {
-        //     //console.log("stool_click")
-        //     if (stool_move < max_stool_dist)
-        //         stool_move += 0.1;
-        //     console.log("stool_click", stool_move)
-        //     stoolClueTransform = stoolClueTransform.times(Mat4.translation(0, 0, -stool_move));
-        // } else {
-        //     stool_move = 0;
-        // }
-        //
-        // this.shapes.stoolclue.draw(context, program_state, stoolClueTransform, this.materials.stoolclue);
-        //
-        // for (let i = 0; i < 6; i++) {
-        //     var transformStool = Mat4.identity();
-        //     transformStool = transformStool.times(Mat4.translation(120, 20, -80 + (stoolShiftFactor * (i+1) )));
-        //     transformStool = transformStool.times(Mat4.scale(12,12,12));
-        //     this.shapes.stool.draw(context, program_state, transformStool, this.materials.stool);
-        // }
-
         //BAR
         this.shapes.bar.draw(context, program_state, this.barTransform, this.materials.bar);
 
@@ -1226,7 +1200,5 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             this.shapes.fadeToBlack.draw(context, program_state, transformBlack, this.materials.fadeToBlack.override(color(0, 0, 0, this.fading)));
             this.setCamera5();
         }
-
-
     }
 }
