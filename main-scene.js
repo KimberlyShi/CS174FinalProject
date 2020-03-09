@@ -106,11 +106,11 @@ const ball_color = color(255 / 255, 50 / 255, 0/ 255, 232/255);
 // const bottle3_color = color(35/255, 115/255, 22/255, 226/255);
 // const bottle4_color = color(32/255, 125/255, 24/255, 228/255);
 // const bottle5_color = color(34/255, 118/255, 26/255, 243/255);
-const bottle1_color = color(37/255, 130/255, 27/255, 242/255);
-const bottle2_color = color(30/255, 105/255, 19/255, 239/255);
-const bottle3_color = color(37/255, 115/255, 22/255, 243/255);
-const bottle4_color = color(32/255, 125/255, 24/255, 225/255);
-const bottle5_color = color(34/255, 118/255, 29/255, 223/255);
+const bottle1_color = color(37/255, 130/255, 27/255, 242/255); //
+const bottle2_color = color(37/255, 130/255, 27/255, 239/255); //
+const bottle3_color = color(37/255, 130/255, 27/255, 243/255); //
+const bottle4_color = color(37/255, 130/255, 27/255, 221/255);
+const bottle5_color = color(37/255, 130/255, 27/255, 224/255);
 
 window.jukebox_color = jukebox_color;
 window.ketchup_color = ketchup_color;
@@ -448,23 +448,23 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                 // }),
 
                 bottle1: new Material(new defs.Textured_Phong(1), {
-                    ambient: 1, diffusivity: 1, specularity: 1, color: bottle1_color,
+                    ambient: 1, diffusivity: 1, specularity: 0.8, color: bottle1_color,
                     texture: new Texture("assets/shards_map.png")
                 }),
                 bottle2: new Material(new defs.Textured_Phong(1), {
-                    ambient: 1, diffusivity: 1, specularity: 1, color: bottle2_color,
+                    ambient: 1, diffusivity: 1, specularity: 0.8, color: bottle2_color,
                     texture: new Texture("assets/shards_map.png")
                 }),
                 bottle3: new Material(new defs.Textured_Phong(1), {
-                    ambient: 1, diffusivity: 1, specularity: 1, color: bottle3_color,
+                    ambient: 1, diffusivity: 1, specularity: 0.8, color: bottle3_color,
                     texture: new Texture("assets/shards_map.png")
                 }),
                 bottle4: new Material(new defs.Textured_Phong(1), {
-                    ambient: 1, diffusivity: 1, specularity: 1, color: bottle4_color,
+                    ambient: 1, diffusivity: 1, specularity: 0.8, color: bottle4_color,
                     texture: new Texture("assets/shards_map.png")
                 }),
                 bottle5: new Material(new defs.Textured_Phong(1), {
-                    ambient: 1, diffusivity: 1, specularity: 1, color: bottle5_color,
+                    ambient: 1, diffusivity: 1, specularity: 0.8, color: bottle5_color,
                     texture: new Texture("assets/shards_map.png")
                 }),
 
@@ -824,7 +824,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                 //console.log("stool_click")
                 if (stool_move < max_stool_dist)
                     stool_move += 0.1;
-                console.log("stool_click", stool_move)
+                //console.log("stool_click", stool_move)
                 stoolClueTransform = stoolClueTransform.times(Mat4.translation(0, 0, -stool_move));
                 stoolTimer += 1;
                 if(stoolTimer < 100)
@@ -1070,7 +1070,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             napkinTransform = napkinTransform.times(Mat4.translation(185, 44, 20)).times(Mat4.scale(6, 6, 6));
 
             if (window.napkin_click == 1) {
-                console.log("napkin = " + window.napkin_click);
+                //console.log("napkin = " + window.napkin_click);
                 napkinTransform = napkinTransform.times(Mat4.rotation(Math.PI, 0, 1, 0));
             }
             this.shapes.napkin.draw(context, program_state, napkinTransform, this.materials.napkin);

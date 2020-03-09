@@ -1201,12 +1201,12 @@ class Webgl_Manager
           window.bottle3_click = 1;
         }
       }
-      if(this.color_match(window.bottle4_color, data)) {
+      if(this.color_match_range(window.bottle4_color, data, 1)) {
         if(window.bottle4_click == 0) {
           window.bottle4_click = 1;
         }
       }
-      if(this.color_match(window.bottle5_color, data)) {
+      if(this.color_match_range(window.bottle5_color, data, 1)) {
         if(window.bottle5_click == 0) {
           window.bottle5_click = 1;
         }
@@ -1216,7 +1216,7 @@ class Webgl_Manager
 
 
         //console.log(rect)
-        //console.log(data)
+        console.log(data)
     }  
 
    
