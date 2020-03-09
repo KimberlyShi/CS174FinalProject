@@ -685,11 +685,11 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
     this.camera_y = -50
     this.camera_z = 140
     this.camera_angle = Math.PI/2.5
-    this.cameraReset = 11
+    this.cameraReset = 11 //maggie i changed this to 11 (it was originally 10) -Kim
     this.vc = [0,1,0]
     }
 
-    setCamera12() { //"Clue 5"w
+    setCamera12() { //"Clue 5" Napkin box
         this.camera_x = -26
         this.camera_y = -68
         this.camera_z = 73
@@ -697,6 +697,45 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         this.cameraReset = 12
         this.vc = [0,1,0]
     }
+
+    setCamera13() { //"Clue 6" smash the bottle
+        this.camera_x = 36
+        this.camera_y = -60
+        this.camera_z = 9
+        this.camera_angle = Math.PI
+        this.cameraReset = 13
+        this.vc = [0,1,0]
+    }
+
+    setCamera14() { //"Clue 7" diamond
+        this.camera_x = 36
+        this.camera_y = -60
+        this.camera_z = 84
+        this.camera_angle = Math.PI
+        this.cameraReset = 14
+        this.vc = [0,1,0]
+    }
+    setCamera15() { //"Clue 8" jukebox
+        this.camera_x = 62
+        this.camera_y = -61
+        this.camera_z = -9
+        this.camera_angle = 0
+        this.cameraReset = 15
+        this.vc = [0,1,0]
+    }
+
+    //I feel like we probably wont need to do a camera zoom to the door because that's just exit
+    //the coord below should be value though
+    
+    // setCamera16() { //"Clue 9" door
+    //     this.camera_x = -125
+    //     this.camera_y = -60
+    //     this.camera_z = 44
+    //     this.camera_angle = 0
+    //     this.cameraReset = 15
+    //     this.vc = [0,1,0]
+    // }
+
 
     make_control_panel() {
 
@@ -715,6 +754,9 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         this.new_line();
         this.key_triggered_button("Clue 4", ["f"], this.setCamera11);
         this.key_triggered_button("Clue 5", ["g"], this.setCamera12);
+        this.key_triggered_button("Clue 6", ["h"], this.setCamera13);
+        this.key_triggered_button("Clue 7", ["j"], this.setCamera14);
+        this.key_triggered_button("Clue 8", ["j"], this.setCamera15);
 
 
     }
