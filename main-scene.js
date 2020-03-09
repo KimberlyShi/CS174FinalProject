@@ -185,7 +185,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             circleposter: new Shape_From_File("assets/circleposter.obj"),
             poster: new Shape_From_File("assets/poster.obj"),
             otherKetchup: new Shape_From_File("assets/kb.obj"),
-            smallBottle: new Shape_From_File("assets/smallBottle.obj")
+            smallBottle: new Shape_From_File("assets/smallBottle.obj"),
         };
 
         this.camera_x = -50
@@ -429,7 +429,6 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                     color: other_ketchup_color, ambient: 1, diffusivity: 1, specularity: 1,
                     texture: new Texture("assets/pink.png")
                 }),
-
                 bottleStrawberry: new Material( new defs.Textured_Phong( 1 ), {
                     ambient: 1, diffusivity: 1, specularity: 1,
                     texture: new Texture( "assets/BottleColor.png" ),
@@ -481,6 +480,10 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         this.transformDoor = this.transformDoor.times(Mat4.translation(140, 60, -199));
         this.transformDoor = this.transformDoor.times(Mat4.rotation(Math.PI / 2, 0, 1, 0));
         this.transformDoor = this.transformDoor.times(Mat4.scale(30, 30, 30));
+        this.transformationSmallBottle = Mat4.identity();
+        this.transformationSmallBottle = this.transformationSmallBottle.times(Mat4.translation(20, 139, 285));
+        this.transformationSmallBottle = this.transformationSmallBottle.times(Mat4.scale(4.3, 4.3, 4.3));
+        this.transformationSmallBottle = this.transformationSmallBottle.times(Mat4.rotation(Math.PI/2, 0, 1, 0));
     }
 
     setCamera1() { //Camera 1: Bar
@@ -1189,6 +1192,9 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         this.shapes.circleposter.draw(context, program_state, this.transformCoffee, this.materials.coffeePoster);
         this.shapes.circleposter.draw(context, program_state, this.transformMimosa, this.materials.mimosaPoster);
         this.shapes.cat.draw(context, program_state, this.transformCat, this.materials.cat);
+
+        this.shapes.smallBottle.draw(context, program_state, this.transformationSmallBottle, this.materials.bottleStrawberry);
+
 
         //TODO: Floor Placement
         //NOTE: order matters for the floor and back wall transformations bc of image wrapping
