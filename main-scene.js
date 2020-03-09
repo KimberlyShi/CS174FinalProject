@@ -192,6 +192,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             otherKetchup: new Shape_From_File("assets/kb.obj"),
             smallBottle: new Shape_From_File("assets/smallBottle.obj"),
             ball: new Shape_From_File("assets/ball.obj"),
+            plate: new Shape_From_File("assets/plate.obj"),
         };
 
         this.camera_x = -50
@@ -446,6 +447,10 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                 ball: new Material(new defs.Textured_Phong(1), {
 				    ambient: 1, diffusivity: 1.0, specularity: 1.0, color: ball_color,
                     //texture: new Texture("assets/ball_map.png")
+                }),
+                plate: new Material(new defs.Textured_Phong(1), {
+                    ambient: 1, diffusivity: 1.0, specularity: 1.0,
+                    texture: new Texture("assets/plateColored.png"),
                 }),
             };
         this.transformJukebox =  Mat4.translation(-50, 42, -170).times(Mat4.rotation(-Math.PI / 2, 0, 1, 0));
