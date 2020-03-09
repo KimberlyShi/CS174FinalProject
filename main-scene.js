@@ -694,7 +694,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
 
     setCamera10() { //"Clue 3"
         this.camera_x = 0
-        this.camera_y = -50
+        this.camera_y = -60
         this.camera_z = 30
         this.camera_angle = 0
         this.cameraReset = 10
@@ -928,9 +928,9 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                 if(cokeTimer < 100)
                     this.setCamera10();
             }
-            this.shapes.coke.draw(context, program_state, transformCoke, myMaterial);
+            this.shapes.coke.draw(context, program_state, this.transformCoke, myMaterial);
     
-            this.shapes.circleposter.draw(context, program_state, this.transformCoke, myMaterial);
+            // this.shapes.circleposter.draw(context, program_state, this.transformCoke, myMaterial);
         }
         else {
             myMaterial = this.materials.coke;
