@@ -588,6 +588,23 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         this.transformMimosa = Mat4.translation(10, 50, -199).times(Mat4.scale(22, 22, 22));
         this.transformCoffee = Mat4.translation(68, 85, -199).times(Mat4.scale(22, 22, 22));
         this.transformAfterDark = Mat4.translation(68, 30, -199).times(Mat4.scale(22, 22, 22));
+        this.transformClueMenuTop = Mat4.identity();
+        this.transformClueMenuTop = this.transformClueMenuTop.times(Mat4.translation(-129 + 0.75, 45, -55));
+        this.transformClueMenuTop = this.transformClueMenuTop.times(Mat4.rotation(-Math.PI/6, 0, 1, 0));
+        this.transformClueMenuTop = this.transformClueMenuTop.times(Mat4.scale(1/12., 1/12., 1/12.))
+        this.transformClueMenuTop = this.transformClueMenuTop.times(Mat4.translation(135, -45, 130));
+        this.transformClueMenuTop = this.transformClueMenuTop.times(Mat4.translation(-135, 45, -50));
+        this.transformClueMenuTop = this.transformClueMenuTop.times(Mat4.scale(12, 12 ,12));
+        this.transformClueMenuTop = this.transformClueMenuTop.times(Mat4.scale(12, 12 ,12));
+        this.transformClueMenuTopClicked = Mat4.identity();
+        this.transformClueMenuTopClicked = this.transformClueMenuTopClicked.times(Mat4.translation(-135, 45, 53 - 90));
+        this.transformClueMenuTopClicked = this.transformClueMenuTopClicked.times(Mat4.scale(12, 12 ,12));
+        this.transformClueMenuTopClicked = this.transformClueMenuTopClicked.times(Mat4.rotation(Math.PI, 0, 1, 0));
+        this.tallTableTransform = Mat4.identity();
+        this.tallTableTransform = this.tallTableTransform.times(Mat4.translation(183, 20, 0));
+        this.tallTableTransform = this.tallTableTransform.times(Mat4.rotation(-Math.PI / 2, 0, 0, 1));
+        this.tallTableTransform = this.tallTableTransform.times(Mat4.rotation(Math.PI / 2, 0, 0, 1));
+        this.tallTableTransform = this.tallTableTransform.times(Mat4.scale(50, 50, 110));
     }
 
     setCamera1() { //Camera 1: Bar
@@ -890,30 +907,18 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         if(this.clue2 == 1) {
             //MENU
 
-            var transformClueMenuTop = Mat4.identity();
             // const menuAngle = Math.PI;
             if (window.menu_click == 0) {
-                transformClueMenuTop = transformClueMenuTop.times(Mat4.translation(-129 + 0.75, 45, -55));
-                transformClueMenuTop = transformClueMenuTop.times(Mat4.rotation(-Math.PI/6, 0, 1, 0));
-                transformClueMenuTop = transformClueMenuTop.times(Mat4.scale(1/12., 1/12., 1/12.))
-                transformClueMenuTop = transformClueMenuTop.times(Mat4.translation(135, -45, 130));
-                transformClueMenuTop = transformClueMenuTop.times(Mat4.translation(-135, 45, -50));
-                transformClueMenuTop = transformClueMenuTop.times(Mat4.scale(12, 12 ,12));
-                transformClueMenuTop = transformClueMenuTop.times(Mat4.scale(12, 12 ,12));
+                this.shapes.menu.draw( context, program_state, this.transformClueMenuTop, this.materials.menuFrontSpecial);
                 menuTimer = 0;
             }
             if (window.menu_click == 1) {
-                transformClueMenuTop = transformClueMenuTop.times(Mat4.translation(-135, 45, 53 - 90));
-                transformClueMenuTop = transformClueMenuTop.times(Mat4.scale(12, 12 ,12));
-                transformClueMenuTop = transformClueMenuTop.times(Mat4.rotation(Math.PI, 0, 1, 0));
+                this.shapes.menu.draw( context, program_state, this.transformClueMenuTopClicked, this.materials.menuFrontSpecial);
                 menuTimer += 1;
                 if(menuTimer < 100)
                     this.setCamera9();
              
             }
-            // this.shapes.menu.draw( context, program_state, transformClueMenuTop, this.materials.menuFront.override(color(menu_color_special)));
-            this.shapes.menu.draw( context, program_state, transformClueMenuTop, this.materials.menuFrontSpecial);
-
 
             //Set next clue
             this.clue3 = 1;
@@ -1367,12 +1372,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         }
 
         // TALL TABLE
-        let tallTableTransform = Mat4.identity();
-        tallTableTransform = tallTableTransform.times(Mat4.translation(183, 20, 0));
-        tallTableTransform = tallTableTransform.times(Mat4.rotation(-Math.PI / 2, 0, 0, 1));
-        tallTableTransform = tallTableTransform.times(Mat4.rotation(Math.PI / 2, 0, 0, 1));
-        tallTableTransform = tallTableTransform.times(Mat4.scale(50, 50, 110));
-        this.shapes.talltable.draw(context, program_state, tallTableTransform, this.materials.talltable);
+        this.shapes.talltable.draw(context, program_state, this.tallTableTransform, this.materials.talltable);
 
         //PAPER UNDER STOOL
         let paperTransform = Mat4.identity();
