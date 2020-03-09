@@ -78,6 +78,8 @@ const stool_color = color(126/255, 125/255, 126/255, 247/255);
 const chairpaper_color = color(0/255, 0/255, 0/255, 244/255);
 const menu_color_special = color(3/255, 3/255, 2/255, 237/255);
 
+const other_ketchup_color = color(255 / 255, 0 / 255, 0 / 255, 255 / 255);
+
 window.jukebox_color = jukebox_color;
 window.ketchup_color = ketchup_color;
 window.mustard_color = mustard_color;
@@ -414,7 +416,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                     texture: new Texture( "assets/beach_poster.png" )
                 }),  
                 otherKetchup: new Material(new defs.Textured_Phong(1), {
-                    color: (255/255,0,0,254/255), ambient: 1, diffusivity: 1, specularity: 1,
+                    color: other_ketchup_color, ambient: 1, diffusivity: 1, specularity: 1,
                     texture: new Texture("assets/pink.png")
                 }),
             };
@@ -689,10 +691,9 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         var otherMustard = Mat4.identity();
         otherMustard = otherMustard.times(Mat4.translation(180, 51 , 10 - 20 +50));
         otherMustard = otherMustard.times(Mat4.translation(0, -5.8, 0));
-        // otherMustard = otherMustard.times(Mat4.rotation(mustard_angle, 1, 0, 0));
+        //otherMustard = otherMustard.times(Mat4.rotation(mustard_angle, 1, 0, 0));
         otherMustard = otherMustard.times(Mat4.translation(0, 5.8, 0));
         otherMustard = otherMustard.times(Mat4.scale(2,2,2));
-
 
         this.shapes.otherKetchup.draw(context, program_state, otherKetchupTransform, this.materials.otherKetchup);
         this.shapes.mustard.draw(context, program_state, otherMustard, this.materials.mustard);
@@ -708,8 +709,8 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                 mustard_angle += 0.04;
                 if (mustard_angle < max_angle) {
                     // if (mustard_mov == 0) mustard_mov = 0.8 // add initial jump right after collision.
-                    if (mustard_mov == 0) mustard_mov = 0.8 // add initial jump right after collision.
-                    mustard_mov += 0.004;
+                    if (mustard_mov == 0) mustard_mov = 2.2 // add initial jump right after collision.
+                    mustard_mov += 0.04;
                 } else {
                     mustard_angle = max_angle
                 }
@@ -739,9 +740,9 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             //model_transform2 is mustard
             // const model_transform2 = Mat4.translation(180, 31 , distance_cup - 20 + mustard_mov - 90 -30)
             const model_transform2 = Mat4.translation(180, 51 , distance_cup - 20 + mustard_mov - 90)
-                .times(Mat4.translation(0, -5.8, 0))
+                .times(Mat4.translation(0, -10.8, 0))
                 .times(Mat4.rotation(mustard_angle, 1, 0, 0))
-                .times(Mat4.translation(0, 5.8, 0))
+                .times(Mat4.translation(0, 10.8, 0))
                 .times(Mat4.scale(2,2,2))
 
         var pos1 = model_transform1.times(vec4(0, 0, 0, 1)); // get the coordinate of ketchup
@@ -755,7 +756,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         var transformMustard = Mat4.identity();
         // transformMustard = transformMustard.times(Mat4.translation(116, 31, 31));
             //this is for the spill???
-            transformMustard = transformMustard.times(Mat4.translation(116, 31, 31));
+            transformMustard = transformMustard.times(Mat4.translation(153, 38, -34));
         transformMustard = transformMustard.times(Mat4.rotation(-Math.PI / 2, 0, 1, 0));
         transformMustard = transformMustard.times(Mat4.rotation(-Math.PI / 2, 1, 0, 0));
         transformMustard = transformMustard.times(Mat4.scale(35, 35, 35));
