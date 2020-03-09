@@ -645,6 +645,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         }
 
         //TODO: Clue #2: Menu
+        // this.clue2 = 0; //testing
         if(this.clue2 == 1) {
             //MENU
 
@@ -674,6 +675,26 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         else
         {
             //draw the unopened menu
+
+            //should be position 1
+            const i = 1;
+            const boothShiftFactor = 90;
+            var transformMenuBottom = Mat4.identity();
+            transformMenuBottom = transformMenuBottom.times(Mat4.translation(0, 1, 0));
+            transformMenuBottom = transformMenuBottom.times(Mat4.translation(-135, 44, 40 - i * boothShiftFactor));
+            transformMenuBottom = transformMenuBottom.times(Mat4.scale(12, 12 ,12));
+            this.shapes.menu.draw(context, program_state, transformMenuBottom, this.materials.menuBackEmpty);
+            transformMenuBottom = transformMenuBottom.times(Mat4.scale(12, 12 ,12));
+
+            var transformMenuTop = Mat4.identity();
+            transformMenuTop = transformMenuTop.times(Mat4.translation(0, 1, 0));
+            transformMenuTop = transformMenuTop.times(Mat4.translation(-129 + 0.75, 44, 35 - i * boothShiftFactor));
+            transformMenuTop = transformMenuTop.times(Mat4.rotation(-Math.PI/6, 0, 1, 0));
+            transformMenuTop = transformMenuTop.times(Mat4.scale(1/12., 1/12., 1/12.))
+            transformMenuTop = transformMenuTop.times(Mat4.translation(135, -44, 40 + i * boothShiftFactor));
+            transformMenuTop = transformMenuTop.times(transformMenuBottom);
+            // if (i != 1)
+                this.shapes.menu.draw(context, program_state, transformMenuTop, this.materials.menuFront);
         }
 
         //TODO: Clue #3: Coke Poster
@@ -703,12 +724,6 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
 
         //TODO: Clue #4: Mustard and Ketchup
         this.clue4 = 1; //TODO: get rid of this (just for testing)
-
-        // var distance_cup = 10;
-        // mustard_mov = 0;
-        // kup_mov = 0;
-        // mustard_angle = 0;
-        //
 
         var otherKetchupTransform = Mat4.identity();
         otherKetchupTransform = otherKetchupTransform.times(Mat4.translation(180, 51, -20 + 50));
