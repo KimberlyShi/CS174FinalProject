@@ -657,27 +657,23 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             }
 
             this.shapes.stoolclue.draw(context, program_state, stoolClueTransform, this.materials.stoolclue);
-
-            for (let i = 0; i < 6; i++) {
-                var transformStool = Mat4.identity();
-                transformStool = transformStool.times(Mat4.translation(120, 20, -80 + (stoolShiftFactor * (i+1) )));
-                transformStool = transformStool.times(Mat4.scale(12,12,12));
-                this.shapes.stool.draw(context, program_state, transformStool, this.materials.stool);
-            }
-
             //set next clue
             this.clue2 = 1;
         }
         else {
             //still want to draw the chair
-            for (let i = -1; i < 6; i++) {
+                let i = -1;
                 var transformStool = Mat4.identity();
                 transformStool = transformStool.times(Mat4.translation(120, 20, -80 + (stoolShiftFactor * (i+1) )));
                 transformStool = transformStool.times(Mat4.scale(12,12,12));
                 this.shapes.stool.draw(context, program_state, transformStool, this.materials.stool);
-            }
+        }
 
-
+        for (let i = 0; i < 6; i++) {
+            var transformStool = Mat4.identity();
+            transformStool = transformStool.times(Mat4.translation(120, 20, -80 + (stoolShiftFactor * (i+1) )));
+            transformStool = transformStool.times(Mat4.scale(12,12,12));
+            this.shapes.stool.draw(context, program_state, transformStool, this.materials.stool);
         }
 
         //TODO: Clue #2: Menu
