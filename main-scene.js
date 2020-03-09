@@ -59,6 +59,10 @@ window.chairpaper_click = chairpaper_click;
 var takeASeat_click = 0;
 window.takeASeat_click = takeASeat_click;
 window.ball_click = 0;
+var menuTimer = 0;
+var stoolTimer = 0;
+var cokeTimer = 0;
+var ketchupTimer = 0;
 
 //NUMS: 200, 212, 221, 241, 245,246, 249, 250, 251, 252, 254, 255,
 const jukebox_color =       color(127 / 255, 124 / 255, 127 / 255, 250 / 255); // change alpha from 255 to 250 for pick color
@@ -141,7 +145,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         this.clue6 = 0;
         this.clue7 = 0;
         this.clue8 = 0;
-
+        this.vc = [0,1,0]
 
 
 
@@ -506,6 +510,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         this.camera_z = -10
         this.camera_angle = Math.PI
         this.cameraReset = 1
+		this.vc = [0,1,0]
     }
 
     setCamera2() { //"Camera 2: Bar Stand"
@@ -514,6 +519,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         this.camera_z = -120
         this.camera_angle = Math.PI / 2
         this.cameraReset = 2
+		this.vc = [0,1,0]
     }
 
     setCamera3() { //"Camera 3: Right Corner",
@@ -522,6 +528,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         this.camera_z = -149 //changed
         this.camera_angle = Math.PI / 4
         this.cameraReset = 3
+		this.vc = [0,1,0]
     }
 
     setCamera4() { //"Camera 4: Booths/Jukebox"
@@ -530,6 +537,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         this.camera_z = -149 //changed
         this.camera_angle = -Math.PI / 4
         this.cameraReset = 4
+		this.vc = [0,1,0]
     }
 
     setCamera5() { //"Camera 5: Posters"
@@ -538,6 +546,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         this.camera_z = -149 //changed
         this.camera_angle = 0
         this.cameraReset = 5
+		this.vc = [0,1,0]
     }
 
     setCamera6() { //"Camera 6: Bottom Corner"
@@ -546,6 +555,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         this.camera_z = -149 //changed
         this.camera_angle = 3 * Math.PI / 4
         this.cameraReset = 6
+		this.vc = [0,1,0]
     }
 
     setCamera7() { //"Rotate Camera"
@@ -554,9 +564,44 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         this.camera_z = -149 //changed
         this.camera_angle = 0
         this.cameraReset = 7
+		this.vc = [0,1,0]
     }
 
+    setCamera8() { //"Clue 1"
+        this.camera_x = 90
+        this.camera_y = -50
+        this.camera_z = -20 
+        this.camera_angle = Math.PI/2
+        this.cameraReset = 8
+		this.vc = [0,1,0]
+    }
 
+    setCamera9() { //"Clue 2"
+        this.camera_x = -50
+        this.camera_y = -50
+        this.camera_z = 70
+        this.camera_angle = -Math.PI/2
+        this.cameraReset = 9
+		this.vc = [0,1,0]
+    }
+
+    setCamera10() { //"Clue 3"
+        this.camera_x = 0
+        this.camera_y = -50
+        this.camera_z = 30
+        this.camera_angle = 0
+        this.cameraReset = 10
+		this.vc = [0,1,0]
+    }
+
+    setCamera11() { //"Clue 4"
+    this.camera_x = 5
+    this.camera_y = -50
+    this.camera_z = 140
+    this.camera_angle = Math.PI/2.5
+    this.cameraReset = 10
+    this.vc = [0,1,0]
+    }
 
     make_control_panel() {
 
@@ -569,6 +614,13 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         this.key_triggered_button("Camera 6: Bottom Corner", ["6"], this.setCamera6);
         this.new_line();
         this.key_triggered_button("Rotate Camera", ["r"], this.setCamera7);
+        this.key_triggered_button("Clue 1", ["b"], this.setCamera8);
+        this.key_triggered_button("Clue 2", ["c"], this.setCamera9);
+        this.key_triggered_button("Clue 3", ["e"], this.setCamera10);
+        this.new_line();
+        this.key_triggered_button("Clue 4", ["f"], this.setCamera11);
+
+
     }
 
     display(context, program_state) {
@@ -586,7 +638,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         }
 
         if (this.cameraReset >= 0) {
-            program_state.set_camera(Mat4.translation(this.camera_x, this.camera_y, this.camera_z).times(Mat4.rotation(this.camera_angle, 0, 1, 0))); //view mustard POV
+            program_state.set_camera(Mat4.translation(this.camera_x, this.camera_y, this.camera_z).times(Mat4.rotation(this.camera_angle, this.vc[0], this.vc[1], this.vc[2]))); //view mustard POV
             if (this.cameraReset == 7)
                 this.camera_angle += 0.003
             else
@@ -666,8 +718,12 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                     stool_move += 0.1;
                 console.log("stool_click", stool_move)
                 stoolClueTransform = stoolClueTransform.times(Mat4.translation(0, 0, -stool_move));
+                stoolTimer += 1;
+                if(stoolTimer < 100)
+                    this.setCamera8();
             } else {
                 stool_move = 0;
+                stoolTimer = 0;
             }
 
             this.shapes.stoolclue.draw(context, program_state, stoolClueTransform, this.materials.stoolclue);
@@ -705,11 +761,16 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                 transformClueMenuTop = transformClueMenuTop.times(Mat4.translation(-135, 45, -50));
                 transformClueMenuTop = transformClueMenuTop.times(Mat4.scale(12, 12 ,12));
                 transformClueMenuTop = transformClueMenuTop.times(Mat4.scale(12, 12 ,12));
+                menuTimer = 0;
             }
             if (window.menu_click == 1) {
                 transformClueMenuTop = transformClueMenuTop.times(Mat4.translation(-135, 45, 53 - 90));
                 transformClueMenuTop = transformClueMenuTop.times(Mat4.scale(12, 12 ,12));
                 transformClueMenuTop = transformClueMenuTop.times(Mat4.rotation(Math.PI, 0, 1, 0));
+                menuTimer += 1;
+                if(menuTimer < 100)
+                    this.setCamera9();
+             
             }
             // this.shapes.menu.draw( context, program_state, transformClueMenuTop, this.materials.menuFront.override(color(menu_color_special)));
             this.shapes.menu.draw( context, program_state, transformClueMenuTop, this.materials.menuFrontSpecial);
@@ -759,11 +820,16 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
 
                 //set the next clue once the clue is revealed
                 this.clue4 = 0;
+                cokeTimer += 1;
+                if(cokeTimer < 100)
+                    this.setCamera10();
             }
             this.shapes.coke.draw(context, program_state, transformCoke, myMaterial);
+    
         }
         else {
             myMaterial = this.materials.coke;
+            cokeTimer = 0;
         }
         this.shapes.coke.draw(context, program_state, transformCoke, myMaterial);
 
@@ -850,10 +916,13 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                 audio.src = "assets/sound/mustardsplat.wav";
                 audio.loop = false;
                 if (audio.paused) audio.play();
+                ketchupTimer += 1;
+                if(ketchupTimer < 100)
+                    this.setCamera11();
             }
 
             if (mustard_spill_timer > 0) mustard_spill_timer += 1;
-            if (mustard_spill_timer > 100) {
+            if (mustard_spill_timer > 1000) {
                 mustard_spill_timer = 0;
                 audio.pause();
             }
@@ -865,6 +934,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                 audio.play();
             } else if (window.music_play == 0 && window.mustard_spill == 0) {
                 audio.pause();
+                ketchupTimer = 0;
             }
         }
         else {
