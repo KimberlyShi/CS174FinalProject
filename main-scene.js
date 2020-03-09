@@ -57,6 +57,8 @@ window.stool_click = stool_click;
 var chairpaper_click = 0;
 window.chairpaper_click = chairpaper_click;
 window.ball_click = 0;
+var takeASeat_click = 0;
+window.takeASeat_click = takeASeat_click;
 
 //NUMS: 200, 212, 221, 241, 245,246, 249, 250, 251, 252, 254, 255,
 const jukebox_color =       color(127 / 255, 124 / 255, 127 / 255, 250 / 255); // change alpha from 255 to 250 for pick color
@@ -79,6 +81,7 @@ const chairpaper_color = color(0/255, 0/255, 0/255, 244/255);
 const menu_color_special = color(3/255, 3/255, 2/255, 237/255);
 const other_ketchup_color = color(255 / 255, 0 / 255, 0 / 255, 255 / 255);
 const ball_color = color(255 / 255, 50 / 255, 0/ 255, 232/255);
+const takeASeat_color = color(4/255, 7/255, 2/255, 254/255);
 
 window.jukebox_color = jukebox_color;
 window.ketchup_color = ketchup_color;
@@ -99,6 +102,7 @@ window.stool_color = stool_color;
 window.chairpaper_color = chairpaper_color;
 window.ball_color = ball_color;
 window.bottle_break = 0;
+window.takeASeat_color = takeASeat_color;
 
 var collision_occured = false;
 var mustard_angle = 0;
@@ -161,6 +165,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             endScene: new defs.Square(),
             fadeToBlack: new defs.Square(),
             instructions: new defs.Square(),
+            takeASeat: new defs.Square(),
             jukebox: new Shape_From_File("assets/jukebox2.obj"),
             ketchup: new Shape_From_File("assets/kb.obj"),
             light: new Shape_From_File("assets/light.obj"),
@@ -352,6 +357,10 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                     ambient: 0.92, diffusivity: 1, specularity: .5, color: rules_color,
                     texture: new Texture("assets/rules_rect_nobutton.png")
                 }),
+                takeASeat: new Material(new defs.Textured_Phong(1), {
+                    ambient: 0.92, diffusivity: 1, specularity: .5, color: takeASeat_color,
+                    texture: new Texture("assets/takeASeat_1.png")
+                }),
 
                 shards: new Material(new defs.Textured_Phong(1), {
                     ambient: 1, diffusivity: 1, specularity: 1, color: rules_color,
@@ -430,7 +439,6 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                     color: other_ketchup_color, ambient: 1, diffusivity: 1, specularity: 1,
                     texture: new Texture("assets/pink.png")
                 }),
-
                 bottleStrawberry: new Material( new defs.Textured_Phong( 1 ), {
                     ambient: 1, diffusivity: 1, specularity: 1,
                     texture: new Texture( "assets/BottleColor.png" ),
@@ -486,6 +494,10 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         this.transformDoor = this.transformDoor.times(Mat4.translation(140, 60, -199));
         this.transformDoor = this.transformDoor.times(Mat4.rotation(Math.PI / 2, 0, 1, 0));
         this.transformDoor = this.transformDoor.times(Mat4.scale(30, 30, 30));
+        this.transformationSmallBottle = Mat4.identity();
+        this.transformationSmallBottle = this.transformationSmallBottle.times(Mat4.translation(20, 139, 285));
+        this.transformationSmallBottle = this.transformationSmallBottle.times(Mat4.scale(4.3, 4.3, 4.3));
+        this.transformationSmallBottle = this.transformationSmallBottle.times(Mat4.rotation(Math.PI/2, 0, 1, 0));
     }
 
     setCamera1() { //Camera 1: Bar
@@ -608,7 +620,18 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
 
             //set first clue
             this.clue1 = 1;
+            this.takeASeat_click = 1;
         }
+
+        if(window.takeASeat_click == 1) {
+            window.rules_click = 2;
+            let transformWords = Mat4.identity();
+            transformWords = transformWords.times(Mat4.translation(-15, 85, 60));
+            transformWords = transformWords.times(Mat4.scale(30, 30, 30));
+            this.shapes.takeASeat.draw(context, program_state, transformWords, this.materials.takeASeat);
+            this.setCamera5();
+        }
+
 
         //TODO: TEMPORARY => set everything to true so all clues will be displayed
 
@@ -624,21 +647,51 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
 
 
         //CLUES!!
-        //Still need to complete chair (Clue 1) and menu (Clue 2)
-
         //TODO: Clue #1: Chair
 
+        // this.clue1 = 0; //testing
+        let stoolShiftFactor = 30;
+        var max_stool_dist = 2.8;
         if(this.clue1 == 1) {
             //place chair code
+            //STOOLS
+            // let stoolShiftFactor = 30;
+            // var max_stool_dist = 2.8;
+            let stoolTransform = Mat4.translation(123, 14, 80 + stoolShiftFactor);
+            let stoolClueTransform = Mat4.translation(125, 18, 36 - stoolShiftFactor * 4);
+            stoolClueTransform = stoolClueTransform.times(Mat4.scale(12, 13, 12));
+            if (window.stool_click == 1) {
+                //console.log("stool_click")
+                if (stool_move < max_stool_dist)
+                    stool_move += 0.1;
+                console.log("stool_click", stool_move)
+                stoolClueTransform = stoolClueTransform.times(Mat4.translation(0, 0, -stool_move));
+            } else {
+                stool_move = 0;
+            }
 
+            this.shapes.stoolclue.draw(context, program_state, stoolClueTransform, this.materials.stoolclue);
             //set next clue
             this.clue2 = 1;
         }
         else {
             //still want to draw the chair
+                let i = -1;
+                var transformStool = Mat4.identity();
+                transformStool = transformStool.times(Mat4.translation(120, 20, -80 + (stoolShiftFactor * (i+1) )));
+                transformStool = transformStool.times(Mat4.scale(12,12,12));
+                this.shapes.stool.draw(context, program_state, transformStool, this.materials.stool);
+        }
+
+        for (let i = 0; i < 6; i++) {
+            var transformStool = Mat4.identity();
+            transformStool = transformStool.times(Mat4.translation(120, 20, -80 + (stoolShiftFactor * (i+1) )));
+            transformStool = transformStool.times(Mat4.scale(12,12,12));
+            this.shapes.stool.draw(context, program_state, transformStool, this.materials.stool);
         }
 
         //TODO: Clue #2: Menu
+        // this.clue2 = 0; //testing
         if(this.clue2 == 1) {
             //MENU
 
@@ -668,6 +721,26 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         else
         {
             //draw the unopened menu
+
+            //should be position 1
+            const i = 1;
+            const boothShiftFactor = 90;
+            var transformMenuBottom = Mat4.identity();
+            transformMenuBottom = transformMenuBottom.times(Mat4.translation(0, 1, 0));
+            transformMenuBottom = transformMenuBottom.times(Mat4.translation(-135, 44, 40 - i * boothShiftFactor));
+            transformMenuBottom = transformMenuBottom.times(Mat4.scale(12, 12 ,12));
+            this.shapes.menu.draw(context, program_state, transformMenuBottom, this.materials.menuBackEmpty);
+            transformMenuBottom = transformMenuBottom.times(Mat4.scale(12, 12 ,12));
+
+            var transformMenuTop = Mat4.identity();
+            transformMenuTop = transformMenuTop.times(Mat4.translation(0, 1, 0));
+            transformMenuTop = transformMenuTop.times(Mat4.translation(-129 + 0.75, 44, 35 - i * boothShiftFactor));
+            transformMenuTop = transformMenuTop.times(Mat4.rotation(-Math.PI/6, 0, 1, 0));
+            transformMenuTop = transformMenuTop.times(Mat4.scale(1/12., 1/12., 1/12.))
+            transformMenuTop = transformMenuTop.times(Mat4.translation(135, -44, 40 + i * boothShiftFactor));
+            transformMenuTop = transformMenuTop.times(transformMenuBottom);
+            // if (i != 1)
+                this.shapes.menu.draw(context, program_state, transformMenuTop, this.materials.menuFront);
         }
 
         //TODO: Clue #3: Coke Poster
@@ -697,12 +770,6 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
 
         //TODO: Clue #4: Mustard and Ketchup
         this.clue4 = 1; //TODO: get rid of this (just for testing)
-
-        // var distance_cup = 10;
-        // mustard_mov = 0;
-        // kup_mov = 0;
-        // mustard_angle = 0;
-        //
 
         var otherKetchupTransform = Mat4.identity();
         otherKetchupTransform = otherKetchupTransform.times(Mat4.translation(180, 51, -20 + 50));
@@ -748,17 +815,10 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             mustard_mov = 0;
             collision_occured = false;
         }
-        // const model_transform1 = Mat4.translation(140, 38, kup_mov - 20)
-        //     .times(Mat4.scale(1.0, 1.0, 1.0))
-        // //model_transform2 is mustard
-        // const model_transform2 = Mat4.translation(140, 38, distance_cup - 20 + mustard_mov)
-        //     .times(Mat4.translation(0, -5.8, 0))
-        //     .times(Mat4.rotation(mustard_angle, 1, 0, 0))
-        //     .times(Mat4.translation(0, 5.8, 0))
+
             const model_transform1 = Mat4.translation(180, 51, kup_mov - 20 - 90)
                 .times(Mat4.scale(2, 2, 2))
             //model_transform2 is mustard
-            // const model_transform2 = Mat4.translation(180, 31 , distance_cup - 20 + mustard_mov - 90 -30)
             const model_transform2 = Mat4.translation(180, 51 , distance_cup - 20 + mustard_mov - 90)
                 .times(Mat4.translation(0, -10.8, 0))
                 .times(Mat4.rotation(mustard_angle, 1, 0, 0))
@@ -774,9 +834,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         this.shapes.ketchup.draw(context, program_state, model_transform1, this.materials.ketchup);
         this.shapes.mustard.draw(context, program_state, model_transform2, this.materials.mustard);
         var transformMustard = Mat4.identity();
-        // transformMustard = transformMustard.times(Mat4.translation(116, 31, 31));
-            //this is for the spill???
-            transformMustard = transformMustard.times(Mat4.translation(153, 38, -34));
+        transformMustard = transformMustard.times(Mat4.translation(153, 38, -34));
         transformMustard = transformMustard.times(Mat4.rotation(-Math.PI / 2, 0, 1, 0));
         transformMustard = transformMustard.times(Mat4.rotation(-Math.PI / 2, 1, 0, 0));
         transformMustard = transformMustard.times(Mat4.scale(35, 35, 35));
@@ -828,32 +886,18 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             this.shapes.mustard.draw(context, program_state, model_transform2, this.materials.mustard);
         }
 
-        //draw the other ketchup and mustards that don't actually do anything
-        // var distance_cup = 10;
-        // mustard_mov = 0;
-        // kup_mov = 0;
-        // mustard_angle = 0;
-        //
-
-
         //TODO: Clue #5: Napkin Box
         //NAPKIN BOX
 
         this.clue5 = 1;
         if(this.clue5 == 1) {
             let napkinTransform = Mat4.identity();
-            // napkinTransform = napkinTransform.times(Mat4.translation(140, 40, 70)).times(Mat4.scale(4, 4, 4));
             napkinTransform = napkinTransform.times(Mat4.translation(185, 44, 20)).times(Mat4.scale(6, 6, 6));
 
             if (window.napkin_click == 1) {
                 console.log("napkin = " + window.napkin_click);
                 napkinTransform = napkinTransform.times(Mat4.rotation(Math.PI, 0, 1, 0));
             }
-            // } else if (window.napkin_click == 0) {
-            //     // napkinTransform = Mat4.identity().times(Mat4.translation(140, 40, 70).times(Mat4.scale(4, 4, 4)));
-            //     // napkinTransform = napkinTransform.times(Mat4.translation(185, 44, 60)).times(Mat4.scale(6, 6, 6));
-            //     napkinTransform = napkinTransform.times(Mat4.rotation(Math.PI / 2, 0, 1, 0));
-            // }
             this.shapes.napkin.draw(context, program_state, napkinTransform, this.materials.napkin);
 
             //set the next clue
@@ -870,13 +914,6 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         let napkinTransform = Mat4.identity();
         napkinTransform = napkinTransform.times(Mat4.translation(185, 44, -120)).times(Mat4.scale(6, 6, 6));
         this.shapes.napkin.draw(context, program_state, napkinTransform, this.materials.napkin);
-        // let napkinTransform2 = Mat4.identity();
-        // napkinTransform2 = napkinTransform2.times(Mat4.translation(185, 44, -120)).times(Mat4.scale(6, 6, 6));
-        // this.shapes.napkin.draw(context, program_state, napkinTransform2, this.materials.napkin);
-        // let napkinTransform3 = Mat4.identity();
-        // napkinTransform3 = napkinTransform3.times(Mat4.translation(185, 44, 20)).times(Mat4.scale(6, 6, 6));
-        // this.shapes.napkin.draw(context, program_state, napkinTransform3, this.materials.napkin);
-
 
         //TODO: Clue #6: Glass Bottle + Shards and Show diamond
         //BOTTLE
@@ -904,6 +941,10 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             }
 
             if (window.bottle_break == 1) {
+            if (window.bottle_click == 0) {
+                this.shapes.bottle.draw(context, program_state, transformBottle, this.materials.bottle);
+            }
+            if (window.bottle_click == 1) {
                 this.shapes.shards.draw(context, program_state, transformShards, this.materials.shards);
                 this.shapes.diamond.draw(context, program_state, diamondTransform, this.materials.diamond);
             }
@@ -971,10 +1012,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         noteTransform = noteTransform.times(Mat4.translation(0, 50, -70));
         noteTransform = noteTransform.times(Mat4.scale(90, 90, 90));
 
-
-        //testing
-        // this.clue7 = 0;
-
+        // this.clue7 = 0; //testing
         if(this.clue7 == 1) {
             if (window.diamond_click == 1) {
                 console.log("diamond = " + window.diamond_click);
@@ -984,6 +1022,9 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             if (window.note_click == 1) {
                 window.diamond_click = 0;
             }
+
+            //set the next clue
+            this.clue8 = 1;
         }
         // else {
             //no note should be drawn
@@ -992,17 +1033,14 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
 
         //TODO: Clue #8: Jukebox
         //JUKEBOX
+        // this.clue8 = 0; //testing
         this.shapes.jukebox.draw(context, program_state, this.transformJukebox, this.materials.jukebox);
+        if(this.clue8 == 0) {
+            window.music_play = 0; //prevent music from ever playing
+        }
 
 
         //TODO: Furniture Placement
-        //CAT
-        //this.camera_x = 0
-        //         this.camera_y = -60
-        //         this.camera_z = 10
-        //         this.camera_angle = Math.PI
-        //         this.cameraReset = 1
-
 
         //POSTERS
         //Martini
@@ -1152,51 +1190,11 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
   
         this.shapes.chairpaper.draw(context, program_state, paperTransform, this.materials.chairpaper);
 
-        //STOOLS
-        let stoolShiftFactor = 30;
-        var max_stool_dist = 2.8;
-        let stoolTransform = Mat4.translation(123, 14, 80 + stoolShiftFactor);
-        let stoolClueTransform = Mat4.translation(125, 18, 36 - stoolShiftFactor * 4);
-        stoolClueTransform = stoolClueTransform.times(Mat4.scale(12, 13, 12));
-        if (window.stool_click == 1) {
-            //console.log("stool_click")
-            if (stool_move < max_stool_dist)
-                stool_move += 0.1;
-            console.log("stool_click", stool_move)
-            stoolClueTransform = stoolClueTransform.times(Mat4.translation(0, 0, -stool_move));
-        } else {
-            stool_move = 0;
-        }
-
-        this.shapes.stoolclue.draw(context, program_state, stoolClueTransform, this.materials.stoolclue);
-
-        for (let i = 0; i < 6; i++) {
-            var transformStool = Mat4.identity();
-            transformStool = transformStool.times(Mat4.translation(120, 20, -80 + (stoolShiftFactor * (i+1) )));
-            transformStool = transformStool.times(Mat4.scale(12,12,12));
-            // stoolTransform = stoolTransform.times(Mat4.translation(0, 0, -stoolShiftFactor));
-            // stoolTransform = stoolTransform.times(Mat4.scale(10, 10, 10));
-            // this.shapes.stool.draw(context, program_state, stoolTransform, this.materials.stool);
-            this.shapes.stool.draw(context, program_state, transformStool, this.materials.stool);
-            // stoolTransform = stoolTransform.times(Mat4.scale(0.1, 0.1, 0.1));
-        }
-
         //BAR
         this.shapes.bar.draw(context, program_state, this.barTransform, this.materials.bar);
 
-
         //DOOR
         this.shapes.openSign.draw(context, program_state, this.transformDoor, this.materials.openSign);
-
-
-        //TODO: Figure out what this Tall Cup is for?? -Kim
-        //TALL CUP
-        // var transformTallCup = Mat4.identity();
-        // transformTallCup = transformTallCup.times(Mat4.translation(0, 3, 0));
-        // transformTallCup = transformTallCup.times(Mat4.rotation(Math.PI, 0, 1, 0));
-        // transformTallCup = transformTallCup.times(Mat4.scale(10, 10, 10));
-        // this.shapes.tallCup.draw(context, program_state, transformTallCup, this.materials.tallCup);
-
 
         // BACK WALL SHELVES
         var transformShelf = Mat4.identity();
@@ -1236,13 +1234,15 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         this.shapes.circleposter.draw(context, program_state, this.transformMimosa, this.materials.mimosaPoster);
         this.shapes.cat.draw(context, program_state, this.transformCat, this.materials.cat);
 
+        this.shapes.smallBottle.draw(context, program_state, this.transformationSmallBottle, this.materials.bottleStrawberry);
+
+
         //TODO: Floor Placement
         //NOTE: order matters for the floor and back wall transformations bc of image wrapping
         this.shapes.plane.draw(context, program_state, this.transformFloor, this.materials.floorBumpMap);
 
 
         //Place flooring and walls
-
         this.shapes.plane.draw(context, program_state, this.transformBackWall, this.materials.backWall);
         this.shapes.plane.draw(context, program_state, this.transformLeftWall, this.materials.leftWall);
         this.shapes.plane.draw(context, program_state, this.transformRightWall, this.materials.rightWall);
@@ -1267,7 +1267,5 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             this.shapes.fadeToBlack.draw(context, program_state, transformBlack, this.materials.fadeToBlack.override(color(0, 0, 0, this.fading)));
             this.setCamera5();
         }
-
-
     }
 }

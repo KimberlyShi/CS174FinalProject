@@ -1124,6 +1124,7 @@ class Webgl_Manager
           }
         }
 		
+
         // for diamond color check, lose the checking
         if(this.color_match_range(window.diamond_color, data, 15)){
           if(window.diamond_click ==1) {
@@ -1148,6 +1149,7 @@ class Webgl_Manager
 		if(this.color_match(window.rules_color, data)) {
 		  if(window.rules_click == 1) {
 		    window.rules_click = 0;
+		    window.takeASeat_click = 1;
           }
         }
 
@@ -1160,6 +1162,16 @@ class Webgl_Manager
         }
 
       if(this.color_match(window.menu_color_special, data)) {
+		if(this.color_match(window.takeASeat_color, data)) {
+		  if(window.takeASeat_click == 1) {
+		    window.takeASeat_click = 0;
+          }
+		  // else {
+		  //   window.takeASeat_click = 0;
+          // }
+        }
+
+		if(this.color_match(window.menu_color_special, data)) {
 		  if(window.menu_click == 1) {
 		    window.menu_click = 0;
           }
@@ -1167,6 +1179,8 @@ class Webgl_Manager
 		    window.menu_click = 1;
           }
         }
+
+
 
 
         //console.log(rect)
