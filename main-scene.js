@@ -56,9 +56,9 @@ var stool_click = 0;35
 window.stool_click = stool_click;
 var chairpaper_click = 0;
 window.chairpaper_click = chairpaper_click;
-window.ball_click = 0;
 var takeASeat_click = 0;
 window.takeASeat_click = takeASeat_click;
+window.ball_click = 0;
 
 //NUMS: 200, 212, 221, 241, 245,246, 249, 250, 251, 252, 254, 255,
 const jukebox_color =       color(127 / 255, 124 / 255, 127 / 255, 250 / 255); // change alpha from 255 to 250 for pick color
@@ -80,8 +80,8 @@ const stool_color = color(126/255, 125/255, 126/255, 247/255);
 const chairpaper_color = color(0/255, 0/255, 0/255, 244/255);
 const menu_color_special = color(3/255, 3/255, 2/255, 237/255);
 const other_ketchup_color = color(255 / 255, 0 / 255, 0 / 255, 255 / 255);
-const ball_color = color(255 / 255, 50 / 255, 0/ 255, 232/255);
 const takeASeat_color = color(4/255, 7/255, 2/255, 254/255);
+const ball_color = color(255 / 255, 50 / 255, 0/ 255, 232/255);
 
 window.jukebox_color = jukebox_color;
 window.ketchup_color = ketchup_color;
@@ -100,9 +100,9 @@ window.menu_color = menu_color;
 window.menu_color_special = menu_color_special;
 window.stool_color = stool_color;
 window.chairpaper_color = chairpaper_color;
+window.takeASeat_color = takeASeat_color;
 window.ball_color = ball_color;
 window.bottle_break = 0;
-window.takeASeat_color = takeASeat_color;
 
 var collision_occured = false;
 var mustard_angle = 0;
@@ -941,10 +941,6 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             }
 
             if (window.bottle_break == 1) {
-            if (window.bottle_click == 0) {
-                this.shapes.bottle.draw(context, program_state, transformBottle, this.materials.bottle);
-            }
-            if (window.bottle_click == 1) {
                 this.shapes.shards.draw(context, program_state, transformShards, this.materials.shards);
                 this.shapes.diamond.draw(context, program_state, diamondTransform, this.materials.diamond);
             }

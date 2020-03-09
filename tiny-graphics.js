@@ -1153,15 +1153,6 @@ class Webgl_Manager
           }
         }
 
-		if(this.color_match_range(window.ball_color, data, 2)) {
-		  if(window.ball_click > 0) {
-		    window.ball_click = 0;
-          } else {
-		    window.ball_click = 1;
-          }
-        }
-
-      if(this.color_match(window.menu_color_special, data)) {
 		if(this.color_match(window.takeASeat_color, data)) {
 		  if(window.takeASeat_click == 1) {
 		    window.takeASeat_click = 0;
@@ -1169,6 +1160,13 @@ class Webgl_Manager
 		  // else {
 		  //   window.takeASeat_click = 0;
           // }
+        }
+		if(this.color_match_range(window.ball_color, data, 2)) {
+		  if(window.ball_click > 0) {
+		    window.ball_click = 0;
+          } else {
+		    window.ball_click = 1;
+          }
         }
 
 		if(this.color_match(window.menu_color_special, data)) {
