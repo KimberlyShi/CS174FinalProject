@@ -240,7 +240,7 @@ class Code_Widget
       this.code_display = code_panel.appendChild( document.createElement( "div" ) );
       this.code_display.className = "code-display";
                                                                             // Default textbox contents:
-      this.display_code( main_scene );
+//      this.display_code( main_scene );
     }
   build_navigator( element, main_scene, additional_scenes, definitions )
     {                                           // (Internal helper function)
