@@ -790,10 +790,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
 
             // this.startFade = this.startFade + 1/255;
             this.shapes.beginScreen.draw(context, program_state, transformBeginScreen, this.materials.beginScreen);
-            this.setCamera5();
-
-            //this.fading = this.fading + 0.5/255;
-            //             this.shapes.endScene.draw(context, program_state, transformEndScene, this.materials.endScene.override(color(0,0,0,this.fading)));
+            this.setCamera5()
         }
         if (window.rules_click == 1) {
             window.start_click = 1;
@@ -808,10 +805,6 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
 
         if(window.takeASeat_click == 1) {
             window.rules_click = 2;
-            // let transformWords = Mat4.identity();
-            // transformWords = transformWords.times(Mat4.translation(-15, 85, 60));
-            // transformWords = transformWords.times(Mat4.scale(30, 30, 30));
-            // this.shapes.takeASeat.draw(context, program_state, transformWords, this.materials.takeASeat);
             this.shapes.takeASeat.draw(context, program_state, transformBeginScreen, this.materials.takeASeat);
             this.setCamera5();
         }
@@ -832,15 +825,10 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
 
         //CLUES!!
         //TODO: Clue #1: Chair
-
-        // this.clue1 = 0; //testing
         let stoolShiftFactor = 30;
         var max_stool_dist = 2.8;
         if(this.clue1 == 1) {
-            //place chair code
             //STOOLS
-            // let stoolShiftFactor = 30;
-            // var max_stool_dist = 2.8;
             let stoolTransform = Mat4.translation(123, 14, 80 + stoolShiftFactor);
             let stoolClueTransform = Mat4.translation(125, 18, 36 - stoolShiftFactor * 4);
             stoolClueTransform = stoolClueTransform.times(Mat4.scale(12, 13, 12));
@@ -848,7 +836,6 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                 //console.log("stool_click")
                 if (stool_move < max_stool_dist)
                     stool_move += 0.1;
-                //console.log("stool_click", stool_move)
                 stoolClueTransform = stoolClueTransform.times(Mat4.translation(0, 0, -stool_move));
                 stoolTimer += 1;
                 if(stoolTimer < 100)
@@ -879,11 +866,8 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         }
 
         //TODO: Clue #2: Menu
-        // this.clue2 = 0; //testing
         if(this.clue2 == 1) {
             //MENU
-
-            // const menuAngle = Math.PI;
             if (window.menu_click == 0) {
                 this.shapes.menu.draw( context, program_state, this.transformClueMenuTop, this.materials.menuFrontSpecial);
                 menuTimer = 0;
@@ -952,8 +936,6 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
 
 
         //TODO: Clue #4: Mustard and Ketchup
-        this.clue4 = 1; //TODO: get rid of this (just for testing)
-
         var otherKetchupTransform = Mat4.identity();
         otherKetchupTransform = otherKetchupTransform.times(Mat4.translation(180, 51, -20 + 60));
         otherKetchupTransform = otherKetchupTransform.times(Mat4.scale(2, 2, 2));
@@ -961,7 +943,6 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         var otherMustard = Mat4.identity();
         otherMustard = otherMustard.times(Mat4.translation(180, 51 , 10 - 20 +60));
         otherMustard = otherMustard.times(Mat4.translation(0, -5.8, 0));
-        //otherMustard = otherMustard.times(Mat4.rotation(mustard_angle, 1, 0, 0));
         otherMustard = otherMustard.times(Mat4.translation(0, 5.8, 0));
         otherMustard = otherMustard.times(Mat4.scale(2,2,2));
 
@@ -978,7 +959,6 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                 var max_angle = 1.6;
                 mustard_angle += 0.04;
                 if (mustard_angle < max_angle) {
-                    // if (mustard_mov == 0) mustard_mov = 0.8 // add initial jump right after collision.
                     if (mustard_mov == 0) mustard_mov = 4.2 // add initial jump right after collision.
                     mustard_mov += 0.04;
                 } else {
@@ -1109,8 +1089,6 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         //TODO: Clue #6: Glass Bottle + Shards and Show diamond
         //BOTTLE
         var bottle_trans = [45, 55, 160]
-
-        // this.clue6 = 0;
         var transformBottle = Mat4.identity();
         transformBottle = transformBottle.times(Mat4.translation(bottle_trans[0], bottle_trans[1], bottle_trans[2]));
         transformBottle = transformBottle.times(Mat4.scale(5, 5, 5));
@@ -1123,23 +1101,13 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         transformShards = transformShards.times(Mat4.scale(10, 10, 10));
 
         if(this.clue6 == 1) {
-            // var transformBottle = Mat4.identity();
-            // transformBottle = transformBottle.times(Mat4.translation(45, 55, 160));
-            // transformBottle = transformBottle.times(Mat4.scale(5, 5, 5));
             if (window.bottle_break == 0) {
                 this.shapes.collision_bottle.draw(context, program_state, transformBottle, this.materials.collison_bottle);
-
-
             }
 
             if (window.bottle_break == 1) {
                 this.shapes.shards.draw(context, program_state, transformShards, this.materials.shards);
                 this.shapes.diamond.draw(context, program_state, diamondTransform, this.materials.diamond);
-
-                // bottleTimer += 1;
-                // if (bottleTimer < 100)
-                //     this.setCamera13();
-
             }
 
             //set the next clue
@@ -1152,7 +1120,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         }
         ////////////////////////////////////////////////////////////////////////////////////////////
         // add for ball to hit bottle
-		
+		//Advanced feature: physics (projectile motion of the ball hitting the bottle then bouncing to the ground)
 		var ball_vec = [20, 73, 120] // initial distance from ball to bottle
 		if (window.ball_click==1) {
 			ball_t += -0.03
@@ -1179,25 +1147,16 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
 			 ball_t = Math.min(tmax,ball_t)
 			 var mov_x = v*ball_t*Math.cos(theta)
 			 var mov_y = v*ball_t*Math.sin(theta) - 0.5*g*ball_t*ball_t
-			 //console.log("ttt="+tmax)
-             //ball_vec = [-0.1*mov_x, mov_y, ball_vec[2]+mov_x]	
              ball_vec = [0.1*mov_x, mov_y, -0.1*mov_x]			 
 		} else {
 			ball_t = 1.0 // restore to original value
 			window.bottle_break = 0
 		}
-		
-		
 		var transformBall = Mat4.identity();
 		transformBall = transformBall.times(Mat4.translation(ball_vec[0], ball_vec[1], ball_vec[2]));
 		transformBall = transformBall.times(Mat4.translation(bottle_trans[0], bottle_trans[1], bottle_trans[2])); // bottle location
         transformBall = transformBall.times(Mat4.scale(2, 2, 2));
         this.shapes.ball.draw(context, program_state, transformBall, this.materials.ball);
-		//this.shapes.ball.draw(context, program_state, this.transformCat, this.materials.ball);
-		
-		
-		////////////////////////////////////////////////////////////////////////////////////////////
-
 
         //TODO: Clue #7: Diamond + Note
         //NOTE
@@ -1205,59 +1164,27 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         noteTransform = noteTransform.times(Mat4.translation(0, 50, -70));
         noteTransform = noteTransform.times(Mat4.scale(90, 90, 90));
 
-
-
-        // this.clue7 = 0; //testing
         if(this.clue7 == 1) {
             if (window.diamond_click == 1) {
-                // console.log("diamond = " + window.diamond_click);
                 this.shapes.note.draw(context, program_state, noteTransform, this.materials.note);
                 this.setCamera5();
             }
             if (window.note_click == 1) {
                 window.diamond_click = 0;
-
-                // diamondTimer += 1;
-                // if(diamondTimer < 100)
-                //     this.setCamera14();
             }
-
             //set the next clue
             this.clue8 = 1;
         }
-        // else {
-            //no note should be drawn
-            //just the diamond still from clue6 so shouldn't need to draw anything
-        // }
 
         //TODO: Clue #8: Jukebox
         //JUKEBOX
-        // this.clue8 = 0; //testing
         this.shapes.jukebox.draw(context, program_state, this.transformJukebox, this.materials.jukebox);
         if(this.clue8 == 0) {
             window.music_play = 0; //prevent music from ever playing
-
-            // jukeboxTimer += 1;
-            // if (jukeboxTimer < 100)
-            //     this.setCamera15();
-
-
         }
-        else
-        {
-            if(window.music_play == 1) {
-                jukeboxTimer += 1;
-                if (jukeboxTimer < 100)
-                    this.setCamera15();
-            }
-        }
-
 
         //TODO: Furniture Placement
-
         //POSTERS
-        //Martini
-
         this.shapes.circleposter.draw(context, program_state, this.transformAfterDark, this.materials.afterDark);
         this.shapes.circleposter.draw(context, program_state, this.transformCoffee, this.materials.coffeePoster);
         this.shapes.circleposter.draw(context, program_state, this.transformMimosa, this.materials.mimosaPoster);
@@ -1348,9 +1275,6 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
 
             var transformPoster2 = Mat4.identity();
             transformPoster2 = transformPoster2.times(Mat4.translation(-198, 70, 45 - i * boothShiftFactor));
-            // transformPoster2 = transformPoster2.times(Mat4.rotation(Math.PI/2, 0, 1, 0));
-            // transformPoster2 = transformPoster2.times(Mat4.rotation(Math.PI, 0, 0, 1));
-            // transformPoster2 = transformPoster2.times(boothScaleFactor);
             transformPoster2 = transformPoster2.times(this.transformPoster2Helper).times(boothScaleFactor);
 
             switch (i) {
@@ -1390,9 +1314,6 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         paperTransform = paperTransform.times(Mat4.rotation(-Math.PI/2, 1, 0, 0));
         if(window.chairpaper_click == 1)
         {
-            // paperTransform = paperTransform.times(Mat4.translation(120,5,-40));
-            // paperTransform = paperTransform.times(Mat4.scale(15, 15, 15));
-            // paperTransform = paperTransform.times(Mat4.rotation(-Math.PI/2, 1, 0, 0));
             paperTransform = Mat4.identity();
             paperTransform = paperTransform.times(Mat4.translation(0, 70, 0));
             paperTransform = paperTransform.times(Mat4.scale(60,60,60));
@@ -1428,7 +1349,6 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             this.shapes.shards2.draw(context, program_state, transformShelfBottle.times(Mat4.scale(0.2, 0.4, 0.2)).times(Mat4.translation(0, -1.5,0)), this.materials.shards);
         }
         else {
-
             this.shapes.bottle1.draw(context, program_state, transformShelfBottle.times(Mat4.scale(0.2, 0.4, 0.2)), this.materials.bottle1);
         }
 
@@ -1477,7 +1397,6 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         //NOTE: order matters for the floor and back wall transformations bc of image wrapping
         this.shapes.plane.draw(context, program_state, this.transformFloor, this.materials.floorBumpMap);
 
-
         //Place flooring and walls
         this.shapes.plane.draw(context, program_state, this.transformBackWall, this.materials.backWall);
         this.shapes.plane.draw(context, program_state, this.transformLeftWall, this.materials.leftWall);
@@ -1497,7 +1416,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         transformBlack = transformBlack.times(Mat4.scale(120, 80, 80));
 
         if (window.door_click == 1) {
-            // opacity
+            // adjust opacity
             this.fading = this.fading + 0.5 / 255;
             this.shapes.endScene.draw(context, program_state, transformEndScene, this.materials.endScene.override(color(0, 0, 0, this.fading)));
             this.shapes.fadeToBlack.draw(context, program_state, transformBlack, this.materials.fadeToBlack.override(color(0, 0, 0, this.fading)));
