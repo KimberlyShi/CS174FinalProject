@@ -49,8 +49,9 @@ Your goal is to go through the entire room, navigating from one clue to the next
 4. Physics Based Animation (see spoilers below)
 <details> 
   <summary>SPOILERS: Advanced Feaures</summary>
-  3. Collision Detection was utilized in the collision between the ketchup bottle and the mustard bottle. 
-  4. Physics Based Animation: Physics was required to calculate the trajectory of the ball after it fell from the shelf, hit the bottle, and bounced before falling onto the ground. Physics was also utilized in calculating the path that the mustard bottle fell in.
+  (3) Collision Detection was utilized in the collision between the ketchup bottle and the mustard bottle. <br/>
+  (4) Physics Based Animation: Physics was required to calculate the trajectory of the ball after it fell from the shelf, hit the bottle, and bounced before falling onto the ground. Physics was also utilized in calculating the path that the mustard bottle fell in.
 </details>
 
 ## Design Process ##
+<img src="https://github.com/KimberlyShi/CS174FinalProject/blob/master/assets/readmeDesign.png" width="750">
