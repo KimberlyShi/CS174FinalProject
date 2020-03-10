@@ -14,6 +14,11 @@ Mac: Run host.command and open localhost:8000 on Google Chrome.
 
 You just woke up in an empty diner. It's quiet, you're alone, and the door won't budge. You've tried breaking the door and the windows, but nothing has worked. However, you notice that there are sublte hints around the diner. Navigate through the hints one by one, and escape the diner!
 
+<img src="https://github.com/KimberlyShi/CS174FinalProject/blob/master/assets/readme1.png" width="750">
+<img src="https://github.com/KimberlyShi/CS174FinalProject/blob/master/assets/readme2.png" width="750">
+<img src="https://github.com/KimberlyShi/CS174FinalProject/blob/master/assets/readme3.png" width="750">
+<img src="https://github.com/KimberlyShi/CS174FinalProject/blob/master/assets/readme4.png" width="750">
+
 ## Objective ##
 
 Your goal is to go through the entire room, navigating from one clue to the next, until you reach the final clue and be able to exit. Each clue will give you a hint to the next one, with the first clue being given to you. There are a total of 9 clues.
