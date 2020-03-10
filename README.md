@@ -47,6 +47,9 @@ Your goal is to go through the entire room, navigating from one clue to the next
 * , : rotate left 
 * . : rotate right
 
+## Gameplay ##
+[![Playing](http://img.youtube.com/vi/HbC0wbkUt9s/0.jpg)](http://www.youtube.com/watch?v=HbC0wbkUt9s "Diner Gameplay")
+
 ## Advanced Features ##
 1. Mouse Clicking: Clicking on objects will cause them to change behavior or position and reveal the next clue.
 2. Blender Objects: Almost all of the objects in this project were created by us on Blender. UV unwrapping was utilized for texture mapping for simple objects where each face was given a solid color (jukebox, stool, booth, etc.) while more complex objects that had hints on the textures were designed with Adobe Illustrator, such as the posters.
