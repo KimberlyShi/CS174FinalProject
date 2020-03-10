@@ -63,6 +63,10 @@ var menuTimer = 0; //clue 2
 var stoolTimer = 0; //clue 1
 var cokeTimer = 0; //clue 3
 var ketchupTimer = 0; //clue 4
+var napkinTimer = 0; //clue 5
+var bottleTimer = 0; //clue 6
+var diamondTimer = 0; //clue 7
+var jukeboxTimer = 0; //clue 8
 
 var bottle1_click = 0;
 window.bottle1_click = bottle1_click;
@@ -101,14 +105,10 @@ const ball_color = color(255 / 255, 50 / 255, 0/ 255, 232/255);
 
 //201, 221, 232, 237, 241, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 154, 255, 255, 255 (three)
 //the other ball 232 is plus 5 range so can't do 226, 227, 229, 230, 231, 232, 233, 234, 235, 236, 237
-// const bottle1_color = color(37/255, 130/255, 27/255, 222/255);
-// const bottle2_color = color(30/255, 105/255, 19/255, 224/255);
-// const bottle3_color = color(35/255, 115/255, 22/255, 226/255);
-// const bottle4_color = color(32/255, 125/255, 24/255, 228/255);
-// const bottle5_color = color(34/255, 118/255, 26/255, 243/255);
-const bottle1_color = color(0/255, 255/255, 0/255, 242/255); //
-const bottle2_color = color(0/255, 255/255, 0/255, 239/255); //
-const bottle3_color = color(0/255, 255/255, 0/255, 243/255); //
+
+const bottle1_color = color(0/255, 255/255, 0/255, 242/255);
+const bottle2_color = color(0/255, 255/255, 0/255, 239/255);
+const bottle3_color = color(0/255, 255/255, 0/255, 243/255);
 const bottle4_color = color(0/255, 255/255, 0/255, 221/255);
 const bottle5_color = color(0/255, 255/255, 0/255, 224/255);
 
@@ -715,31 +715,31 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         this.vc = [0,1,0]
     }
 
-    setCamera13() { //"Clue 6" smash the bottle
-        this.camera_x = 36
-        this.camera_y = -60
-        this.camera_z = 9
-        this.camera_angle = Math.PI
-        this.cameraReset = 13
-        this.vc = [0,1,0]
-    }
-
-    setCamera14() { //"Clue 7" diamond
-        this.camera_x = 36
-        this.camera_y = -60
-        this.camera_z = 84
-        this.camera_angle = Math.PI
-        this.cameraReset = 14
-        this.vc = [0,1,0]
-    }
-    setCamera15() { //"Clue 8" jukebox
-        this.camera_x = 62
-        this.camera_y = -61
-        this.camera_z = -9
-        this.camera_angle = 0
-        this.cameraReset = 15
-        this.vc = [0,1,0]
-    }
+    // setCamera13() { //"Clue 6" smash the bottle
+    //     this.camera_x = 36
+    //     this.camera_y = -60
+    //     this.camera_z = 9
+    //     this.camera_angle = Math.PI
+    //     this.cameraReset = 13
+    //     this.vc = [0,1,0]
+    // }
+    //
+    // setCamera14() { //"Clue 7" diamond
+    //     this.camera_x = 36
+    //     this.camera_y = -60
+    //     this.camera_z = 84
+    //     this.camera_angle = Math.PI
+    //     this.cameraReset = 14
+    //     this.vc = [0,1,0]
+    // }
+    // setCamera15() { //"Clue 8" jukebox
+    //     this.camera_x = 62
+    //     this.camera_y = -61
+    //     this.camera_z = -9
+    //     this.camera_angle = 0
+    //     this.cameraReset = 15
+    //     this.vc = [0,1,0]
+    // }
 
     //I feel like we probably wont need to do a camera zoom to the door because that's just exit
     //the coord below should be value though
@@ -771,9 +771,9 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         this.new_line();
         this.key_triggered_button("Clue 4", ["f"], this.setCamera11);
         this.key_triggered_button("Clue 5", ["g"], this.setCamera12);
-        this.key_triggered_button("Clue 6", ["h"], this.setCamera13);
-        this.key_triggered_button("Clue 7", ["j"], this.setCamera14);
-        this.key_triggered_button("Clue 8", ["j"], this.setCamera15);
+        // this.key_triggered_button("Clue 6", ["h"], this.setCamera13);
+        // this.key_triggered_button("Clue 7", ["j"], this.setCamera14);
+        // this.key_triggered_button("Clue 8", ["j"], this.setCamera15);
 
 
     }
@@ -1108,6 +1108,10 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             if (window.napkin_click == 1) {
                 //console.log("napkin = " + window.napkin_click);
                 napkinTransform = napkinTransform.times(Mat4.rotation(Math.PI, 0, 1, 0));
+
+                napkinTimer += 1;
+                if(napkinTimer < 100)
+                    this.setCamera12();
             }
             this.shapes.napkin.draw(context, program_state, napkinTransform, this.materials.napkin);
 
@@ -1149,11 +1153,17 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             if (window.bottle_break == 0) {
                 this.shapes.collision_bottle.draw(context, program_state, transformBottle, this.materials.collison_bottle);
 
+
             }
 
             if (window.bottle_break == 1) {
                 this.shapes.shards.draw(context, program_state, transformShards, this.materials.shards);
                 this.shapes.diamond.draw(context, program_state, diamondTransform, this.materials.diamond);
+
+                // bottleTimer += 1;
+                // if (bottleTimer < 100)
+                //     this.setCamera13();
+
             }
 
             //set the next clue
@@ -1219,15 +1229,21 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         noteTransform = noteTransform.times(Mat4.translation(0, 50, -70));
         noteTransform = noteTransform.times(Mat4.scale(90, 90, 90));
 
+
+
         // this.clue7 = 0; //testing
         if(this.clue7 == 1) {
             if (window.diamond_click == 1) {
-                console.log("diamond = " + window.diamond_click);
+                // console.log("diamond = " + window.diamond_click);
                 this.shapes.note.draw(context, program_state, noteTransform, this.materials.note);
                 this.setCamera5();
             }
             if (window.note_click == 1) {
                 window.diamond_click = 0;
+
+                // diamondTimer += 1;
+                // if(diamondTimer < 100)
+                //     this.setCamera14();
             }
 
             //set the next clue
@@ -1244,6 +1260,20 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         this.shapes.jukebox.draw(context, program_state, this.transformJukebox, this.materials.jukebox);
         if(this.clue8 == 0) {
             window.music_play = 0; //prevent music from ever playing
+
+            // jukeboxTimer += 1;
+            // if (jukeboxTimer < 100)
+            //     this.setCamera15();
+
+
+        }
+        else
+        {
+            if(window.music_play == 1) {
+                jukeboxTimer += 1;
+                if (jukeboxTimer < 100)
+                    this.setCamera15();
+            }
         }
 
 

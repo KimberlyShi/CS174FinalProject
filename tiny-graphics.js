@@ -1055,12 +1055,15 @@ class Webgl_Manager
         //console.log(mx,my)
         this.gl.readPixels(mx, my, 1, 1, this.gl.RGBA, this.gl.UNSIGNED_BYTE, data);
 
+        var jukeboxTimer = 0;
         //console.log("alpha="+data)
         if (this.color_match(window.jukebox_color,data)) {
             if (window.music_play ==0)
             {
                window.music_play = 1;
                window.music_index += 1;
+
+
             } else {
                window.music_play = 0;
 			}
