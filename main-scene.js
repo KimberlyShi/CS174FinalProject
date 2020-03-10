@@ -79,14 +79,12 @@ window.bottle4_click = bottle4_click;
 var bottle5_click = 0;
 window.bottle5_click = bottle5_click;
 
-
-//NUMS: 200, 212, 221, 241, 245,246, 249, 250, 251, 252, 254, 255,
+//Based on color mouse clicking according to all 4 values
 const jukebox_color =       color(127 / 255, 124 / 255, 127 / 255, 250 / 255); // change alpha from 255 to 250 for pick color
 const ketchup_color =       color(255 / 255, 0 / 255, 0 / 255, 251 / 255);
 const mustard_color =       color(255 / 255, 255 / 255, 0 / 255, 255 / 255);
 const coke_color =          color(2 / 255, 2 / 255, 2 / 255, 252 / 255);
 const cup_color =           color(190 / 255, 223 / 255, 221 / 255);
-// const diamond_color = color(10/255,80/255, 70/255, 200/255);
 const napkin_color = color(20/255, 40/255, 60/255, 248/255);
 const diamond_color = color(227/255, 255/255, 254/255, 201/255);
 const door_color = color(1/255, 1/255, 1/255, 253/255);
@@ -102,10 +100,6 @@ const menu_color_special = color(3/255, 3/255, 2/255, 237/255);
 const other_ketchup_color = color(255 / 255, 0 / 255, 0 / 255, 255 / 255);
 const takeASeat_color = color(4/255, 7/255, 2/255, 254/255);
 const ball_color = color(255 / 255, 50 / 255, 0/ 255, 232/255);
-
-//201, 221, 232, 237, 241, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 154, 255, 255, 255 (three)
-//the other ball 232 is plus 5 range so can't do 226, 227, 229, 230, 231, 232, 233, 234, 235, 236, 237
-
 const bottle1_color = color(0/255, 255/255, 0/255, 242/255);
 const bottle2_color = color(0/255, 255/255, 0/255, 239/255);
 const bottle3_color = color(0/255, 255/255, 0/255, 243/255);
@@ -414,18 +408,14 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                     ambient: 0.92, diffusivity: 1, specularity: .5, color: takeASeat_color,
                     texture: new Texture("assets/hint1_rect.png")
                 }),
-
                 shards: new Material(new defs.Textured_Phong(1), {
                     ambient: 1, diffusivity: 1, specularity: 1, color: rules_color,
                     texture: new Texture("assets/shards_map.png")
                 }),
-
-
                 collison_bottle: new Material(new defs.Textured_Phong(1), {
                     ambient: 1, diffusivity: 1, specularity: 1, color: collison_bottle_color,
                     texture: new Texture("assets/shards_map.png")
                 }),
-
                 bottle1: new Material(new defs.Textured_Phong(1), {
                     ambient: 1, diffusivity: 1, specularity: 1.0, color: bottle1_color,
                     texture: new Texture("assets/shards_map.png")
@@ -446,13 +436,10 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                     ambient: 1, diffusivity: 1, specularity: 1.0, color: bottle5_color,
                     texture: new Texture("assets/shards_map.png")
                 }),
-
-
                 stoolclue: new Material(new defs.Textured_Phong(1), {
                     color: stool_color, ambient: 1, diffusivity: 1, specularity: 1,
                     texture: new Texture("assets/stool_map.png")
                 }),
-
                 window: new Material(new defs.Textured_Phong(1), {
                     ambient: 1, diffusivity: 1, specularity: 1,
                     texture: new Texture("assets/window_map.png")
@@ -647,6 +634,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         this.transform5Smoothie = this.transform5Smoothie.times(Mat4.scale(45, 45, 45));
     }
 
+    //Set different camera angles for the ease of the user
     setCamera1() { //Camera 1: Bar
         this.camera_x = 0
         this.camera_y = -60
@@ -710,6 +698,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
 		this.vc = [0,1,0]
     }
 
+    //Camera angles set so that the user will be zoomed into the clue upon clicking on the appropriate clue for the first time
     setCamera8() { //"Clue 1"
         this.camera_x = 90
         this.camera_y = -50
@@ -718,7 +707,6 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         this.cameraReset = 8
 		this.vc = [0,1,0]
     }
-
     setCamera9() { //"Clue 2"
         this.camera_x = -50
         this.camera_y = -50
@@ -727,7 +715,6 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         this.cameraReset = 9
 		this.vc = [0,1,0]
     }
-
     setCamera10() { //"Clue 3"
         this.camera_x = 0
         this.camera_y = -60
@@ -736,7 +723,6 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         this.cameraReset = 10
 		this.vc = [0,1,0]
     }
-
     setCamera11() { //"Clue 4"
     this.camera_x = 5
     this.camera_y = -50
@@ -745,7 +731,6 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
     this.cameraReset = 11 //maggie i changed this to 11 (it was originally 10) -Kim
     this.vc = [0,1,0]
     }
-
     setCamera12() { //"Clue 5" Napkin box
         this.camera_x = -26
         this.camera_y = -68
@@ -754,45 +739,6 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         this.cameraReset = 12
         this.vc = [0,1,0]
     }
-
-    // setCamera13() { //"Clue 6" smash the bottle
-    //     this.camera_x = 36
-    //     this.camera_y = -60
-    //     this.camera_z = 9
-    //     this.camera_angle = Math.PI
-    //     this.cameraReset = 13
-    //     this.vc = [0,1,0]
-    // }
-    //
-    // setCamera14() { //"Clue 7" diamond
-    //     this.camera_x = 36
-    //     this.camera_y = -60
-    //     this.camera_z = 84
-    //     this.camera_angle = Math.PI
-    //     this.cameraReset = 14
-    //     this.vc = [0,1,0]
-    // }
-    // setCamera15() { //"Clue 8" jukebox
-    //     this.camera_x = 62
-    //     this.camera_y = -61
-    //     this.camera_z = -9
-    //     this.camera_angle = 0
-    //     this.cameraReset = 15
-    //     this.vc = [0,1,0]
-    // }
-
-    //I feel like we probably wont need to do a camera zoom to the door because that's just exit
-    //the coord below should be value though
-    
-    // setCamera16() { //"Clue 9" door
-    //     this.camera_x = -125
-    //     this.camera_y = -60
-    //     this.camera_z = 44
-    //     this.camera_angle = 0
-    //     this.cameraReset = 15
-    //     this.vc = [0,1,0]
-    // }
-
 
     make_control_panel() {
 
@@ -811,11 +757,6 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         this.new_line();
         this.key_triggered_button("Clue 4", ["f"], this.setCamera11);
         this.key_triggered_button("Clue 5", ["g"], this.setCamera12);
-        // this.key_triggered_button("Clue 6", ["h"], this.setCamera13);
-        // this.key_triggered_button("Clue 7", ["j"], this.setCamera14);
-        // this.key_triggered_button("Clue 8", ["j"], this.setCamera15);
-
-
     }
 
     display(context, program_state) {
@@ -824,12 +765,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         //camera movement
         if (!context.scratchpad.controls) {
             this.children.push(context.scratchpad.controls = new defs.Movement_Controls());
-            // Locate the camera here (inverted matrix).
-            // program_state.set_camera(Mat4.translation(0, -100,-320 ));   //overview of room view without front wall
-            // program_state.set_camera(Mat4.translation(40, -8,-80 )); //Original camera coord
-            program_state.set_camera(Mat4.translation(0, -70, -150)); //DO THIS ONE for POV
-            // program_state.set_camera(Mat4.translation(0, -100,-500 )); //Current overview of front wall
-            // program_state.set_camera(Mat4.translation(-50, -70,10 ).times(Mat4.rotation(Math.PI/2, 0, 1,0))); //view mustard POV
+            program_state.set_camera(Mat4.translation(0, -70, -150)); //start POV
         }
 
         if (this.cameraReset >= 0) {
