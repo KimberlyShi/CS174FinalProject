@@ -605,6 +605,46 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         this.tallTableTransform = this.tallTableTransform.times(Mat4.rotation(-Math.PI / 2, 0, 0, 1));
         this.tallTableTransform = this.tallTableTransform.times(Mat4.rotation(Math.PI / 2, 0, 0, 1));
         this.tallTableTransform = this.tallTableTransform.times(Mat4.scale(50, 50, 110));
+        this.transform1Bulb = Mat4.identity();
+        this.transform1Bulb = this.transform1Bulb.times(Mat4.translation(-155, 80, 45 + 2 * 90));
+        this.transform1Bulb = this.transform1Bulb.times(Mat4.scale(0.1, 0.1, 0.1));
+        this.transform1Bulb = this.transform1Bulb.times(Mat4.scale(45, 45, 45));
+        this.transform2Bulb = Mat4.identity();
+        this.transform2Bulb = this.transform2Bulb.times(Mat4.translation(-155, 80, 45 + 1 * 90));
+        this.transform2Bulb = this.transform2Bulb.times(Mat4.scale(0.1, 0.1, 0.1));
+        this.transform2Bulb = this.transform2Bulb.times(Mat4.scale(45, 45, 45));
+        this.transform3Bulb = Mat4.identity();
+        this.transform3Bulb = this.transform3Bulb.times(Mat4.translation(-155, 80, 45));
+        this.transform3Bulb = this.transform3Bulb.times(Mat4.scale(0.1, 0.1, 0.1));
+        this.transform3Bulb = this.transform3Bulb.times(Mat4.scale(45, 45, 45));
+        this.transform4Bulb = Mat4.identity();
+        this.transform4Bulb = this.transform4Bulb.times(Mat4.translation(-155, 80, 45 - 90));
+        this.transform4Bulb = this.transform4Bulb.times(Mat4.scale(0.1, 0.1, 0.1));
+        this.transform4Bulb = this.transform4Bulb.times(Mat4.scale(45, 45, 45));
+        this.transform5Bulb = Mat4.identity();
+        this.transform5Bulb = this.transform5Bulb.times(Mat4.translation(-155, 80, 45 - 2 * 90));
+        this.transform5Bulb = this.transform5Bulb.times(Mat4.scale(0.1, 0.1, 0.1));
+        this.transform5Bulb = this.transform5Bulb.times(Mat4.scale(45, 45, 45));
+        this.transform1Smoothie = Mat4.identity();
+        this.transform1Smoothie = this.transform1Smoothie.times(Mat4.translation(-175, 47.5, 40 + 2 * 90));
+        this.transform1Smoothie = this.transform1Smoothie.times(Mat4.scale(0.075, 0.075, 0.075));
+        this.transform1Smoothie = this.transform1Smoothie.times(Mat4.scale(45, 45, 45));
+        this.transform2Smoothie = Mat4.identity();
+        this.transform2Smoothie = this.transform2Smoothie.times(Mat4.translation(-175, 47.5, 40 + 90));
+        this.transform2Smoothie = this.transform2Smoothie.times(Mat4.scale(0.075, 0.075, 0.075));
+        this.transform2Smoothie = this.transform2Smoothie.times(Mat4.scale(45, 45, 45));
+        this.transform3Smoothie = Mat4.identity();
+        this.transform3Smoothie = this.transform3Smoothie.times(Mat4.translation(-175, 47.5, 40));
+        this.transform3Smoothie = this.transform3Smoothie.times(Mat4.scale(0.075, 0.075, 0.075));
+        this.transform3Smoothie = this.transform3Smoothie.times(Mat4.scale(45, 45, 45));
+        this.transform4Smoothie = Mat4.identity();
+        this.transform4Smoothie = this.transform4Smoothie.times(Mat4.translation(-175, 47.5, 40 - 90));
+        this.transform4Smoothie = this.transform4Smoothie.times(Mat4.scale(0.075, 0.075, 0.075));
+        this.transform4Smoothie = this.transform4Smoothie.times(Mat4.scale(45, 45, 45));
+        this.transform5Smoothie = Mat4.identity();
+        this.transform5Smoothie = this.transform5Smoothie.times(Mat4.translation(-175, 47.5, 40 - 2 * 90));
+        this.transform5Smoothie = this.transform5Smoothie.times(Mat4.scale(0.075, 0.075, 0.075));
+        this.transform5Smoothie = this.transform5Smoothie.times(Mat4.scale(45, 45, 45));
     }
 
     setCamera1() { //Camera 1: Bar
@@ -1286,6 +1326,23 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         this.shapes.circleposter.draw(context, program_state, this.transformCoffee, this.materials.coffeePoster);
         this.shapes.circleposter.draw(context, program_state, this.transformMimosa, this.materials.mimosaPoster);
 
+        this.shapes.bulb.draw(context, program_state, this.transform1Bulb, this.materials.bulb);
+        this.shapes.bulb.draw(context, program_state, this.transform2Bulb, this.materials.bulb);
+        this.shapes.bulb.draw(context, program_state, this.transform3Bulb, this.materials.bulb);
+        this.shapes.bulb.draw(context, program_state, this.transform4Bulb, this.materials.bulb);
+        this.shapes.bulb.draw(context, program_state, this.transform5Bulb, this.materials.bulb);
+
+        this.shapes.smoothie.draw(context, program_state, this.transform1Smoothie, this.materials.smoothie);
+        this.shapes.smoothie.draw(context, program_state, Mat4.translation(-4, 0, 8).times(this.transform1Smoothie), this.materials.smoothie2);
+        this.shapes.smoothie.draw(context, program_state, this.transform2Smoothie, this.materials.smoothie);
+        this.shapes.smoothie.draw(context, program_state, Mat4.translation(-4, 0, 8).times(this.transform2Smoothie), this.materials.smoothie2);
+        this.shapes.smoothie.draw(context, program_state, this.transform3Smoothie, this.materials.smoothie);
+        this.shapes.smoothie.draw(context, program_state, Mat4.translation(-4, 0, 8).times(this.transform3Smoothie), this.materials.smoothie2);
+        this.shapes.smoothie.draw(context, program_state, this.transform4Smoothie, this.materials.smoothie);
+        this.shapes.smoothie.draw(context, program_state, Mat4.translation(-4, 0, 8).times(this.transform4Smoothie), this.materials.smoothie2);
+        this.shapes.smoothie.draw(context, program_state, this.transform5Smoothie, this.materials.smoothie);
+        this.shapes.smoothie.draw(context, program_state, Mat4.translation(-4, 0, 8).times(this.transform5Smoothie), this.materials.smoothie2);
+
         //BOOTH
         //shift factor changes how far apart the same facing chair will be
         const boothShiftFactor = 90;
@@ -1314,20 +1371,6 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             transformLight = transformLight.times(Mat4.rotation(Math.PI / 4, 0, 1, 0));
             transformLight = transformLight.times(Mat4.scale(2.5, 2.5, 2.5));
             this.shapes.light.draw(context, program_state, transformLight.times(boothTableScaleFactor), this.materials.light);
-
-            var transformBulb = Mat4.identity();
-            transformBulb = transformBulb.times(Mat4.translation(-155, 80, 45 - i * boothShiftFactor));
-            transformBulb = transformBulb.times(Mat4.scale(0.4, 0.4, 0.4));
-            this.shapes.bulb.draw(context, program_state, transformBulb.times(boothTableScaleFactor), this.materials.bulb);
-
-            var transformSmoothie2 = Mat4.identity();
-            transformSmoothie2 = transformSmoothie2.times(Mat4.translation(-10, 0, 0));
-            var transformSmoothie = Mat4.identity();
-            transformSmoothie = transformSmoothie.times(Mat4.translation(-175, 47.5, 40 - i * boothShiftFactor));
-            transformSmoothie = transformSmoothie.times(Mat4.scale(0.075, 0.075, 0.075));
-            transformSmoothie = transformSmoothie.times(boothScaleFactor);
-            this.shapes.smoothie.draw(context, program_state, transformSmoothie, this.materials.smoothie);
-            this.shapes.smoothie.draw(context, program_state, Mat4.translation(-4, 0, 8).times(transformSmoothie), this.materials.smoothie2);
 
             var transformMenuBottom = Mat4.identity();
             transformMenuBottom = transformMenuBottom.times(Mat4.translation(0, 1, 0));
