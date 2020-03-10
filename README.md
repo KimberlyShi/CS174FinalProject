@@ -47,7 +47,8 @@ Your goal is to go through the entire room, navigating from one clue to the next
 * , : rotate left 
 * . : rotate right
 
-## Gameplay ##[![Diner Gameplay](https://res.cloudinary.com/marcomontalbano/image/upload/v1583827074/video_to_markdown/images/youtube--HbC0wbkUt9s-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://www.youtube.com/watch?v=HbC0wbkUt9s&feature=youtu.be "Diner Gameplay")
+## Gameplay ##
+<iframe width="560" height="315" src="https://www.youtube.com/embed/0LPZJqLZg6s" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Advanced Features ##
 1. Mouse Clicking: Clicking on objects will cause them to change behavior or position and reveal the next clue.
