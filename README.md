@@ -51,7 +51,7 @@ Your goal is to go through the entire room, navigating from one clue to the next
 [![Diner Gameplay](https://res.cloudinary.com/marcomontalbano/image/upload/v1583827473/video_to_markdown/images/youtube--0LPZJqLZg6s-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://youtu.be/chnz-Efe8RI "Diner Gameplay")
 
 ## Advanced Features ##
-1. Mouse Clicking: Clicking on objects will cause them to change behavior or position and reveal the next clue.
+1. Mouse Clicking: Clicking on objects will cause them to change behavior or position and reveal the next clue based on the color of the pixel the mouse clicks on.
 2. Blender Objects: Almost all of the objects in this project were created by us on Blender. UV unwrapping was utilized for texture mapping for simple objects where each face was given a solid color (jukebox, stool, booth, etc.) while more complex objects that had hints on the textures were designed with Adobe Illustrator, such as the posters.
 3. Collision Detection (see spoilers below)
 4. Physics Based Animation (see spoilers below)
@@ -63,3 +63,12 @@ Your goal is to go through the entire room, navigating from one clue to the next
 
 ## Design Process ##
 <img src="https://github.com/KimberlyShi/CS174FinalProject/blob/master/assets/readmeDesign.png" width="750">
+
+## Contributions ##
+Maggie: I implemented our project's advanced features, including mouse picking by color, collision detection, and the physics-based trajectory of the orange for one of our clues. The mouse picking was used for every interactive feature on our game(each clue), and was based on the color of the pixel clicked on by the mouse. When this color corresponds to a color of an object, that object will perform a certain task. I also implemented some of the clues, including Clue 1(stool), Clue 4(ketchup and mustard, which included the collision detection), Clue 5(the napkin box), Clue 6 and 7(the shattering of the bottle and clicking on the diamond, which included physics), and Clue 8(the jukebox). With the jukebox, I also loaded music files so it would play a different song every time you clicked on it, and I added a sound effect for the mustard and ketchup clue. I also set up the camera angles that corresponded to the buttons below the game, and changed the camera angle for 4 of the clues so when you click on an object related to a clue, the camera location will change.
+
+## Sources ##
+Coke image: https://www.cleanpng.com/png-neon-sign-portable-network-graphics-logo-light-emi-7334176/
+Diamond object: https://www.turbosquid.com/3d-models/free-perfect-model/675252
+Cat object: https://www.turbosquid.com/3d-models/low-polycatanimal-model-1340490
+Crumbled piece of paper: https://www.hiclipart.com/free-transparent-background-png-clipart-nxisw/download

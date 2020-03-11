@@ -1224,7 +1224,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             // this.clue8 = 1;
         }
 
-        this.clue8 = 1;
+        //this.clue8 = 1;
         
         //TODO: Clue #8: Jukebox
         //JUKEBOX
