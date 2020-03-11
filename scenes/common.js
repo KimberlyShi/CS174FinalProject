@@ -989,8 +989,8 @@ class Movement_Controls extends Scene
     this.matrix().post_multiply(Mat4.translation(...this.thrust.times(-meters_per_frame)));
     this.inverse().pre_multiply(Mat4.translation(...this.thrust.times(+meters_per_frame)));
 
-    this.matrix().post_multiply(Mat4.rotation(+.007 * this.roll, 0, 1, 0));
-    this.inverse().pre_multiply(Mat4.rotation(-.007 * this.roll, 0, 1, 0));
+    this.matrix().post_multiply(Mat4.rotation(+.002 * this.roll, 0, 1, 0));
+    this.inverse().pre_multiply(Mat4.rotation(-.002 * this.roll, 0, 1, 0));
 
 
 
