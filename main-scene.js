@@ -755,12 +755,12 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         this.key_triggered_button("Camera 6: Bottom Corner", ["6"], this.setCamera6);
         this.new_line();
         this.key_triggered_button("Rotate Camera", ["r"], this.setCamera7);
-        this.key_triggered_button("Clue 1", ["b"], this.setCamera8);
-        this.key_triggered_button("Clue 2", ["c"], this.setCamera9);
-        this.key_triggered_button("Clue 3", ["e"], this.setCamera10);
-        this.new_line();
-        this.key_triggered_button("Clue 4", ["f"], this.setCamera11);
-        this.key_triggered_button("Clue 5", ["g"], this.setCamera12);
+        // this.key_triggered_button("Clue 1", ["b"], this.setCamera8);
+        // this.key_triggered_button("Clue 2", ["c"], this.setCamera9);
+        // this.key_triggered_button("Clue 3", ["e"], this.setCamera10);
+        // this.new_line();
+        // this.key_triggered_button("Clue 4", ["f"], this.setCamera11);
+        // this.key_triggered_button("Clue 5", ["g"], this.setCamera12);
     }
 
     display(context, program_state) {
@@ -1141,6 +1141,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             if (window.bottle_break == 1) {
                 this.shapes.shards.draw(context, program_state, transformShards, this.materials.shards);
                 this.shapes.diamond.draw(context, program_state, diamondTransform, this.materials.diamond);
+                
 
                 //set the next clue
                 this.clue7 = 1;
@@ -1152,7 +1153,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         else {
             //just draw the bottle unshattered
             //none of the bottles should shatter
-            this.shapes.collision_bottle.draw(context, program_state, transformBottle, this.materials.collison_bottle);
+            this.shapes.collision_bottle.draw(context, program_state, transformBottle, this.materials.collison_bottle); 
         }
         ////////////////////////////////////////////////////////////////////////////////////////////
         // add for ball to hit bottle
