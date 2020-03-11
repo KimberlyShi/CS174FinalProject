@@ -1220,12 +1220,10 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             if (window.note_click == 1) {
                 window.diamond_click = 0;
             }
-            // //set the next clue
-            // this.clue8 = 1;
         }
 
         //this.clue8 = 1;
-        
+
         //TODO: Clue #8: Jukebox
         //JUKEBOX
         this.shapes.jukebox.draw(context, program_state, this.transformJukebox, this.materials.jukebox);
