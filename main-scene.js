@@ -468,9 +468,13 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                     ambient: 1, diffusivity: 1, specularity: 0.5, color: color(0, 0, 0, 1),
                     texture: new Texture("assets/door_map.png")
                 }),
+                // chairpaper: new Material( new defs.Textured_Phong( 1 ), {
+                //     color: chairpaper_color, ambient: 1, diffusivity: 1, specularity: 1,
+                //     texture: new Texture( "assets/stoolClue.png" )
+                // }),
                 chairpaper: new Material( new defs.Textured_Phong( 1 ), {
-                    color: chairpaper_color, ambient: 1, diffusivity: 1, specularity: 1, 
-                    texture: new Texture( "assets/stoolClue.png" )
+                    color: chairpaper_color, ambient: 1, diffusivity: 1, specularity: 1,
+                    texture: new Texture( "assets/stoolclue.png" )
                 }),
                 shelf: new Material( new defs.Textured_Phong( 1 ), {
                     ambient: 1, diffusivity: 1, specularity: 1, 
@@ -811,16 +815,25 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
 
 
         //TODO: TEMPORARY => set everything to true so all clues will be displayed
+        //Uncomment if want to see all the clues at once
+        //Otherwise, each clue is only accessible once you have completed the previous clue
+        // this.clue1 = 1;
+        // this.clue2 = 1;
+        // this.clue3 = 1;
+        // this.clue4 = 1;
+        // this.clue5 = 1;
+        // this.clue6 = 1;
+        // this.clue7 = 1;
+        // this.clue8 = 1;
 
-        this.clue1 = 1;
-        this.clue2 = 1;
-        this.clue3 = 1;
-        this.clue4 = 1;
-        this.clue5 = 1;
-        this.clue6 = 1;
-        this.clue7 = 1;
-        this.clue8 = 1;
-        //TODO: get rid of the above section after all clues are complete so that all clues are initialized to 0
+        this.clue1 = 1; //start off with the first clue as true
+        this.clue2 = 0;
+        this.clue3 = 0;
+        this.clue4 = 0;
+        this.clue5 = 0;
+        this.clue6 = 0;
+        this.clue7 = 0;
+        this.clue8 = 0;
 
 
         //CLUES!!
@@ -840,14 +853,18 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                 stoolTimer += 1;
                 if(stoolTimer < 100)
                     this.setCamera8();
+
+                // set next clue
+                this.clue2 = 1;
+
             } else {
                 stool_move = 0;
                 stoolTimer = 0;
             }
 
             this.shapes.stoolclue.draw(context, program_state, stoolClueTransform, this.materials.stoolclue);
-            //set next clue
-            this.clue2 = 1;
+            // // set next clue
+            // this.clue2 = 1;
         }
         else {
             //still want to draw the chair
@@ -877,11 +894,13 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                 menuTimer += 1;
                 if(menuTimer < 100)
                     this.setCamera9();
+                //Set next clue
+                this.clue3 = 1;
              
             }
 
-            //Set next clue
-            this.clue3 = 1;
+            // //Set next clue
+            // this.clue3 = 1;
         }
         else
         {
@@ -919,10 +938,13 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                 myMaterial = this.materials.cokeClue;
 
                 //set the next clue once the clue is revealed
-                this.clue4 = 0;
+                // this.clue4 = 0;
+
                 cokeTimer += 1;
                 if(cokeTimer < 100)
                     this.setCamera10();
+
+                this.clue4 = 1;
             }
             this.shapes.coke.draw(context, program_state, this.transformCoke, myMaterial);
     
@@ -965,12 +987,15 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                     mustard_angle = max_angle
                 }
 
+                //Once collide, will reveal the next clue
+                // this.clue5 = 1; //set next clue
+
             } else {
                 kup_mov += 0.1;
             }
 
-            //Once collide, will reveal the next clue
-            this.clue5 = 1;
+            // //Once collide, will reveal the next clue
+            // this.clue5 = 1;
 
         } else {    // reset it to original position
             kup_mov = 0;
@@ -1016,6 +1041,8 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                 ketchupTimer += 1;
                 if(ketchupTimer < 100)
                     this.setCamera11();
+
+                // this.clue5 = 1; //set next clue
             }
 
             if (mustard_spill_timer > 0) mustard_spill_timer += 1;
@@ -1033,6 +1060,8 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                 audio.pause();
                 ketchupTimer = 0;
             }
+
+            this.clue5 = 1; //set next clue
         }
         else {
             var distance_cup = 10;
@@ -1056,7 +1085,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         //TODO: Clue #5: Napkin Box
         //NAPKIN BOX
 
-        this.clue5 = 1;
+        // this.clue5 = 1;
         if(this.clue5 == 1) {
             let napkinTransform = Mat4.identity();
             napkinTransform = napkinTransform.times(Mat4.translation(185, 44, 20)).times(Mat4.scale(6, 6, 6));
@@ -1068,11 +1097,14 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
                 napkinTimer += 1;
                 if(napkinTimer < 100)
                     this.setCamera12();
+
+                //set the next clue
+                this.clue6 = 1;
             }
             this.shapes.napkin.draw(context, program_state, napkinTransform, this.materials.napkin);
 
-            //set the next clue
-            this.clue6 = 1;
+            // //set the next clue
+            // this.clue6 = 1;
 
         }
         else { //clue napkin box when not used
@@ -1103,15 +1135,19 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         if(this.clue6 == 1) {
             if (window.bottle_break == 0) {
                 this.shapes.collision_bottle.draw(context, program_state, transformBottle, this.materials.collison_bottle);
+
             }
 
             if (window.bottle_break == 1) {
                 this.shapes.shards.draw(context, program_state, transformShards, this.materials.shards);
                 this.shapes.diamond.draw(context, program_state, diamondTransform, this.materials.diamond);
+
+                //set the next clue
+                this.clue7 = 1;
             }
 
-            //set the next clue
-            this.clue7 = 1;
+            // //set the next clue
+            // this.clue7 = 1;
         }
         else {
             //just draw the bottle unshattered
@@ -1158,6 +1194,16 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         transformBall = transformBall.times(Mat4.scale(2, 2, 2));
         this.shapes.ball.draw(context, program_state, transformBall, this.materials.ball);
 
+
+
+        // this.clue1 = 1;
+        // this.clue2 = 1;
+        // this.clue3 = 1;
+        // this.clue4 = 1;
+        // this.clue5 = 1;
+        // this.clue6 = 1;
+        // this.clue7 = 1;
+
         //TODO: Clue #7: Diamond + Note
         //NOTE
         let noteTransform = Mat4.identity();
@@ -1168,14 +1214,18 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
             if (window.diamond_click == 1) {
                 this.shapes.note.draw(context, program_state, noteTransform, this.materials.note);
                 this.setCamera5();
+                //set the next clue
+                // this.clue8 = 1;
             }
             if (window.note_click == 1) {
                 window.diamond_click = 0;
             }
-            //set the next clue
-            this.clue8 = 1;
+            // //set the next clue
+            // this.clue8 = 1;
         }
 
+        this.clue8 = 1;
+        
         //TODO: Clue #8: Jukebox
         //JUKEBOX
         this.shapes.jukebox.draw(context, program_state, this.transformJukebox, this.materials.jukebox);
@@ -1415,6 +1465,9 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         transformBlack = transformBlack.times(Mat4.translation(0, 70, 10));
         transformBlack = transformBlack.times(Mat4.scale(120, 80, 80));
 
+        if(this.clue1 == 1 && this.clue2 == 1 && this.clue3 == 1
+            && this.clue4 == 1 && this.clue5 == 1 && this.clue6 == 1
+            && this.clue7 == 1 && this.clue8 == 1 )
         if (window.door_click == 1) {
             // adjust opacity
             this.fading = this.fading + 0.5 / 255;
