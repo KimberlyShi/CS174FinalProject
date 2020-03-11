@@ -18,11 +18,11 @@ var sounds = [
     "assets/sound/circles.mp3",
     "assets/sound/heyjude.mp3",
     "assets/sound/iwillsurvive.mp3",
-    "assets/sound/mygirl.mp3",
-    "assets/sound/neverbeentospain.mp3",
-    "assets/sound/partyintheusa.mp3",
-    "assets/sound/spanishflea.mp3",
-    "assets/sound/sundaybest.mp3"
+    // "assets/sound/mygirl.mp3",
+    // "assets/sound/neverbeentospain.mp3",
+    // "assets/sound/partyintheusa.mp3", 
+    // "assets/sound/spanishflea.mp3",
+    // "assets/sound/sundaybest.mp3"
 ];
 
 var audio = document.createElement('audio');
@@ -1393,7 +1393,7 @@ class Main_Scene extends Scene {                           // **Obj_File_Demo** 
         var transformShelfBottle = transformShelf.times(Mat4.translation(0.75, 0.90, 0));
         if(window.bottle1_click == 1) {
 
-            console.log("inside bottleclick");
+//             console.log("inside bottleclick");
             // this.shapes.shards.draw(context, program_state, transformShelfBottle.times(Mat4.scale(0.2, 0.4, 0.2)), this.materials.shards);
             this.shapes.shards2.draw(context, program_state, transformShelfBottle.times(Mat4.scale(0.2, 0.4, 0.2)).times(Mat4.translation(0, -1.5,0)), this.materials.shards);
         }
